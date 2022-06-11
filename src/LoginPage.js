@@ -1,27 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import fire from "./fire";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Login";
 import Hero from "./Hero";
-import "./App.css";
-import LoginPage from "./LoginPage";
-import HomePage from "./HomePage";
+import "./LoginPage.css";
 
-const App = () => {
+const LoginPage = () => {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
-
-  const auth = getAuth(fire)
-  const provider = new GoogleAuthProvider();
-
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-  }
 
   const clearInputs = () => {
     setEmail("");
@@ -92,7 +82,7 @@ const App = () => {
   });
 
   return (
-    <div className="App">
+    <div className="LoginPage">
       {user ? (
         <Hero handleLogout={handleLogout} />
       ) : (
@@ -107,19 +97,10 @@ const App = () => {
           setHasAccount={setHasAccount}
           emailError={emailError}
           passwordError={passwordError}
-          signInWithGoogle={signInWithGoogle}
         />
       )}
-/*
-  return (
-    <div>
-      <hi>CardiNUS</hi>
-      <p>Please Login / Sign Up.</p>
-      <LoginPage></LoginPage>
-      <HomePage></HomePage>
-/*
     </div>
   );
 };
 
-export default App;
+export default LoginPage;
