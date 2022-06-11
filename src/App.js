@@ -5,8 +5,8 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Login";
 import Hero from "./Hero";
 import "./App.css";
-import LoginPage from "./LoginPage";
-import HomePage from "./HomePage";
+//import LoginPage from "./LoginPage";
+//import HomePage from "./HomePage";
 
 const App = () => {
   const [user, setUser] = useState("");
@@ -110,6 +110,10 @@ const App = () => {
           signInWithGoogle={signInWithGoogle}
         />
       )}
+    </div>
+  );
+};
+
 /*
   return (
     <div>
@@ -117,9 +121,6 @@ const App = () => {
       <p>Please Login / Sign Up.</p>
       <LoginPage></LoginPage>
       <HomePage></HomePage>
-/*
-    </div>
-  );
-};
+*/ 
 
 export default App;
