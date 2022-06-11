@@ -110,6 +110,10 @@ const App = () => {
           signInWithGoogle={signInWithGoogle}
         />
       )}
+    </div>
+  );
+};
+
 /*
   return (
     <div>
@@ -117,9 +121,6 @@ const App = () => {
       <p>Please Login / Sign Up.</p>
       <LoginPage></LoginPage>
       <HomePage></HomePage>
-/*
-    </div>
-  );
-};
+*/ 
 
 export default App;
