@@ -5,8 +5,8 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Login";
 import Hero from "./Hero";
 import "./App.css";
-import LoginPage from "./LoginPage";
-import HomePage from "./HomePage";
+//import LoginPage from "./LoginPage";
+//import HomePage from "./HomePage";
 
 const App = () => {
   const [user, setUser] = useState("");
