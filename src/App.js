@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import fire from "./fire";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Login";
 import Hero from "./Hero";
 import "./App.css";
@@ -12,6 +13,13 @@ const App = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
+
+  const auth = getAuth(fire)
+  const provider = new GoogleAuthProvider();
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+  }
 
   const clearInputs = () => {
     setEmail("");
@@ -97,6 +105,7 @@ const App = () => {
           setHasAccount={setHasAccount}
           emailError={emailError}
           passwordError={passwordError}
+          signInWithGoogle={signInWithGoogle}
         />
       )}
     </div>
