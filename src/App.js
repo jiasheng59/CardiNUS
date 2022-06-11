@@ -6,6 +6,7 @@ import HomePage from "./HomePage";
 const App = () => {
   return (
     <div>
+      <hi>CardiNUS</hi>
       <p>Please Login / Sign Up.</p>
       <LoginPage></LoginPage>
       <HomePage></HomePage>
