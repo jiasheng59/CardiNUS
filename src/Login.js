@@ -11,7 +11,8 @@ const Login = (props) => {
     hasAccount,
     setHasAccount,
     emailError,
-    passwordError
+    passwordError,
+    signInWithGoogle
   } = props;
   return (
     <section className="login">
@@ -51,6 +52,9 @@ const Login = (props) => {
               </p>
             </>
           )}
+        </div>
+        <div className="alternativeSignIn">
+            <button type="button" className="login-with-google-btn" onClick={signInWithGoogle}></button>
         </div>
       </div>
     </section>
