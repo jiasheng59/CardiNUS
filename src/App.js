@@ -11,7 +11,6 @@ const App = () => {
       <p>Please Login / Sign Up.</p>
       <LoginPage></LoginPage>
       <HomePage></HomePage>
-      <h1>Hello</h1>
       <NightEvent />
     </div>
   );
