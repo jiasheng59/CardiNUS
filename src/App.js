@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import LoginPage from "./LoginPage";
 import HomePage from "./HomePage";
-import NightEvent from "./Game";
+import { NightEvent, ChooseAttires } from "./Game";
 
 const App = () => {
   return (
@@ -12,6 +12,7 @@ const App = () => {
       <LoginPage></LoginPage>
       <HomePage></HomePage>
       <NightEvent />
+      <ChooseAttires />
     </div>
   );
 };
