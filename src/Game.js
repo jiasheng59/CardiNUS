@@ -1,6 +1,5 @@
 import React from "react";
-import Popup from "reactjs-popup";
-import Modal from "react-modal"
+import ReactModal from 'react-modal';
 import firebase from "firebase/compat/app";
 
 const helmet = ['w', 'r', 'y', 'b', 't'];
@@ -10,7 +9,7 @@ const gloves = ['w', 'r', 'y', 'b', 't'];
 const boots = ['w', 'r', 'y', 'b', 't'];
 
 class NightEvent extends React.Component {
-    constructo(props) {
+    constructor(props) {
         super(props);
         this.state = {showModal: false};
           
