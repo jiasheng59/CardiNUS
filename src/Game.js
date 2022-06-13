@@ -2,11 +2,26 @@ import React, { useState } from "react";
 import ReactModal from 'react-modal';
 import firebase from "firebase/compat/app";
 
-const helmet = ['w', 'r', 'y', 'b', 't']; // white, red, yellow, blue, turquoise
-const visor = ['w', 'r', 'y', 'b', 't'];
-const suit = ['w', 'r', 'y', 'b', 't'];
-const gloves = ['w', 'r', 'y', 'b', 't'];
-const boots = ['w', 'r', 'y', 'b', 't'];
+const helmet = ['p', 'r', 'y', 'b', 't']; // purple, red, yellow, blue, turquoise
+const visor = ['p', 'r', 'y', 'b', 't'];
+const suit = ['p', 'r', 'y', 'b', 't'];
+const gloves = ['p', 'r', 'y', 'b', 't'];
+const boots = ['p', 'r', 'y', 'b', 't'];
+
+function getRandomInt(min, max) {
+    // Both min and max are inclusive
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+  
+function shuffle(array) {
+    for (let i = 1; i < array.length; i = i + 1) {
+        const r = getRandomInt(0, i);
+        const temp = array[i];
+        array[i] = array[r];
+        array[r] = temp;
+    }
+    return array;
+}
 
 class ChooseAttires extends React.Component {
     constructor(props) {
@@ -149,4 +164,14 @@ class Game extends React.Component {
                 </label>
 
 */}
-export { NightEvent, ChooseAttires };
+
+const num = [1, 2, 3, 4, 5];
+function TestingShuffle() {
+    const array = shuffle(shuffle(num)).map(n => <li>{n}</li>);
+    return (
+        <ul>
+            {array}
+        </ul>
+    );
+}
+export { ChooseAttires, TestingShuffle };
