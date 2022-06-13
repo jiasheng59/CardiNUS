@@ -12,7 +12,6 @@ const App = () => {
       <LoginPage></LoginPage>
       <HomePage></HomePage>
       <NightEvent />
-      <ChooseAttires />
     </div>
   );
 };

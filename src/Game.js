@@ -11,6 +11,9 @@ const boots = ['w', 'r', 'y', 'b', 't'];
 class ChooseAttires extends React.Component {
     constructor(props) {
         super(props);
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event, attire) {
@@ -46,38 +49,7 @@ class ChooseAttires extends React.Component {
                         <option value="yellow">{"yellow"/* helmets[2] */}</option>
                     </select>
                 </label>
-                <label>
-                    {"Visor: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "visor")}>
-                    <option value="white">{/* helmets[0] */} </option>
-                        <option value="red">{/* helmets[1] */}</option>
-                        <option value="yellow">{/* helmets[2] */}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Suit: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "suit")}>
-                        <option value="white">{/* helmets[0] */} </option>
-                        <option value="red">{/* helmets[1] */}</option>
-                        <option value="yellow">{/* helmets[2] */}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Gloves: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "gloves")}>
-                        <option value="white">{/* helmets[0] */} </option>
-                        <option value="red">{/* helmets[1] */}</option>
-                        <option value="yellow">{/* helmets[2] */}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Boots: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "boots")}>
-                        <option value="white">{/* helmets[0] */} </option>
-                        <option value="red">{/* helmets[1] */}</option>
-                        <option value="yellow">{/* helmets[2] */}</option>
-                    </select>
-                </label>
+                
                 <input type="submit" value="Submit" />
             </form>
         );
@@ -142,4 +114,39 @@ class Game extends React.Component {
     }
 }
 
-export default { NightEvent, ChooseAttires };
+{/*
+<label>
+                    {"Visor: "}
+                    <select value={this.state.value} onChange={e => this.handleChange(e, "visor")}>
+                    <option value="white">{} </option>
+                        <option value="red">{}</option>
+                        <option value="yellow">{}</option>
+                    </select>
+                </label>
+                <label>
+                    {"Suit: "}
+                    <select value={this.state.value} onChange={e => this.handleChange(e, "suit")}>
+                        <option value="white">{} </option>
+                        <option value="red">{}</option>
+                        <option value="yellow">{}</option>
+                    </select>
+                </label>
+                <label>
+                    {"Gloves: "}
+                    <select value={this.state.value} onChange={e => this.handleChange(e, "gloves")}>
+                        <option value="white">{} </option>
+                        <option value="red">{}</option>
+                        <option value="yellow">{}</option>
+                    </select>
+                </label>
+                <label>
+                    {"Boots: "}
+                    <select value={this.state.value} onChange={e => this.handleChange(e, "boots")}>
+                        <option value="white">{} </option>
+                        <option value="red">{}</option>
+                        <option value="yellow">{}</option>
+                    </select>
+                </label>
+
+*/}
+export { NightEvent, ChooseAttires };
