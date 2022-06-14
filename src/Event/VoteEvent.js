@@ -15,7 +15,7 @@ function eliminated(room) {
 class VoteForCaptainEvent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {showModal: false, captain: 1};
+        this.state = {showModal: false, captain: ""};
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleVote = this.handleVote.bind(this);
@@ -29,6 +29,10 @@ class VoteForCaptainEvent extends React.Component {
         this.setState({ showModal: false });
     }
     handleVote(event) {
+        if (this.state.captain === "") {
+            alert("Please choose one player.");
+            return;
+        }
         // and update database
         this.handleCloseModal();
         alert("You has voted for Player " + this.state.captain + " to be the Captain.");

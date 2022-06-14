@@ -2,7 +2,7 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 
-class Captain extends React.Component {
+class Inspect extends React.Component {
     constructor(props) {
         super(props);
         this.state = { showModal: false, attire: "", selectedPlayers: []};
@@ -90,4 +90,4 @@ class Captain extends React.Component {
     }
 }
 
-export default Captain;
+export default Inspect;
