@@ -128,43 +128,6 @@ class Game extends React.Component {
     }
 }
 
-{/*
-<label>
-                    {"Visor: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "visor")}>
-                    <option value="white">{} </option>
-                        <option value="red">{}</option>
-                        <option value="yellow">{}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Suit: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "suit")}>
-                        <option value="white">{} </option>
-                        <option value="red">{}</option>
-                        <option value="yellow">{}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Gloves: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "gloves")}>
-                        <option value="white">{} </option>
-                        <option value="red">{}</option>
-                        <option value="yellow">{}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Boots: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "boots")}>
-                        <option value="white">{} </option>
-                        <option value="red">{}</option>
-                        <option value="yellow">{}</option>
-                    </select>
-                </label>
-
-*/}
-
-
 const roles = ["astronaut", "alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut"];
 function TestingShuffle() {
     const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);

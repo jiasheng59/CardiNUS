@@ -5,7 +5,7 @@ import HomePage from "./HomePage";
 import { ChooseAttires, TestingShuffle } from "./Game";
 import Color from "./Player";
 import NightEvent from "./Event/NightEvent";
-import Player from "./Player";
+import GamePage from "./GamePage";
 
 const App = () => {
   return (
@@ -14,9 +14,8 @@ const App = () => {
       <p>Please Login / Sign Up.</p>
       <LoginPage />
       <HomePage />
-      <NightEvent />
       <TestingShuffle></TestingShuffle>
-      <Player name="Player 1"></Player>
+      <NightEvent></NightEvent>
     </div>
   );
 };

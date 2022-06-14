@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import ReactModal from 'react-modal';
 
 class Player extends React.Component {
     constructor(props) {
@@ -20,11 +21,13 @@ class Player extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.handleOpenModal}>{this.props.name}</button>
+                <button onClick={this.handleOpenModal}>
+                    {"Player " + this.props.number + ": " + this.props.name}
+                </button>
                 <ReactModal
                     isOpen={this.state.showModal}
                     contentLabel="showAttire">
-                    <button onClick={this.handleCloseModal}>close</button>
+                    <button onClick={this.handleCloseModal}>Close</button>
                 </ReactModal>
             </div>
         );
