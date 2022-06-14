@@ -2,40 +2,45 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 
-class NightEvent extends React.Component {
+class Captain extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showModal: false, player: 1, attire: "helmet" };
+        this.state = { showModal: false, attire: "", selectedPlayers: []};
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
-
-        this.handleSwap = this.handleSwap.bind(this);
+        this.handleView = this.handleView.bind(this);
+        this.onSelectAttire = this.onSelectAttire.bind(this);
+        this.onSelectPlayers = this.onSelectPlayers.bind(this);
+        this.onRemovePlayers = this.onRemovePlayers.bind(this);
     }
-    
+
     // Modal
     handleOpenModal() {
         this.setState({ showModal: true });
     }
-        
     handleCloseModal() {
         this.setState({ showModal: false });
+    }
+    handleView(event) {
+        let message = "";
+        for (let i = 0; i < this.state.selectedPlayers.length; i++) {
+            message += this.state.selectedPlayers[i] + " ";
+        }
+        message = "The " + this.state.attire + " of players " + message + "are: " + " respectively";
+        alert(message);
+        this.handleCloseModal();
     }
 
     onSelectAttire(selectedList, selectedItem) {
         this.setState({ attire: selectedItem.id });
     }
-
-    onSelectPlayer(selectedList, selectedItem) {
-        this.setState({ player: selectedItem.id });
+    onSelectPlayers(selectedList, selectedItem) {
+        this.setState({ selectedPlayers: selectedList.map(arr => arr.id) });
+    }
+    onRemovePlayers(selectedList, removedItem) {
+        this.setState({ selectedPlayers: selectedList.map(arr => arr.id) });
     }
     
-    handleSwap(event) {
-        // and update database
-        this.handleCloseModal();
-        alert("You has swapped your " + this.state.attire + " with Player " + this.state.player);
-        event.preventDefault();
-    }
-        
     render() {
         const attires = [
             { name: "Helmet", id: "helmet" },
@@ -55,11 +60,10 @@ class NightEvent extends React.Component {
         ];
         return (
             <div>
-                <button disabled={false} onClick={this.handleOpenModal}>Change Attire</button>
+                <button disabled={false} onClick={this.handleOpenModal}>Inspect Players' Attires</button>
                 <ReactModal isOpen={this.state.showModal}>
-                    <h2>Do you want to swap your attire?</h2>
                     <form>
-                        <h3>Pick the attire you want to swap.</h3>
+                        <h3>Choose an attire.</h3>
                         <Multiselect
                             options={attires}
                             onSelect={this.onSelectAttire}
@@ -68,21 +72,22 @@ class NightEvent extends React.Component {
                             singleSelect={true}
                         />
 
-                        <h3>Choose the player you want to swap with.</h3>
+                        <h3>Choose three players.</h3>
                         <Multiselect
                             options={players}
-                            onSelect={this.onSelectPlayer}
+                            onSelect={this.onSelectPlayers} 
+                            onRemove={this.onRemovePlayers} 
                             displayValue="name"
                             avoidHighlightFirstOption={true}
-                            singleSelect={true}
+                            selectionLimit={3}
                         />
                     </form>
-                    <button onClick={this.handleSwap}>Swap</button>
-                    <button onClick={this.handleCloseModal}>Skip</button>
+                    <button onClick={this.handleView}>View</button>
+                    <button onClick={this.handleCloseModal}>Close</button>
                 </ReactModal>
             </div>
         );
     }
 }
 
-export default NightEvent;
+export default Captain;

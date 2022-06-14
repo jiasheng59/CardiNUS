@@ -5,7 +5,9 @@ import HomePage from "./HomePage";
 import { ChooseAttires, TestingShuffle } from "./Game";
 import Color from "./Player";
 import NightEvent from "./Event/NightEvent";
-import GamePage from "./GamePage";
+import VoteForCaptainEvent from "./Event/VoteEvent";
+import Timer from "./Timer";
+import Captain from "./Captain";
 
 const App = () => {
   return (
@@ -16,6 +18,9 @@ const App = () => {
       <HomePage />
       <TestingShuffle></TestingShuffle>
       <NightEvent></NightEvent>
+      <Captain></Captain>
+      <VoteForCaptainEvent></VoteForCaptainEvent>
+      <Timer secondsLeft={15}></Timer>
     </div>
   );
 };
