@@ -8,7 +8,8 @@ class NightEvent extends React.Component {
         this.state = { showModal: false, player: 1, attire: "helmet" };
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
-
+        this.onSelectAttire = this.onSelectAttire.bind(this);
+        this.onSelectPlayer = this.onSelectPlayer;
         this.handleSwap = this.handleSwap.bind(this);
     }
     

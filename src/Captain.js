@@ -63,6 +63,10 @@ class Inspect extends React.Component {
                 <button disabled={false} onClick={this.handleOpenModal}>Inspect Players' Attires</button>
                 <ReactModal isOpen={this.state.showModal}>
                     <form>
+                        <h2>
+                            You are elected as Captain in this round. You may view three players' attire.
+                            The Alien's attires are shown below.
+                        </h2>
                         <h3>Choose an attire.</h3>
                         <Multiselect
                             options={attires}
