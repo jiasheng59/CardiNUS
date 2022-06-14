@@ -1,27 +1,34 @@
-import React, { useState } from "react";
-import Select, { StylesConfig } from "react-select";
-import chroma from "chroma-js";
+import React from "react";
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-    { value: 'unknown', label: 'Unknown' },
-    { value: 'hello', label: 'Hello' }
-  ]
-    
-class Color extends React.Component {
+class Player extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {showModal: false};
+          
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+    }
+
+    handleOpenModal () {
+        this.setState({ showModal: true });
+    }
+        
+    handleCloseModal() {
+        this.setState({ showModal: false });
     }
 
     render() {
         return (
-                <Select
-                options={options}/>
-        
+            <div>
+                <button onClick={this.handleOpenModal}>{this.props.name}</button>
+                <ReactModal
+                    isOpen={this.state.showModal}
+                    contentLabel="showAttire">
+                    <button onClick={this.handleCloseModal}>close</button>
+                </ReactModal>
+            </div>
         );
     }
 }
 
-export default Color;
+export default Player;

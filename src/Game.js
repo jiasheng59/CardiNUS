@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import ReactModal from 'react-modal';
-import firebase from "firebase/compat/app";
 
-const helmet = ['p', 'r', 'y', 'b', 't']; // purple, red, yellow, blue, turquoise
-const visor = ['p', 'r', 'y', 'b', 't'];
-const suit = ['p', 'r', 'y', 'b', 't'];
-const gloves = ['p', 'r', 'y', 'b', 't'];
-const boots = ['p', 'r', 'y', 'b', 't'];
+const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
+const visor = ['r', 'y', 'b', 't', 'p'];
+const suit = ['r', 'y', 'b', 't', 'p'];
+const gloves = ['r', 'y', 'b', 't', 'p'];
+const boots = ['r', 'y', 'b', 't', 'p'];
 
 function getRandomInt(min, max) {
     // Both min and max are inclusive
@@ -165,13 +164,15 @@ class Game extends React.Component {
 
 */}
 
-const num = [1, 2, 3, 4, 5];
+
+const roles = ["astronaut", "alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut"];
 function TestingShuffle() {
-    const array = shuffle(shuffle(num)).map(n => <li>{n}</li>);
+    const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);
     return (
         <ul>
-            {array}
+            {shuffledRoles}
         </ul>
     );
 }
+
 export { ChooseAttires, TestingShuffle };
