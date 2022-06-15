@@ -8,6 +8,7 @@ import "./App.css";
 import LoginPage from "./LoginPage";
 import HomePage from "./HomePage";
 import GamePage from "./GamePage";
+
 const App = () => {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");

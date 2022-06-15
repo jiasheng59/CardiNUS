@@ -6,13 +6,9 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
-<<<<<<< HEAD
-    "firebase": "^9.8.3",
-=======
     "chroma-js": "^2.4.2",
-    "firebase": "^9.8.2",
+    "firebase": "^9.8.3",
     "multiselect-react-dropdown": "^2.0.22",
->>>>>>> game
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-firebase-hooks": "^5.0.3",
