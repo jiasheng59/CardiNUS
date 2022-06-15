@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { rtdb } from "./fire";
 import { ref, onValue} from "firebase/database";
-
+import GamePage from "./Game/GamePage";
 
 function WaitingRoom({roomId}) {
     const [roomInfo, setRoomInfo] = useState("");
@@ -17,7 +17,7 @@ function WaitingRoom({roomId}) {
     },[]);
 
     return(
-        <>
+        <div>
             <div>
                 Room ID: {roomId}
             </div>
@@ -29,8 +29,9 @@ function WaitingRoom({roomId}) {
                     </div>
                 ))}
             </div>
-        </>
-    )
+            <GamePage roomId={roomId}></GamePage>
+        </div>
+    );
 }
 
 export default WaitingRoom;

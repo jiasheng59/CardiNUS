@@ -1,7 +1,7 @@
 import { onValue, ref, set } from "firebase/database";
-import React, { useState } from "react";
+import React from "react";
 import ReactModal from 'react-modal';
-import { rtdb, auth } from "./fire";
+import { rtdb, auth } from "../fire";
 
 const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
 const visor = ['r', 'y', 'b', 't', 'p'];
@@ -24,70 +24,6 @@ function shuffle(array) {
     return array;
 }
 
-/*
-function TestingShuffle() {
-    const roles = ["alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut", "astronaut"];
-    const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);
-    return (
-        <ul>
-            {shuffledRoles}
-        </ul>
-    );
-}
-*/
-
-class ChooseAttires extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event, attire) {
-        // update attire of the player in database
-    }
-
-    handleSubmit(event) {
-        // update database state, check if every player done choosing, game starts
-    }
-
-    getAttires(player) {
-        // return set of attires from database
-    }
-
-    render() {
-        /*
-        const attires = // get set of attires from database 
-        const helmets = attires.helmets; // array of helmets
-        const visors = attires.visors;
-        const suits = attires.suits;
-        const gloves = attires.gloves;
-        const boots = attires.boots;
-        */
-        
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <legend>Pick Your Attire.</legend>
-                <label>
-                    {"Helmet: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "helmet")}>
-                        <option value="white">{ "white"/* helmets[0] */} </option>
-                        <option value="red">{"red"/* helmets[1] */}</option>
-                        <option value="yellow">{"yellow"/* helmets[2] */}</option>
-                    </select>
-                </label>
-                
-                <input type="submit" value="Submit" />
-            </form>
-        );
-    }
-}
-
-class GamePlay extends React.Component {
-
-}
-
 function getHostId(roomId) { // roomId === joinId
     let hostId;
     const gameRef = ref(rtdb, '/games/' + roomId);
@@ -104,8 +40,10 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = { gameStarted: false };
-        
-        // When game begins, assgin roles.
+        this.assignRoles = this.assignRoles.bind(this);
+    }
+
+    componentDidMount() { // When game begins, assgin roles.
         const { uid } = auth.currentUser;
         if (uid === getHostId(this.props.roomId)) {
             this.assignRoles();
@@ -117,10 +55,13 @@ class Game extends React.Component {
         // update database to assign role to each player
         const shuffledRoles = shuffle(roles);
         const rolesRef = ref(rtdb, '/games/' + this.props.roomId + '/roles');
-        set(rolesRef, {shuffledRoles});
+        set(rolesRef, { shuffledRoles });
     }
 
     render() {
+        return (
+            <h1>Hellooo</h1>
+        );
         /*
         if (!this.state.gameStarted) {
 
@@ -129,18 +70,11 @@ class Game extends React.Component {
             return <GamePlay />;
         }
         */
-        return (
-            <div>
-                Game Begins!
-            </div>
-        );
     }
 }
 
-export { ChooseAttires, TestingShuffle, Game };
-
-
 ///////////////////////////////////////////
+/*
 function setClientGameStarted(joinId) {
     const gameRef = ref(rtdb, '/games/' + joinId);
     onValue(gameRef, (snapshot) => {
@@ -152,3 +86,18 @@ function setClientGameStarted(joinId) {
         }
     }, {onlyOnce: false});
 }
+*/
+export default Game;
+
+/*
+function TestingShuffle() {
+    const roles = ["alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut", "astronaut"];
+    const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);
+    return (
+        <ul>
+            {shuffledRoles}
+        </ul>
+    );
+}
+*/
+

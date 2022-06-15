@@ -1,13 +1,15 @@
 import React from "react";
-import Player from "../Player";
-import { ChooseAttires, TestingShuffle, Game } from "./Game";
+import Player from "./Player";
+import Game from "./Game";
 import NightEvent from "../Event/NightEvent";
 import VoteForCaptainEvent from "../Event/VoteEvent";
 import Timer from "./Timer";
 import Inspect from "./Captain";
 
 class GamePage extends React.Component {
-    // props joinID={}
+    constructor(props) {
+        super(props);
+    }
 
     render() {
         const players = ["ori", "or", "andi", "and", "beq", "bnq", "j"];
@@ -21,12 +23,11 @@ class GamePage extends React.Component {
                         return (<Player name={player} number={count} />);
                     })}
                 </ul>
-                <TestingShuffle></TestingShuffle>
                 <NightEvent></NightEvent>
                 <Inspect></Inspect>
                 <VoteForCaptainEvent></VoteForCaptainEvent>
                 <Timer secondsLeft={30}></Timer>
-                <Game roomId={}></Game>
+                <Game roomId={this.props.roomId}></Game>
             </div>
         );
     }
