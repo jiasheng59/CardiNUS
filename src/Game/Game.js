@@ -22,6 +22,17 @@ function shuffle(array) {
     return array;
 }
 
+const roles = ["astronaut", "alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut"];
+function TestingShuffle() {
+    const roles = ["alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut", "astronaut"];
+    const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);
+    return (
+        <ul>
+            {shuffledRoles}
+        </ul>
+    );
+}
+
 class ChooseAttires extends React.Component {
     constructor(props) {
         super(props);
@@ -70,37 +81,6 @@ class ChooseAttires extends React.Component {
     }
 }
 
-class NightEvent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {showModal: false};
-          
-        this.handleOpenModal = this.handleOpenModal.bind(this);
-        this.handleCloseModal = this.handleCloseModal.bind(this);
-    }
-        
-    handleOpenModal () {
-        this.setState({ showModal: true });
-    }
-        
-    handleCloseModal() {
-        this.setState({ showModal: false });
-    }
-        
-    render() {
-        return (
-            <div>
-              <button onClick={this.handleOpenModal}>Trigger Modal</button>
-                <ReactModal
-                    isOpen={this.state.showModal}
-                    contentLabel="Minimal Modal Example">
-                    <button onClick={this.handleCloseModal}>Close Modal</button>
-                </ReactModal>
-            </div>
-        );
-    }
-}
-
 class GamePlay extends React.Component {
 
 }
@@ -126,16 +106,6 @@ class Game extends React.Component {
             return <GamePlay />;
         }
     }
-}
-
-const roles = ["astronaut", "alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut"];
-function TestingShuffle() {
-    const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);
-    return (
-        <ul>
-            {shuffledRoles}
-        </ul>
-    );
 }
 
 export { ChooseAttires, TestingShuffle };

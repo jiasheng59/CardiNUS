@@ -1,8 +1,8 @@
 import React from "react";
-import Player from "./Player";
+import Player from "../Player";
 import { ChooseAttires, TestingShuffle } from "./Game";
-import NightEvent from "./Event/NightEvent";
-import VoteForCaptainEvent from "./Event/VoteEvent";
+import NightEvent from "../Event/NightEvent";
+import VoteForCaptainEvent from "../Event/VoteEvent";
 import Timer from "./Timer";
 import Inspect from "./Captain";
 
