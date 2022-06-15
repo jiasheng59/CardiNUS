@@ -1,6 +1,9 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import { getAuth } from "firebase/auth";
 import "firebase/compat/firestore";
+import { getDatabase } from "firebase/database";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -9,6 +12,7 @@ import "firebase/compat/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyD5gB-q5KTEjKLLstUK-NcEIeZUffIeX6A",
   authDomain: "cardinus-99061.firebaseapp.com",
+  databaseURL: "https://cardinus-99061-default-rtdb.asia-southeast1.firebasedatabase.app/",
   projectId: "cardinus-99061",
   storageBucket: "cardinus-99061.appspot.com",
   messagingSenderId: "925612567874",
@@ -17,6 +21,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const fire = firebase.initializeApp(firebaseConfig);
 
-export default fire;
+
+const fire = firebase.initializeApp(firebaseConfig);
+const db = fire.firestore();
+const rtdb = getDatabase();
+const auth = getAuth(fire)
+
+export {fire, db, auth, rtdb};

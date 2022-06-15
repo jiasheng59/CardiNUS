@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import fire from "./fire";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {fire, auth} from "./fire";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Login";
-import Hero from "./Hero";
+import Home from "./Home";
 import "./App.css";
 //import LoginPage from "./LoginPage";
 //import HomePage from "./HomePage";
@@ -15,8 +15,8 @@ const App = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
+  const [playerId, setPlayerId] = useState("Anon")
 
-  const auth = getAuth(fire)
   const provider = new GoogleAuthProvider();
 
   const signInWithGoogle = () => {
@@ -89,12 +89,16 @@ const App = () => {
 
   useEffect(() => {
     authListener();
-  });
+  }, []);
 
   return (
     <div className="App">
       {user ? (
-        <Hero handleLogout={handleLogout} />
+        <Home 
+          handleLogout={handleLogout} 
+          playerId={playerId}
+          setPlayerId={setPlayerId}
+        />
       ) : (
         <Login
           email={email}
