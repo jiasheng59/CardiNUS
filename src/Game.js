@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import ReactModal from 'react-modal';
-import firebase from "firebase/compat/app";
 
-const helmet = ['w', 'r', 'y', 'b', 't']; // white, red, yellow, blue, turquoise
-const visor = ['w', 'r', 'y', 'b', 't'];
-const suit = ['w', 'r', 'y', 'b', 't'];
-const gloves = ['w', 'r', 'y', 'b', 't'];
-const boots = ['w', 'r', 'y', 'b', 't'];
+const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
+const visor = ['r', 'y', 'b', 't', 'p'];
+const suit = ['r', 'y', 'b', 't', 'p'];
+const gloves = ['r', 'y', 'b', 't', 'p'];
+const boots = ['r', 'y', 'b', 't', 'p'];
+
+function getRandomInt(min, max) {
+    // Both min and max are inclusive
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+  
+function shuffle(array) {
+    for (let i = 1; i < array.length; i = i + 1) {
+        const r = getRandomInt(0, i);
+        const temp = array[i];
+        array[i] = array[r];
+        array[r] = temp;
+    }
+    return array;
+}
 
 class ChooseAttires extends React.Component {
     constructor(props) {
@@ -114,39 +128,14 @@ class Game extends React.Component {
     }
 }
 
-{/*
-<label>
-                    {"Visor: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "visor")}>
-                    <option value="white">{} </option>
-                        <option value="red">{}</option>
-                        <option value="yellow">{}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Suit: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "suit")}>
-                        <option value="white">{} </option>
-                        <option value="red">{}</option>
-                        <option value="yellow">{}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Gloves: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "gloves")}>
-                        <option value="white">{} </option>
-                        <option value="red">{}</option>
-                        <option value="yellow">{}</option>
-                    </select>
-                </label>
-                <label>
-                    {"Boots: "}
-                    <select value={this.state.value} onChange={e => this.handleChange(e, "boots")}>
-                        <option value="white">{} </option>
-                        <option value="red">{}</option>
-                        <option value="yellow">{}</option>
-                    </select>
-                </label>
+const roles = ["astronaut", "alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut"];
+function TestingShuffle() {
+    const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);
+    return (
+        <ul>
+            {shuffledRoles}
+        </ul>
+    );
+}
 
-*/}
-export { NightEvent, ChooseAttires };
+export { ChooseAttires, TestingShuffle };
