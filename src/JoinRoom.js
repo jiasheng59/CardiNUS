@@ -1,4 +1,4 @@
-import { ref, onValue, once, set } from 'firebase/database';
+import { ref, onValue, set } from 'firebase/database';
 import React, { useState } from 'react';
 import { rtdb, auth } from "./fire";
 

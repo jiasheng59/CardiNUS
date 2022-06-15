@@ -4,7 +4,7 @@ import { ref, onValue} from "firebase/database";
 import GamePage from "./Game/GamePage";
 
 function WaitingRoom({roomId}) {
-    const [roomInfo, setRoomInfo] = useState("");
+    // const [roomInfo, setRoomInfo] = useState("");
     const [players, setPlayers] = useState([]);
     
 

@@ -7,9 +7,6 @@ import Timer from "./Timer";
 import Inspect from "./Captain";
 
 class GamePage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const players = ["ori", "or", "andi", "and", "beq", "bnq", "j"];
@@ -23,17 +20,14 @@ class GamePage extends React.Component {
                         return (<Player name={player} number={count} />);
                     })}
                 </ul>
+                <NightEvent></NightEvent>
+                <Inspect></Inspect>
+                <VoteForCaptainEvent></VoteForCaptainEvent>
+                <Timer secondsLeft={30}></Timer>
+                <Game roomId={this.props.roomId}></Game>
             </div>
         );
     }
 }
 
 export default GamePage;
-
-/*
-                <NightEvent></NightEvent>
-                <Inspect></Inspect>
-                <VoteForCaptainEvent></VoteForCaptainEvent>
-                <Timer secondsLeft={30}></Timer>
-                <Game roomId={this.props.roomId}></Game>
-*/

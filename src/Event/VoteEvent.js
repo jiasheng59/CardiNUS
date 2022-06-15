@@ -1,16 +1,15 @@
 import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
-
+/*
 function vote(room, player) {
     // this player count + 1;
 }
 
 function eliminated(room) {
-    /*
-    for all players in the room, the player with the highest vote is elimated /becomes captain
-    */
+    // for all players in the room, the player with the highest vote is elimated/becomes captain
 }
+*/
 
 class VoteForCaptainEvent extends React.Component {
     constructor(props) {
@@ -73,7 +72,7 @@ class VoteForCaptainEvent extends React.Component {
         );
     }
 }
-
+/*
 class VoteForAlienEvent extends React.Component {
     constructor(props) {
         super(props);
@@ -87,5 +86,5 @@ class VoteForAlienEvent extends React.Component {
         );
     }
 }
-
+*/
 export default VoteForCaptainEvent;

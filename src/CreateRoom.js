@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { rtdb, auth } from "./fire";
-import { push, ref, child, set } from 'firebase/database';
+import { push, ref } from 'firebase/database';
 
-function CreateRoom({setRoomId, setJoined}) {
-
+function CreateRoom({ setRoomId, setJoined }) {
+    /*
     function makeid(length) {
         var result           = '';
         var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -14,6 +14,7 @@ function CreateRoom({setRoomId, setJoined}) {
        }
        return result;
     }
+    */
 
     function createRoom(e) {
         e.preventDefault();

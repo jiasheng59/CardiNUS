@@ -1,13 +1,13 @@
 import { onValue, ref, set } from "firebase/database";
 import React from "react";
-import ReactModal from 'react-modal';
 import { rtdb, auth } from "../fire";
-
+/*
 const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
 const visor = ['r', 'y', 'b', 't', 'p'];
 const suit = ['r', 'y', 'b', 't', 'p'];
 const gloves = ['r', 'y', 'b', 't', 'p'];
 const boots = ['r', 'y', 'b', 't', 'p'];
+*/
 
 const roles = ["alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut", "astronaut"];
 function getRandomInt(min, max) {
