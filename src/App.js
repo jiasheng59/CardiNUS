@@ -87,7 +87,7 @@ const App = () => {
 
   useEffect(() => {
     authListener();
-  }, []);
+  });
 
   return (
     <div className="App">
