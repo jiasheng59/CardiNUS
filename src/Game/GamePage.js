@@ -1,12 +1,14 @@
 import React from "react";
 import Player from "../Player";
-import { ChooseAttires, TestingShuffle } from "./Game";
+import { ChooseAttires, TestingShuffle, Game } from "./Game";
 import NightEvent from "../Event/NightEvent";
 import VoteForCaptainEvent from "../Event/VoteEvent";
 import Timer from "./Timer";
 import Inspect from "./Captain";
 
 class GamePage extends React.Component {
+    // props joinID={}
+
     render() {
         const players = ["ori", "or", "andi", "and", "beq", "bnq", "j"];
         let count = 0;
@@ -24,6 +26,7 @@ class GamePage extends React.Component {
                 <Inspect></Inspect>
                 <VoteForCaptainEvent></VoteForCaptainEvent>
                 <Timer secondsLeft={30}></Timer>
+                <Game roomId={}></Game>
             </div>
         );
     }

@@ -26,6 +26,6 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig);
 const db = fire.firestore();
 const rtdb = getDatabase();
-const auth = getAuth(fire)
+const auth = getAuth(fire);
 
 export {fire, db, auth, rtdb};
