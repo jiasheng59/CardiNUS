@@ -94,6 +94,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <div>
       {user ? (
         <Home 
           handleLogout={handleLogout} 
@@ -114,7 +115,11 @@ const App = () => {
           passwordError={passwordError}
           signInWithGoogle={signInWithGoogle}
         />
-      )}
+        )}
+      </div>
+      <div>
+        <GamePage></GamePage>
+      </div>
     </div>
   );
 };

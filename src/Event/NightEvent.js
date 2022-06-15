@@ -9,7 +9,7 @@ class NightEvent extends React.Component {
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.onSelectAttire = this.onSelectAttire.bind(this);
-        this.onSelectPlayer = this.onSelectPlayer;
+        this.onSelectPlayer = this.onSelectPlayer.bind(this);
         this.handleSwap = this.handleSwap.bind(this);
     }
     
