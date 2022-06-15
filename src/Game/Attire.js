@@ -1,5 +1,5 @@
 import React from "react";
-
+/*
 class Attire extends React.Component {
     constructor(props) {
         super(props);
@@ -18,3 +18,4 @@ class Attire extends React.Component {
 }
 
 export default Attire;
+*/

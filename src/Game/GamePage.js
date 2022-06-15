@@ -23,14 +23,17 @@ class GamePage extends React.Component {
                         return (<Player name={player} number={count} />);
                     })}
                 </ul>
-                <NightEvent></NightEvent>
-                <Inspect></Inspect>
-                <VoteForCaptainEvent></VoteForCaptainEvent>
-                <Timer secondsLeft={30}></Timer>
-                <Game roomId={this.props.roomId}></Game>
             </div>
         );
     }
 }
 
 export default GamePage;
+
+/*
+                <NightEvent></NightEvent>
+                <Inspect></Inspect>
+                <VoteForCaptainEvent></VoteForCaptainEvent>
+                <Timer secondsLeft={30}></Timer>
+                <Game roomId={this.props.roomId}></Game>
+*/
