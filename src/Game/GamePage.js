@@ -1,6 +1,6 @@
 import React from "react";
 import Player from "./Player";
-import Game from "./Game";
+import { Game } from "./Game";
 import NightEvent from "../Event/NightEvent";
 import VoteForCaptainEvent from "../Event/VoteEvent";
 import Timer from "./Timer";
@@ -13,6 +13,7 @@ class GamePage extends React.Component {
         let count = 0;
         return (
             <div>
+                <Game roomId={this.props.roomId}></Game>
                 <h2>Players in the room: </h2>
                 <ul>
                     {players.map(player => {
@@ -24,7 +25,6 @@ class GamePage extends React.Component {
                 <Inspect></Inspect>
                 <VoteForCaptainEvent></VoteForCaptainEvent>
                 <Timer secondsLeft={30}></Timer>
-                <Game roomId={this.props.roomId}></Game>
             </div>
         );
     }

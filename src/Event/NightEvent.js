@@ -33,7 +33,7 @@ class NightEvent extends React.Component {
     handleSwap(event) {
         // and update database
         this.handleCloseModal();
-        alert("You has swapped your " + this.state.attire + " with Player " + this.state.player);
+        alert("You have swapped your " + this.state.attire + " with Player " + this.state.player);
         event.preventDefault();
     }
         

@@ -1,5 +1,6 @@
 import { onValue, ref, set } from "firebase/database";
 import React from "react";
+import ChooseAttiresEvent from "../Event/ChooseAttiresEvent";
 import { rtdb, auth } from "../fire";
 /*
 const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
@@ -9,7 +10,7 @@ const gloves = ['r', 'y', 'b', 't', 'p'];
 const boots = ['r', 'y', 'b', 't', 'p'];
 */
 
-const roles = ["alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut", "astronaut"];
+const ROLES = ["alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut", "astronaut"];
 function getRandomInt(min, max) {
     // Both min and max are inclusive
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -35,7 +36,19 @@ function getHostId(roomId) { // roomId === joinId
     }, { onlyOnce: true });
     return hostId;
 }
+function getPlayerIndex(roomdId) {
+    const uid = auth.currentUser.uid;
+    let playerIndex;
+    const playerIndexRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/playerIndex/' + uid);
+    onValue(playerIndexRef, (snapshot) => {
+        playerIndex = snapshot.val();
+    }, { onlyOnce: true });
+    return playerIndex;
+}
 
+/*
+Assign roles, set up player's index.
+*/
 class Game extends React.Component {
     constructor(props) {
         super(props);
@@ -82,14 +95,17 @@ class Game extends React.Component {
     assignRoles() {
         // const shuffledRoles = some permutation
         // update database to assign role to each player
-        const shuffledRoles = shuffle(roles);
+        const roles = shuffle(ROLES);
         const gameInfoRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
-        set(gameInfoRef, { shuffledRoles });
+        set(gameInfoRef, { roles });
     }
 
     render() {
         return (
-            <h1>Game is starting soon!</h1>
+            <div>
+                <h1>Game is starting soon!</h1>
+                <ChooseAttiresEvent props={this.props.roomId}></ChooseAttiresEvent>
+            </div>
         );
     }
 }
@@ -108,7 +124,7 @@ function setClientGameStarted(joinId) {
     }, {onlyOnce: false});
 }
 */
-export default Game;
+export { Game, getPlayerIndex };
 
 /*
 function TestingShuffle() {
