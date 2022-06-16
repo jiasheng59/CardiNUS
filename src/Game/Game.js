@@ -36,13 +36,12 @@ function getHostId(roomId) { // roomId === joinId
     }, { onlyOnce: true });
     return hostId;
 }
-function getPlayerIndex(roomId) {
-    const uid = auth.currentUser.uid;
+function getPlayerIndex(roomId, uid) {
     let playerIndex;
     const playerIndexRef = ref(rtdb, '/games/' + roomId + '/gameInfo/playerIndex/' + uid);
     onValue(playerIndexRef, (snapshot) => {
         playerIndex = snapshot.val();
-    }, { onlyOnce: true });
+    });
     return playerIndex;
 }
 

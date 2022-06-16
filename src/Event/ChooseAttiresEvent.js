@@ -1,7 +1,7 @@
 import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
-import { rtdb } from "../fire";
+import { auth, rtdb } from "../fire";
 import { ref, set } from "firebase/database";
 import { getPlayerIndex } from "../Game/Game";
 
@@ -60,14 +60,14 @@ class ChooseAttiresEvent extends React.Component {
             alert("You have not chosen all attires");
         } else {
             this.handleCloseModal();
-            const playerIndex = getPlayerIndex(this.props.roomId);
+            const playerIndex = getPlayerIndex(this.props.roomId, auth.currentUser.uid);
             const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires/' + playerIndex);
             const originalAttires = [
-                { name: helmet, color: this.state.helmet },
-                { name: visor, color: this.state.visor },
-                { name: suit, color: this.state.suit },
-                { name: gloves, color: this.state.gloves },
-                { name: boots, color: this.state.boots }
+                { name: "helmet", color: this.state.helmet },
+                { name: "visor", color: this.state.visor },
+                { name: "suit", color: this.state.suit },
+                { name: "gloves", color: this.state.gloves },
+                { name: "boots", color: this.state.boots }
             ];
             set(r, originalAttires);
             alert("You have chosen your attires.");
