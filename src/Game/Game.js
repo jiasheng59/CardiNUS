@@ -55,9 +55,8 @@ class Game extends React.Component {
     setPlayerIndex() { // Start counting from 0
         const uid = auth.currentUser.uid;
         const gameRef = ref(rtdb, '/games/' + this.props.roomId);
-        const gameInfoRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
-        const playerIndexRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/playerIndex');
         let playerIndex; // this player's index
+        /*
         function isPlayerIndexEmpty(roomId) {
             let isEmpty;
             onValue(playerIndexRef, (snapshot) => {
@@ -65,6 +64,7 @@ class Game extends React.Component {
             }, { onlyOnce: true });
             return isEmpty;
         }
+        */
         // Find this player's index
         onValue(gameRef, (snapshot) => {
             const players = snapshot.val().players;
