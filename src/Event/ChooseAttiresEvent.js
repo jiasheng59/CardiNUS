@@ -52,19 +52,28 @@ class ChooseAttiresEvent extends React.Component {
     }
 
     handleDone(event) {
-        this.handleCloseModal();
-        const playerIndex = getPlayerIndex(this.props.roomId);
-        console.log(playerIndex);
-        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires/' + playerIndex);
-        set(r, {
-            helmet: this.state.helmet,
-            visor: this.state.visor,
-            suit: this.state.suit,
-            gloves: this.state.gloves,
-            boots: this.state.boots,
-        });
-        alert("You has chosen your attires.");
-        event.preventDefault();
+        if (this.state.helmet === ""
+            || this.state.visor === ""
+            || this.state.suit === ""
+            || this.state.gloves === ""
+            || this.state.boots === "") {
+            alert("You have not chosen all attires");
+        } else {
+            this.handleCloseModal();
+            const playerIndex = getPlayerIndex(this.props.roomId);
+            console.log(playerIndex);
+            const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires');
+            const originalAttires = {
+                helmet: this.state.helmet,
+                visor: this.state.visor,
+                suit: this.state.suit,
+                gloves: this.state.gloves,
+                boots: this.state.boots,
+            };
+            set(r, { player1: originalAttires });
+            alert("You have chosen your attires.");
+            event.preventDefault();
+        }
     }
         
     render() {
