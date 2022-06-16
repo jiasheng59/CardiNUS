@@ -40,6 +40,7 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = { gameStarted: false };
+        this.setPlayerIndex = this.setPlayerIndex.bind(this);
         this.assignRoles = this.assignRoles.bind(this);
     }
 
@@ -48,28 +49,48 @@ class Game extends React.Component {
         if (uid === getHostId(this.props.roomId)) {
             this.assignRoles();
         }
+        this.setPlayerIndex();
+    }
+
+    setPlayerIndex() { // Start counting from 0
+        const uid = auth.currentUser.uid;
+        const gameRef = ref(rtdb, '/games/' + this.props.roomId);
+        const gameInfoRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
+        const playerIndexRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/playerIndex');
+        let playerIndex; // this player's index
+        function isPlayerIndexEmpty(roomId) {
+            let isEmpty;
+            onValue(playerIndexRef, (snapshot) => {
+                isEmpty = !snapshot.exists();
+            }, { onlyOnce: true });
+            return isEmpty;
+        }
+        // Find this player's index
+        onValue(gameRef, (snapshot) => {
+            const players = snapshot.val().players;
+            for (let i = 0; i < players.length; i++) {
+                if (uid === players[i]) {
+                    playerIndex = i;
+                }
+            }
+        });
+        // Set this player's index
+        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/playerIndex/' + uid);
+        set(r, playerIndex);
     }
 
     assignRoles() {
         // const shuffledRoles = some permutation
         // update database to assign role to each player
         const shuffledRoles = shuffle(roles);
-        const rolesRef = ref(rtdb, '/games/' + this.props.roomId + '/roles');
-        set(rolesRef, { shuffledRoles });
+        const gameInfoRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
+        set(gameInfoRef, { shuffledRoles });
     }
 
     render() {
         return (
-            <h1>Hellooo</h1>
+            <h1>Game is starting soon!</h1>
         );
-        /*
-        if (!this.state.gameStarted) {
-
-            // return <ChooseAttires />;
-        } else {
-            return <GamePlay />;
-        }
-        */
     }
 }
 
