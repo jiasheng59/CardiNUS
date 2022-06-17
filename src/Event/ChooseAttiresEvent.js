@@ -2,7 +2,7 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { auth, rtdb } from "../fire";
-import { ref, set } from "firebase/database";
+import { onValue, ref, set } from "firebase/database";
 import { getPlayerIndex } from "../Game/Game";
 
 // const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
@@ -61,7 +61,7 @@ class ChooseAttiresEvent extends React.Component {
         } else {
             this.handleCloseModal();
             const playerIndex = getPlayerIndex(this.props.roomId, auth.currentUser.uid);
-            const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires/' + playerIndex);
+            const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires');
             const originalAttires = [
                 { name: "helmet", color: this.state.helmet },
                 { name: "visor", color: this.state.visor },
@@ -69,7 +69,13 @@ class ChooseAttiresEvent extends React.Component {
                 { name: "gloves", color: this.state.gloves },
                 { name: "boots", color: this.state.boots }
             ];
-            set(r, originalAttires);
+            onValue(r, (snapshot) => {
+                const data = snapshot.val();
+                const arr = data;
+                arr[playerIndex] = originalAttires;
+                set(r, arr);
+            }, { onlyOnce: true });
+            // set(r, originalAttires);
             alert("You have chosen your attires.");
             event.preventDefault();
         }
