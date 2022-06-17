@@ -41,9 +41,6 @@ function Description(props) {
 }
 
 class GameBody extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
