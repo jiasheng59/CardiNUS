@@ -5,8 +5,9 @@ import NightEvent from "../Event/NightEvent";
 import VoteForCaptainEvent from "../Event/VoteEvent";
 import Timer from "./Timer";
 import Inspect from "./Captain";
+import { Description } from "./GameBody";
 
-class GamePage extends React.Component {
+class GamePage extends React.Component { // this.props.phase
 
     render() {
         const players = ["ori", "or", "andi", "and", "beq", "bnq", "j"];
@@ -14,6 +15,7 @@ class GamePage extends React.Component {
         return (
             <div>
                 <Game roomId={this.props.roomId}></Game>
+                <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>
                 <h2>Players in the room: </h2>
                 <ul>
                     {players.map(player => {
@@ -21,10 +23,10 @@ class GamePage extends React.Component {
                         return (<Player name={player} number={count} />);
                     })}
                 </ul>
-                <NightEvent></NightEvent>
                 <Inspect></Inspect>
                 <VoteForCaptainEvent></VoteForCaptainEvent>
                 <Timer secondsLeft={30}></Timer>
+                <NightEvent roomId={this.props.roomId}></NightEvent>
             </div>
         );
     }

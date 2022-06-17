@@ -1,6 +1,5 @@
 import { onValue, ref, set } from "firebase/database";
 import React from "react";
-import ChooseAttiresEvent from "../Event/ChooseAttiresEvent";
 import { rtdb, auth } from "../fire";
 /*
 const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
@@ -103,7 +102,6 @@ class Game extends React.Component {
         return (
             <div>
                 <h1>Game is starting soon!</h1>
-                <ChooseAttiresEvent props={this.props.roomId}></ChooseAttiresEvent>
             </div>
         );
     }

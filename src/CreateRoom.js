@@ -24,8 +24,9 @@ function CreateRoom({ setRoomId, setJoined }) {
             host: uid,
             players:[uid],
         };
-    
-        setRoomId(push(ref(rtdb, "/games"), roomInfo).key);
+        const key = push(ref(rtdb, "/games"), roomInfo).key;
+        alert(key);
+        setRoomId(key);
         setJoined(true);
     }
 

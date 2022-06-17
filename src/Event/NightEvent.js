@@ -1,6 +1,9 @@
 import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
+import { onValue, set, ref } from "firebase/database";
+import { getPlayerIndex } from "../Game/Game";
+import { auth, rtdb } from "../fire";
 
 class NightEvent extends React.Component {
     constructor(props) {
@@ -10,6 +13,7 @@ class NightEvent extends React.Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.onSelectAttire = this.onSelectAttire.bind(this);
         this.onSelectPlayer = this.onSelectPlayer.bind(this);
+        this.attireToIndex = this.attireToIndex.bind(this);
         this.handleSwap = this.handleSwap.bind(this);
     }
     
@@ -29,12 +33,45 @@ class NightEvent extends React.Component {
     onSelectPlayer(selectedList, selectedItem) {
         this.setState({ player: selectedItem.id });
     }
+
+    attireToIndex(attire) {
+        if (attire === "helmet") {
+            return 0;
+        }
+        if (attire === "visor") {
+            return 1;
+        }
+        if (attire === "suit") {
+            return 2;
+        }
+        if (attire === "gloves") {
+            return 3;
+        }
+        if (attire === "boots") {
+            return 4;
+        }
+    }
     
     handleSwap(event) {
-        // and update database
+        // Client side
         this.handleCloseModal();
         alert("You have swapped your " + this.state.attire + " with Player " + this.state.player);
         event.preventDefault();
+
+        // Update database
+        const yourRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/orginalAttires/' + getPlayerIndex(this.props.roomId, auth.currentUser.uid) + '/' + this.attireToIndex(this.state.attire));
+        const hisRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/orginalAttires/' + (this.state.player - 1).toString() + '/' + this.attireToIndex(this.state.attire));
+        let hisAttireColor;
+        let yourAttireColor; 
+        onValue(hisRef, (snapshot) => {
+            hisAttireColor = snapshot.val().color;
+        }); 
+        onValue(yourRef, (snapshot) => {
+            alert(snapshot.val().toString());
+            yourAttireColor = snapshot.val().color;
+        });
+        set(hisRef, yourAttireColor);
+        set(yourRef, hisAttireColor);
     }
         
     render() {
