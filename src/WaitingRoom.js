@@ -14,7 +14,7 @@ function WaitingRoom({roomId}) {
             const data = snapshot.val();
             setPlayers(data.players)
         }, {onlyOnce: true});
-    }, []);
+    }, [roomId]);
 
     return(
         <div>
