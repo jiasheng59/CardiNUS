@@ -15,8 +15,8 @@ function JoinRoom({setRoomId, setJoined}) {
             if (snapshot.exists()) {
                 setRoomId(joinId)
                 const data = snapshot.val();
-                console.log(data.players);
                 set(gameRef, {
+                    gameInfo: data.gameInfo,
                     host: data.host,
                     players: [...data.players, uid],
                 })
@@ -25,24 +25,9 @@ function JoinRoom({setRoomId, setJoined}) {
                 alert("Invalid Room Id")
             }
         }, {onlyOnce: true});
+
     }
-    /*
-    async function joinRoom(e) {
-        e.preventDefault()
-        const { uid } = auth.currentUser;
-        const usersRef = db.collection('gameroom').doc(text);
-        usersRef.get()
-        .then((docSnapshot) => {
-            if (docSnapshot.exists) {
-                db.collection("gameroom").doc(text).update({players: uid});
-                setRoomId(e.target.value);
-                setJoined(true);
-            } else {
-                alert("Invalid Room Id");
-            }
-        })
-    }
-    */
+ 
 
     return (
         <div>

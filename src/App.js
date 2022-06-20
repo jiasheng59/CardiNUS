@@ -87,7 +87,7 @@ const App = () => {
 
   useEffect(() => {
     authListener();
-  });
+  }, []);
 
   return (
     <div className="App">
@@ -117,14 +117,5 @@ const App = () => {
     </div>
   );
 };
-
-/*
-  return (
-    <div>
-      <hi>CardiNUS</hi>
-      <p>Please Login / Sign Up.</p>
-      <LoginPage></LoginPage>
-      <HomePage></HomePage>
-*/ 
 
 export default App;
