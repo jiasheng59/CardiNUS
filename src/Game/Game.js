@@ -1,4 +1,4 @@
-import { onValue, ref, set } from "firebase/database";
+import { onValue, ref, set, update } from "firebase/database";
 import React from "react";
 import { rtdb, auth } from "../fire";
 /*
@@ -66,28 +66,44 @@ class Game extends React.Component {
     setPlayerIndex() { // Start counting from 0
         const uid = auth.currentUser.uid;
         const gameRef = ref(rtdb, '/games/' + this.props.roomId);
-        let playerIndex; // this player's index
-        /*
-        function isPlayerIndexEmpty(roomId) {
-            let isEmpty;
-            onValue(playerIndexRef, (snapshot) => {
-                isEmpty = !snapshot.exists();
-            }, { onlyOnce: true });
-            return isEmpty;
-        }
-        */
+        let yourIndex; // this player's index
+        
         // Find this player's index
         onValue(gameRef, (snapshot) => {
             const players = snapshot.val().players;
             for (let i = 0; i < players.length; i++) {
                 if (uid === players[i]) {
-                    playerIndex = i;
+                    yourIndex = i;
                 }
             }
         });
+        
         // Set this player's index
         const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/playerIndex/' + uid);
-        set(r, playerIndex);
+        set(r, yourIndex);
+        /*
+        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
+        onValue(r, snapshot => {
+            const data = snapshot.val();
+            set(ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/playerIndex'), { ...data.playerIndex, `${uid}`: yourIndex });
+        });
+        */
+        // set(r, {...uid: yourIndex});
+        /*
+        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
+        onValue(r, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                console.log(yourIndex);
+                set(r, {
+                    roles: data.roles,
+                    playerIndex: [yourIndex],
+                });
+            } else {
+                alert("Error");
+            }
+        }, {onlyOnce: true});
+        */
     }
 
     assignRoles() {

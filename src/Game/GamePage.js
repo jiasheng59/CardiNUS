@@ -15,7 +15,6 @@ class GamePage extends React.Component { // this.props.phase
         return (
             <div>
                 <Game roomId={this.props.roomId}></Game>
-                <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>
                 <h2>Players in the room: </h2>
                 <ul>
                     {players.map(player => {
@@ -26,10 +25,13 @@ class GamePage extends React.Component { // this.props.phase
                 <Inspect></Inspect>
                 <VoteForCaptainEvent></VoteForCaptainEvent>
                 <Timer secondsLeft={30}></Timer>
-                <NightEvent roomId={this.props.roomId}></NightEvent>
             </div>
         );
     }
 }
 
 export default GamePage;
+
+
+// <NightEvent roomId={this.props.roomId}></NightEvent>
+// <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>

@@ -3,6 +3,7 @@ import Chat from "./Chat"
 import ChangePlayerId from "./ChangePlayerId";
 import CreateRoom from './CreateRoom';
 import JoinRoom from './JoinRoom';
+import ReactModal from 'react-modal';
 
 
 function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
@@ -41,8 +42,10 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
         />
         </div>
       <div>
-        <Chat
-          playerId={playerId}/>
+        <ReactModal isOpen={ false}>
+          <Chat
+          playerId={playerId} />
+        </ReactModal>
       </div>
     </>
   );
