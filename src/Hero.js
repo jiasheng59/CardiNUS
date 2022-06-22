@@ -34,10 +34,12 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
         <CreateRoom
           setRoomId={setRoomId}
           setJoined={setJoined}
+          playerId={playerId}
         />
         <JoinRoom
           setRoomId={setRoomId}
           setJoined={setJoined}
+          playerId={playerId}
         />
         </div>
       <div>
