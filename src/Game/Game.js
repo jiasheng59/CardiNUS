@@ -57,10 +57,14 @@ function isReadyToChangePhase(roomId) {
             console.log("fail");
         }
     });
-    return tempDone === 2;
+    return tempDone === 7;
 }
 
+
 function doneAction(roomId) {
+    // Update data.done. 
+    // TODO: Nothing, but be very careful! Any additional field added to database 
+    // is likely to trigger the need to modify this function.
     const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
     let tempDone = 0;
     let tempIndex = {};
@@ -108,7 +112,7 @@ class Game extends React.Component {
             this.assignRoles();
         }
         this.setPlayerIndex();
-        this.listen();
+        this.listen(); // listen for the phase change in database
     }
 
     setPlayerIndex() { // Start counting from 0
@@ -159,6 +163,7 @@ class Game extends React.Component {
             roles: roles,
             mapIndex: mapIndex,
             originalAttires: {},
+            currentAttires: {},
             done: 0,
             phase: "Choose Attires"
         });
@@ -167,7 +172,7 @@ class Game extends React.Component {
     changePhase(newPhase) {
         const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/phase');
         set(r, newPhase);
-        alert(`phase changed, now: ${newPhase}`);
+        alert(`Phase changed, now: ${newPhase}`);
     }
 
     listen() {
@@ -185,7 +190,11 @@ class Game extends React.Component {
     render() {
         return (
             <div>
-                <Description phase={this.state.phase} roomId={this.props.roomId} changePhase={this.changePhase}></Description>
+                <Description>
+                    phase={this.state.phase}
+                    roomId={this.props.roomId}
+                    changePhase={this.changePhase}    
+                </Description>
             </div>
         );
     }

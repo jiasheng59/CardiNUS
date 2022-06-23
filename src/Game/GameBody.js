@@ -3,14 +3,14 @@ import ChooseAttiresEvent from "../Event/ChooseAttiresEvent";
 import Timer from "./Timer";
 /*
 const phases = [
-    "Choose attires",
+    "Choose Attires",
     "Night",
     "Discussion",
-    "Vote a Captain",
-    "Captain time",
-    "Vote for Alien",
-    "Astronauts win",
-    "Alien and Mr. D win"
+    "Vote For Captain",
+    "Captain Time",
+    "Vote For Alien",
+    "Astronauts Win",
+    "Alien And Mr. D Win"
 ]
 */
 

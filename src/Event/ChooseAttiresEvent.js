@@ -6,7 +6,13 @@ import { onValue, ref, set } from "firebase/database";
 import { doneAction, getPlayerIndex, isReadyToChangePhase } from "../Game/Game";
 
 // red, yellow, blue, turquoise, purple
-function setOrriginalAttires(roomId, playerIndex, attires) {
+
+function setOriginalAttires(roomId, playerIndex, attires) {
+    /*
+    TODO: 
+    Debug pleaseee (facing the same problem of the previous players' attires disappear)
+    This function is to update the originalAttires in database.
+    */
     const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
     let tempIndex = {};
     let tempRole = [];
@@ -104,7 +110,7 @@ class ChooseAttiresEvent extends React.Component {
             alert("You have chosen your attires.");
             
             // Update database
-            setOrriginalAttires(this.props.roomId, playerIndex, originalAttires);
+            setOriginalAttires(this.props.roomId, playerIndex, originalAttires);
             
             doneAction(this.props.roomId);
             if (isReadyToChangePhase(this.props.roomId)) {
