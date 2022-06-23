@@ -4,6 +4,7 @@ import WaitingRoom from "./WaitingRoom";
 
 function Home({handleLogout, playerId, setPlayerId}) {
     const [joined, setJoined] = useState(false);
+    const [started, setStarted] = useState(false);
     const [roomId, setRoomId] = useState();
 
 

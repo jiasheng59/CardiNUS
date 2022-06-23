@@ -74,20 +74,19 @@ const App = () => {
     fire.auth().signOut();
   };
 
-  const authListener = () => {
-    fire.auth().onAuthStateChanged((user) => {
-      if (user) {
-        clearInputs();
-        setUser(user);
-      } else {
-        setUser("");
-      }
-    });
-  };
-
   useEffect(() => {
+    const authListener = () => {
+      fire.auth().onAuthStateChanged((user) => {
+        if (user) {
+          clearInputs();
+          setUser(user);
+        } else {
+          setUser("");
+        }
+      });
+    };
     authListener();
-  });
+  }, []);
 
   return (
     <div className="App">
@@ -117,14 +116,5 @@ const App = () => {
     </div>
   );
 };
-
-/*
-  return (
-    <div>
-      <hi>CardiNUS</hi>
-      <p>Please Login / Sign Up.</p>
-      <LoginPage></LoginPage>
-      <HomePage></HomePage>
-*/ 
 
 export default App;

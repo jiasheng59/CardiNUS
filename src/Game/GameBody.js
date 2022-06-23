@@ -13,6 +13,7 @@ const phases = [
     "Alien and Mr. D win"
 ]
 */
+
 function Description(props) {
     if (props.phase === "Choose attires") {
         return (

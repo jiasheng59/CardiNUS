@@ -55,6 +55,7 @@ class Game extends React.Component {
         this.assignRoles = this.assignRoles.bind(this);
     }
 
+
     componentDidMount() { // When game begins, assgin roles.
         const { uid } = auth.currentUser;
         if (uid === getHostId(this.props.roomId)) {
@@ -62,6 +63,7 @@ class Game extends React.Component {
         }
         this.setPlayerIndex();
     }
+    
 
     setPlayerIndex() { // Start counting from 0
         const uid = auth.currentUser.uid;
@@ -76,42 +78,38 @@ class Game extends React.Component {
                     yourIndex = i;
                 }
             }
-        });
+        }, { onlyOnce: true });
         
         // Set this player's index
-        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/playerIndex/' + uid);
-        set(r, yourIndex);
-        /*
         const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
-        onValue(r, snapshot => {
-            const data = snapshot.val();
-            set(ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/playerIndex'), { ...data.playerIndex, `${uid}`: yourIndex });
-        });
-        */
-        // set(r, {...uid: yourIndex});
-        /*
-        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
+        var tempIndex = {}
+        var tempRole = []
         onValue(r, (snapshot) => {
-            if (snapshot.exists()) {
+            if(snapshot.exists) {
                 const data = snapshot.val();
-                console.log(yourIndex);
-                set(r, {
-                    roles: data.roles,
-                    playerIndex: [yourIndex],
-                });
+                data.mapIndex[uid] = playerIndex;
+                tempIndex = data.mapIndex
+                tempRole = data.roles
             } else {
-                alert("Error");
-            }
+                console.log("fail")
+            } 
         }, {onlyOnce: true});
-        */
+        const tempGameInfo = {
+            roles : tempRole,
+            mapIndex: tempIndex
+        }
+        set(r, tempGameInfo);
     }
 
     assignRoles() {
         // const shuffledRoles = some permutation
         // update database to assign role to each player
+        var mapIndex = {};
+        const uid = auth.currentUser.uid;
+        mapIndex[uid] = 0;
         const roles = shuffle(ROLES);
         const gameInfoRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
-        set(gameInfoRef, { roles });
+        set(gameInfoRef, { roles: roles, mapIndex: mapIndex });
     }
 
     render() {

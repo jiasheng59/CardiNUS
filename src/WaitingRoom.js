@@ -12,9 +12,9 @@ function WaitingRoom({roomId}) {
         const gameRef = ref(rtdb, '/games/' + roomId);
         onValue(gameRef, (snapshot) => {
             const data = snapshot.val();
-            setPlayers(data.players)
+            setPlayers(data.playersId)
         });
-    });
+    }, [roomId]);
 
     return(
         <div>

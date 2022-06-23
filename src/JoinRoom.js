@@ -2,7 +2,7 @@ import { ref, onValue, set } from 'firebase/database';
 import React, { useState } from 'react';
 import { rtdb, auth } from "./fire";
 
-function JoinRoom({setRoomId, setJoined}) {
+function JoinRoom({setRoomId, setJoined, playerId}) {
     
     const [joinId, setJoinId] = useState("");
 
@@ -15,34 +15,22 @@ function JoinRoom({setRoomId, setJoined}) {
             if (snapshot.exists()) {
                 setRoomId(joinId)
                 const data = snapshot.val();
-                console.log(data.players);
-                set(gameRef, {
-                    host: data.host,
-                    players: [...data.players, uid],
-                })
+                if(!data.players.includes(uid)) {
+                    set(gameRef, {
+                        gameInfo: data.gameInfo,
+                        host: data.host,
+                        players: [...data.players, uid],
+                        playersId: [data.playersId, playerId]
+                    })
+                }
                 setJoined(true)
             }else{
                 alert("Invalid Room Id")
             }
         }, {onlyOnce: true});
+
     }
-    /*
-    async function joinRoom(e) {
-        e.preventDefault()
-        const { uid } = auth.currentUser;
-        const usersRef = db.collection('gameroom').doc(text);
-        usersRef.get()
-        .then((docSnapshot) => {
-            if (docSnapshot.exists) {
-                db.collection("gameroom").doc(text).update({players: uid});
-                setRoomId(e.target.value);
-                setJoined(true);
-            } else {
-                alert("Invalid Room Id");
-            }
-        })
-    }
-    */
+ 
 
     return (
         <div>
