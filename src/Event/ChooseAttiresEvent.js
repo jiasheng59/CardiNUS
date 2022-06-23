@@ -6,6 +6,32 @@ import { onValue, ref, set } from "firebase/database";
 import { getPlayerIndex } from "../Game/Game";
 
 // red, yellow, blue, turquoise, purple
+function setOrriginalAttires(roomId, playerIndex, attires) {
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+    let tempIndex = {};
+    let tempRole = [];
+    let tempOriAttires = {};
+    onValue(r, (snapshot) => {
+        if (snapshot.exists) {
+            const data = snapshot.val();
+            if (data.originalAttires === undefined || data.originalAttires === null) {
+                data.originalAttires = {};
+            }
+            data.originalAttires[playerIndex] = attires;
+            tempIndex = data.mapIndex;
+            tempRole = data.roles;
+            tempOriAttires = data.originalAttires;
+        } else {
+            console.log("fail");
+        }
+    }, { onlyOnce: true });
+    const tempGameInfo = {
+        roles: tempRole,
+        mapIndex: tempIndex,
+        originalAttires: tempOriAttires
+    }
+    set(r, tempGameInfo);
+}
 
 class ChooseAttiresEvent extends React.Component {
     constructor(props) {
@@ -61,8 +87,6 @@ class ChooseAttiresEvent extends React.Component {
         } else {
             this.handleCloseModal();
             const playerIndex = getPlayerIndex(this.props.roomId, auth.currentUser.uid);
-            const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
-            let arr = {};
             const originalAttires = [
                 { name: "helmet", color: this.state.helmet },
                 { name: "visor", color: this.state.visor },
@@ -71,18 +95,8 @@ class ChooseAttiresEvent extends React.Component {
                 { name: "boots", color: this.state.boots }
             ];
             // Update database
-            onValue(r, snapshot => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    data.originalAttires[playerIndex] = originalAttires;
-                    arr = data.originalAttires;
-                } else {
-                    arr[playerIndex] = originalAttires;
-                }
-            }, { onlyOnce: true });
-            const originalAttiresRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires');
-            set(originalAttiresRef, arr);
-
+            setOrriginalAttires(this.props.roomId, playerIndex, originalAttires);
+            
             alert("You have chosen your attires.");
             event.preventDefault();
         }

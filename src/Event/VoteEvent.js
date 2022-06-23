@@ -35,6 +35,8 @@ class VoteForCaptainEvent extends React.Component {
         // and update database
         this.handleCloseModal();
         alert("You have voted for Player " + this.state.captain + " to be the Captain.");
+        
+        this.props.changePhase("Captain time");
         event.preventDefault();
     }
     onSelect(selectedList, selectedItem) {
