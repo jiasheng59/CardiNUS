@@ -1,6 +1,8 @@
-import { onValue, ref, set, update } from "firebase/database";
+import { onValue, ref, set } from "firebase/database";
 import React from "react";
 import { rtdb, auth } from "../fire";
+import { Description } from "./GameBody";
+
 /*
 const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
 const visor = ['r', 'y', 'b', 't', 'p'];
@@ -24,7 +26,7 @@ function shuffle(array) {
     return array;
 }
 
-function getHostId(roomId) { // roomId === joinId
+function getHostId(roomId) {
     let hostId;
     const gameRef = ref(rtdb, '/games/' + roomId);
     onValue(gameRef, (snapshot) => {
@@ -37,7 +39,7 @@ function getHostId(roomId) { // roomId === joinId
 }
 function getPlayerIndex(roomId, uid) {
     let playerIndex;
-    const playerIndexRef = ref(rtdb, '/games/' + roomId + '/gameInfo/playerIndex/' + uid);
+    const playerIndexRef = ref(rtdb, '/games/' + roomId + '/gameInfo/mapIndex/' + uid);
     onValue(playerIndexRef, (snapshot) => {
         playerIndex = snapshot.val();
     });
@@ -50,11 +52,10 @@ Assign roles, set up player's index.
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { gameStarted: false };
+        this.state = { phase: "Choose Attires" };
         this.setPlayerIndex = this.setPlayerIndex.bind(this);
         this.assignRoles = this.assignRoles.bind(this);
     }
-
 
     componentDidMount() { // When game begins, assgin roles.
         const { uid } = auth.currentUser;
@@ -63,19 +64,18 @@ class Game extends React.Component {
         }
         this.setPlayerIndex();
     }
-    
 
     setPlayerIndex() { // Start counting from 0
         const uid = auth.currentUser.uid;
         const gameRef = ref(rtdb, '/games/' + this.props.roomId);
-        let yourIndex; // this player's index
+        let playerIndex; // this player's index
         
         // Find this player's index
         onValue(gameRef, (snapshot) => {
             const players = snapshot.val().players;
             for (let i = 0; i < players.length; i++) {
                 if (uid === players[i]) {
-                    yourIndex = i;
+                    playerIndex = i;
                 }
             }
         }, { onlyOnce: true });
@@ -102,8 +102,6 @@ class Game extends React.Component {
     }
 
     assignRoles() {
-        // const shuffledRoles = some permutation
-        // update database to assign role to each player
         var mapIndex = {};
         const uid = auth.currentUser.uid;
         mapIndex[uid] = 0;
@@ -115,7 +113,7 @@ class Game extends React.Component {
     render() {
         return (
             <div>
-                <h1>Game is starting soon!</h1>
+                <Description phase={this.state.phase}></Description>
             </div>
         );
     }
@@ -136,16 +134,13 @@ function setClientGameStarted(joinId) {
 }
 */
 export { Game, getPlayerIndex };
+    
+    // <NightEvent roomId={this.props.roomId}></NightEvent>
+// <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>
 
 /*
-function TestingShuffle() {
-    const roles = ["alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut", "astronaut"];
-    const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);
-    return (
-        <ul>
-            {shuffledRoles}
-        </ul>
-    );
-}
+    <Inspect></Inspect>                
+    <VoteForCaptainEvent></VoteForCaptainEvent>
+    <Timer secondsLeft={30}></Timer>
 */
 

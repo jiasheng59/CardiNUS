@@ -15,7 +15,7 @@ const phases = [
 */
 
 function Description(props) {
-    if (props.phase === "Choose attires") {
+    if (props.phase === "Choose Attires") {
         return (
             <ChooseAttiresEvent roomId={props.roomId}></ChooseAttiresEvent>
         );

@@ -1,4 +1,4 @@
-class ViewMyAttire extends React.Component {
+class ViewMyAttires extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

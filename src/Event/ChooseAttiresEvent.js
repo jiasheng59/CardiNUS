@@ -5,7 +5,7 @@ import { auth, rtdb } from "../fire";
 import { onValue, ref, set } from "firebase/database";
 import { getPlayerIndex } from "../Game/Game";
 
-// const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
+// red, yellow, blue, turquoise, purple
 
 class ChooseAttiresEvent extends React.Component {
     constructor(props) {
@@ -61,7 +61,8 @@ class ChooseAttiresEvent extends React.Component {
         } else {
             this.handleCloseModal();
             const playerIndex = getPlayerIndex(this.props.roomId, auth.currentUser.uid);
-            const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires');
+            const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
+            let arr = {};
             const originalAttires = [
                 { name: "helmet", color: this.state.helmet },
                 { name: "visor", color: this.state.visor },
@@ -69,13 +70,19 @@ class ChooseAttiresEvent extends React.Component {
                 { name: "gloves", color: this.state.gloves },
                 { name: "boots", color: this.state.boots }
             ];
-            onValue(r, (snapshot) => {
-                const data = snapshot.val();
-                const arr = data;
-                arr[playerIndex] = originalAttires;
-                set(r, arr);
+            // Update database
+            onValue(r, snapshot => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    data.originalAttires[playerIndex] = originalAttires;
+                    arr = data.originalAttires;
+                } else {
+                    arr[playerIndex] = originalAttires;
+                }
             }, { onlyOnce: true });
-            // set(r, originalAttires);
+            const originalAttiresRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires');
+            set(originalAttiresRef, arr);
+
             alert("You have chosen your attires.");
             event.preventDefault();
         }
