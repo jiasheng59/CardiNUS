@@ -14,10 +14,15 @@ const phases = [
 ]
 */
 
+/*
+Things to include while updating database
+done, phase, mapIndex, roles, originalAttires, currentAttires
+*/
+
 function Description(props) {
     if (props.phase === "Choose Attires") {
         return (
-            <ChooseAttiresEvent roomId={props.roomId}></ChooseAttiresEvent>
+            <ChooseAttiresEvent roomId={props.roomId} changePhase={props.changePhase}></ChooseAttiresEvent>
         );
     }
     if (props.phase === "Night") {

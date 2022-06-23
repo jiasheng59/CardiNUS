@@ -30,7 +30,7 @@ class GamePage extends React.Component { // this.props.phase
                 <ul>
                     {players.map(player => {
                         count++;
-                        return (<Player name={player} number={count} />);
+                        return (<Player name={player} number={count} roomId={this.props.roomId} />);
                     })}
                 </ul>
             </div>
