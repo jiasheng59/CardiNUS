@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { getPlayerIndex } from "./Game";
-import { auth } from "../fire";
+import { auth } from "../firebase/fire";
 import "./Player.css";
 
 class Player extends React.Component {

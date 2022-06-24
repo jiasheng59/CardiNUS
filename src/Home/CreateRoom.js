@@ -1,5 +1,5 @@
 import React from 'react';
-import { rtdb, auth } from "./fire";
+import { rtdb, auth } from "../firebase/fire";
 import { push, ref } from 'firebase/database';
 
 function CreateRoom({ setRoomId, setJoined, playerId }) {
@@ -12,7 +12,8 @@ function CreateRoom({ setRoomId, setJoined, playerId }) {
             gameInfo: [null],
             host: uid,
             players:[uid],
-            playersId: [playerId]
+            playersId: [playerId],
+            ready: [true, false, false, false, false, false]
         };
         const key = push(ref(rtdb, "/games"), roomInfo).key;
         alert(key);
