@@ -2,6 +2,8 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { isReadyToChangePhase, doneAction, getAlienIndex } from "../Game/Game";
+import { rtdb, auth } from "../fire";
+import { onValue, ref, set } from "firebase/database";
 
 // Remark: Eliminate player feature will be implemented by milestone 3
 
@@ -35,6 +37,9 @@ function setVote(roomId, votedPlayerIndex) {
 function setVoteToZero(roomId) {
     // TODO: set the vote array in database to [] / {}, depending on your implementation
 }
+function setCaptain(roomId, newCaptain) {
+    // TODO: update captain field in database to newCaptain
+}
 
 class VoteForCaptainEvent extends React.Component {
     constructor(props) {
@@ -58,9 +63,9 @@ class VoteForCaptainEvent extends React.Component {
             alert("Please choose one player.");
             return;
         }
+        alert("You have voted for Player " + this.state.captain + " to be the Captain.");
         this.handleCloseModal();
         this.updateVote();
-        alert("You have voted for Player " + this.state.captain + " to be the Captain.");
         event.preventDefault();
     }
     onSelect(selectedList, selectedItem) {
@@ -71,9 +76,8 @@ class VoteForCaptainEvent extends React.Component {
         doneAction(this.props.roomId);
         if (isReadyToChangePhase(this.props.roomId)) {
             const captain = getHighestVote(this.props.roomId);
-            this.props.setCaptain(captain);
+            setCaptain(this.props.roomId, captain);
             this.props.changePhase("Captain Time");
-            
             setVoteToZero(this.props.roomId);
         }
     }
@@ -147,7 +151,7 @@ class VoteForAlienEvent extends React.Component {
         const alienIndex = getAlienIndex(this.props.roomId);
 
         if (isReadyToChangePhase(this.props.roomId)) {
-            if (getHighestVoteAlien(this.props.roomId) === alienIndex) {
+            if (getHighestVote(this.props.roomId) === alienIndex) {
                 this.props.changePhase("Astronauts Win");
             } else {
                 this.props.changePhase("Night");

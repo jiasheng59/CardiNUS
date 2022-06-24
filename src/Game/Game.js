@@ -58,6 +58,19 @@ function getAlienIndex(roomId) {
     }, { onlyOnce: true });
     return alienIndex;
 }
+function getMrDIndex(roomId) {
+        let mrDIndex;
+        const gameRef = ref(rtdb, '/games/' + roomId);
+        onValue(gameRef, (snapshot) => {
+            const roles = snapshot.val().roles;
+            for (let i = 0; i < roles.length; i++) {
+                if (roles[i] === "mrD") {
+                    mrDIndex = i;
+                }
+            }
+        }, { onlyOnce: true });
+        return mrDIndex;
+}
 
 function isReadyToChangePhase(roomId) {
     let tempDone = 0;
@@ -112,7 +125,7 @@ Assign roles, set up player's index.
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { phase: "Choose Attires" , captain: -1};
+        this.state = { phase: "Choose Attires", captain: -1}; 
         this.setPlayerIndex = this.setPlayerIndex.bind(this);
         this.assignRoles = this.assignRoles.bind(this);
         this.changePhase = this.changePhase.bind(this);
@@ -162,7 +175,8 @@ class Game extends React.Component {
             roles : tempRole,
             mapIndex: tempIndex,
             done: 0,
-            phase: "Choose Attires"
+            phase: "Choose Attires",
+            captain: -1
         }
         set(r, tempGameInfo);
     }
@@ -180,7 +194,8 @@ class Game extends React.Component {
             currentAttires: {},
             done: 0,
             phase: "Choose Attires",
-            vote: []
+            vote: [],
+            captain: -1
         });
     }
 
@@ -190,14 +205,23 @@ class Game extends React.Component {
         alert(`Phase changed, now: ${newPhase}`);
     }
 
-    listen() {
+    listen() { // This function may cause trouble.
         const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/phase');
         onValue(r, (snapshot) => {
             if (snapshot.exists) {
                 const curPhase = snapshot.val();
-                this.setState({ phase: curPhase });
+                this.setState({ phase: curPhase }); 
             } else {
                 console.log("fail");
+            }
+        });
+        const r2 = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/captain');
+        onValue(r, (snapshot) => {
+            if (snapshot.exists) {
+                const captain = snapshot.val();
+                this.setState({ captain: captain }); 
+            } else {
+                console.log("fail to synchronise captain");
             }
         });
     }
@@ -213,7 +237,7 @@ class Game extends React.Component {
                     phase={this.state.phase}
                     roomId={this.props.roomId}
                     changePhase={this.changePhase}
-                    setCaptain={this.setCaptain}
+                    captain={this.state.captain}
                 >    
                 </Description>
             </div>
@@ -235,7 +259,7 @@ function setClientGameStarted(joinId) {
     }, {onlyOnce: false});
 }
 */
-export { Game, getPlayerIndex, isReadyToChangePhase, doneAction, getAlienIndex };
+export { Game, getPlayerIndex, isReadyToChangePhase, doneAction, getAlienIndex, getMrDIndex };
     
     // <NightEvent roomId={this.props.roomId}></NightEvent>
 // <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>

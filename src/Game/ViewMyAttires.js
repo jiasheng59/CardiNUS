@@ -1,12 +1,13 @@
 import { onValue, ref, set } from "firebase/database";
 import React from "react";
 import { rtdb, auth } from "../fire";
+import ReactModal from "react-modal";
 
 class ViewMyAttires extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: true,
+            showModal: false,
             helmet: "",
             visor: "",
             suit: "",
@@ -26,13 +27,15 @@ class ViewMyAttires extends React.Component {
         this.setState({ showModal: false });
     }
     getCurrentAttires() {
-        const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+        // TODO: 
+        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
         onValue(r, snapshot => {
 
         })
     }
     getOriginalAttires() {
-        const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+        // TODO: 
+        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
     }
         
     render() {
@@ -41,6 +44,7 @@ class ViewMyAttires extends React.Component {
         
         return (
             <div>
+                <button disabled={false} onClick={this.handleOpenModal}>View My attires</button>
                 <ReactModal isOpen={this.state.showModal}>
                     <h2>View my attires.</h2>
                     <h3>Current</h3>
@@ -51,11 +55,10 @@ class ViewMyAttires extends React.Component {
                     <div>
 
                     </div>
-
                 </ReactModal>
             </div>
         );
     }
 }
 
-export default ChooseAttiresEvent;
+export default ViewMyAttires;

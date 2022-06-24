@@ -108,15 +108,12 @@ class ChooseAttiresEvent extends React.Component {
                 { name: "boots", color: this.state.boots }
             ];
             alert("You have chosen your attires.");
-            
-            // Update database
-            setOriginalAttires(this.props.roomId, playerIndex, originalAttires);
-            
             doneAction(this.props.roomId);
             if (isReadyToChangePhase(this.props.roomId)) {
                 this.props.changePhase("Night");
             }
-
+            // Update database
+            setOriginalAttires(this.props.roomId, playerIndex, originalAttires);
             event.preventDefault();
         }
     }

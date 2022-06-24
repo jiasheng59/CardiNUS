@@ -1,6 +1,12 @@
 import React from "react";
 import ChooseAttiresEvent from "../Event/ChooseAttiresEvent";
+import NightEvent from "../Event/NightEvent";
+import { VoteForAlienEvent, VoteForCaptainEvent } from "../Event/VoteEvent";
+import Inspect from "./Captain";
+import { getPlayerIndex, getAlienIndex, getMrDIndex } from "./Game";
 import Timer from "./Timer";
+import ViewMyAttires from "./ViewMyAttires";
+import { rtdb, auth } from "../fire";
 /*
 const phases = [
     "Choose Attires",
@@ -16,7 +22,7 @@ const phases = [
 
 /*
 Things to include while updating database
-done, phase, mapIndex, roles, originalAttires, currentAttires, vote
+done, phase, mapIndex, roles, originalAttires, currentAttires, vote, captain
 */
 
 function Description(props) {
@@ -25,40 +31,96 @@ function Description(props) {
             <ChooseAttiresEvent
                 roomId={props.roomId}
                 changePhase={props.changePhase}
-            >
-            </ChooseAttiresEvent>
+            ></ChooseAttiresEvent>
         );
     }
     if (props.phase === "Night") {
         return (
             <div>
                 You may swap an attire with any other player.
+                <NightEvent
+                    roomId={props.roomId}
+                    changePhase={props.changePhase}
+                ></NightEvent>
             </div>
         );
     }
-    if (props.phase === "Discussion") {
+    if (props.phase === "Discussion") { // ViewMyAttires TBC
         return (
             <div>
                 Discussion time left: <Timer secondsLeft={300}></Timer>
+                <ViewMyAttires roomId={props.roomId}></ViewMyAttires>
             </div>
         );
     }
     if (props.phase === "Vote For Captain") {
-
+        return (
+            <div>
+                Now, it's time to vote for a captain. The captain can view an attire from three players.
+                <VoteForCaptainEvent
+                    roomId={props.roomId}
+                    changePhase={props.changePhase}
+                ></VoteForCaptainEvent>
+            </div>
+        )
     }
-    if (props.phase === "Captain Time") {
-
+    if (props.phase === "Captain Time") { // Inspect (in Captain.js) TBC
+        if (props.captain === getPlayerIndex(props.roomId, auth.currentUser.uid)) {
+            return (
+                <div>
+                    <div>
+                        Congratulations! You are elected as captain in this round.
+                        <br />
+                        You can inspect three players' attires and decide whether to vote for Alien.
+                    </div>
+                    <Inspect
+                        roomId={props.roomId}
+                        changePhase={props.changePhase}
+                    ></Inspect>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    Please wait for the captain.
+                </div>
+            );
+        }
     }
     if (props.phase === "Vote For Alien") {
         return (
-            <div>Vote the person you suspect might be an Alien. The person with highest vote will be eliminated.</div>
+            <div>
+                <div>
+                    Vote the person you suspect might be an Alien. The person with highest vote will be eliminated.
+                </div>
+                <VoteForAlienEvent
+                    roomId={props.roomId}
+                    changePhase={props.changePhase}
+                ></VoteForAlienEvent>
+            </div>
         );
     }
     if (props.phase === "Astronauts Win") {
-
+        return (
+            <div>
+                <h4>Astronauts win!</h4>
+                <div>{
+                    `Alien is Player ${getAlienIndex(props.roomId) + 1},
+                    Mr.D is Player ${getMrDIndex(props.roomId) + 1}`
+                }</div>
+            </div>
+        );
     }
     if (props.phase === "Alien And Mr. D Win") {
-
+        return (
+            <div>
+                <h4>Alien and Mr. D win!</h4>
+                <div>{
+                    `Alien is Player ${getAlienIndex(props.roomId) + 1},
+                    Mr.D is Player ${getMrDIndex(props.roomId) + 1}`
+                }</div>
+            </div>
+        );
     }
     alert("Error in GameBody");
 }
@@ -68,7 +130,7 @@ class GameBody extends React.Component {
     render() {
         return (
             <div>
-                <Description phase={"Choose attires"}></Description>
+                <Description phase={"Choose Attires"}></Description>
             </div>
         );
     }
