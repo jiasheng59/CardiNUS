@@ -1,7 +1,7 @@
 import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
-import { doneAction, getAlienIndex } from "../Game/Game";
+import { isReadyToChangePhase, doneAction, getAlienIndex } from "../Game/Game";
 
 // Remark: Eliminate player feature will be implemented by milestone 3
 
@@ -43,6 +43,7 @@ class VoteForCaptainEvent extends React.Component {
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleVote = this.handleVote.bind(this);
+        this.updateVote = this.updateVote.bind(this);
         this.onSelect = this.onSelect.bind(this);
     }  
     
@@ -57,15 +58,25 @@ class VoteForCaptainEvent extends React.Component {
             alert("Please choose one player.");
             return;
         }
-        // and update database
         this.handleCloseModal();
+        this.updateVote();
         alert("You have voted for Player " + this.state.captain + " to be the Captain.");
-
-        this.props.changePhase("Captain time");
         event.preventDefault();
     }
     onSelect(selectedList, selectedItem) {
         this.setState({ captain: selectedItem.id });
+    }
+    updateVote() { // Update database (vote), phase
+        setVote(this.props.roomId, this.state.captain - 1);
+        doneAction(this.props.roomId);
+        if (isReadyToChangePhase(this.props.roomId)) {
+            if (getHighestVoteAlien(this.props.roomId) === alienIndex) {
+                this.props.changePhase("Astronauts Win");
+            } else {
+                this.props.changePhase("Night");
+            }
+            setVoteToZero(this.props.roomId);
+        }
     }
     
     render() {
@@ -124,14 +135,13 @@ class VoteForAlienEvent extends React.Component {
         }
         this.handleCloseModal();
         this.updateVote();
-        
+
         alert("You have voted for Player " + this.state.alien + ".");
         event.preventDefault();
     }
     onSelect(selectedList, selectedItem) {
         this.setState({ alien: selectedItem.id });
     }
-
     updateVote() { // Update database (vote), phase
         setVote(this.props.roomId, this.state.alien - 1);
         doneAction(this.props.roomId);

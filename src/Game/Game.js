@@ -204,10 +204,10 @@ class Game extends React.Component {
     render() {
         return (
             <div>
-                <Description>
+                <Description
                     phase={this.state.phase}
                     roomId={this.props.roomId}
-                    changePhase={this.changePhase}    
+                    changePhase={this.changePhase}>    
                 </Description>
             </div>
         );
