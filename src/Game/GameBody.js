@@ -16,7 +16,7 @@ const phases = [
 
 /*
 Things to include while updating database
-done, phase, mapIndex, roles, originalAttires, currentAttires
+done, phase, mapIndex, roles, originalAttires, currentAttires, vote
 */
 
 function Description(props) {
@@ -39,7 +39,7 @@ function Description(props) {
             </div>
         );
     }
-    if (props.phase === "Vote for Alien") {
+    if (props.phase === "Vote For Alien") {
         return (
             <div>Vote the person you suspect might be an Alien. The person with highest vote will be eliminated.</div>
         );

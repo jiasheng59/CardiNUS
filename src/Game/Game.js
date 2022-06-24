@@ -45,6 +45,19 @@ function getPlayerIndex(roomId, uid) {
     });
     return playerIndex;
 }
+function getAlienIndex(roomId) {
+    let alienIndex;
+    const gameRef = ref(rtdb, '/games/' + roomId);
+    onValue(gameRef, (snapshot) => {
+        const roles = snapshot.val().roles;
+        for (let i = 0; i < roles.length; i++) {
+            if (roles[i] === "alien") {
+                alienIndex = i;
+            }
+        }
+    }, { onlyOnce: true });
+    return alienIndex;
+}
 
 function isReadyToChangePhase(roomId) {
     let tempDone = 0;
@@ -165,7 +178,8 @@ class Game extends React.Component {
             originalAttires: {},
             currentAttires: {},
             done: 0,
-            phase: "Choose Attires"
+            phase: "Choose Attires",
+            vote: []
         });
     }
 
@@ -214,7 +228,7 @@ function setClientGameStarted(joinId) {
     }, {onlyOnce: false});
 }
 */
-export { Game, getPlayerIndex, isReadyToChangePhase, doneAction };
+export { Game, getPlayerIndex, isReadyToChangePhase, doneAction, getAlienIndex };
     
     // <NightEvent roomId={this.props.roomId}></NightEvent>
 // <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>
