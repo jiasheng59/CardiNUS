@@ -14,11 +14,15 @@ function setOriginalAttires(roomId, playerIndex, attires) {
     This function is to update the originalAttires in database.
     */
    
-    const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo/originalAttires');
     let tempOriAttires = {};
     onValue(r, (snapshot) => {
-        const data = snapshot.val();
-        tempOriAttires = data.originalAttires;
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            tempOriAttires = data;
+        } else {
+            tempOriAttires = {};
+        }
     }, { onlyOnce: true });
     tempOriAttires[playerIndex] = attires;
     set(ref(rtdb, '/games/' + roomId + '/gameInfo/originalAttires'), tempOriAttires);

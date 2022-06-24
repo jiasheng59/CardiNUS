@@ -163,7 +163,7 @@ class Game extends React.Component {
         set(gameInfoRef, {
             roles: roles,
             mapIndex: mapIndex,
-            originalAttires: mapIndex,
+            originalAttires: {},
             currentAttires: {},
             done: 0,
             phase: "Choose Attires",
