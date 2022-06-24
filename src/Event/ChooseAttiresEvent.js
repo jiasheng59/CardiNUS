@@ -13,33 +13,16 @@ function setOriginalAttires(roomId, playerIndex, attires) {
     Debug pleaseee (facing the same problem of the previous players' attires disappear)
     This function is to update the originalAttires in database.
     */
+   
     const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
-    let tempIndex = {};
-    let tempRole = [];
     let tempOriAttires = {};
-    let tempDone;
-    let tempPhase;
     onValue(r, (snapshot) => {
-        if (snapshot.exists) {
-            const data = snapshot.val();
-            data.originalAttires[playerIndex] = attires;
-            tempIndex = data.mapIndex;
-            tempRole = data.roles;
-            tempOriAttires = data.originalAttires;
-            tempDone = data.done;
-            tempPhase = data.phase;
-        } else {
-            console.log("fail");
-        }
+        const data = snapshot.val();
+        tempOriAttires = data.originalAttires;
     }, { onlyOnce: true });
-    const tempGameInfo = {
-        roles: tempRole,
-        mapIndex: tempIndex,
-        originalAttires: tempOriAttires,
-        done: tempDone,
-        phase: tempPhase
-    }
-    set(r, tempGameInfo);
+    tempOriAttires[playerIndex] = attires;
+    set(ref(rtdb, '/games/' + roomId + '/gameInfo/originalAttires'), tempOriAttires);
+    set(ref(rtdb, '/games/' + roomId + '/gameInfo/currentAttires'), tempOriAttires);
 }
 
 class ChooseAttiresEvent extends React.Component {
