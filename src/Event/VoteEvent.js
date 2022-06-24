@@ -70,11 +70,10 @@ class VoteForCaptainEvent extends React.Component {
         setVote(this.props.roomId, this.state.captain - 1);
         doneAction(this.props.roomId);
         if (isReadyToChangePhase(this.props.roomId)) {
-            if (getHighestVoteAlien(this.props.roomId) === alienIndex) {
-                this.props.changePhase("Astronauts Win");
-            } else {
-                this.props.changePhase("Night");
-            }
+            const captain = getHighestVote(this.props.roomId);
+            this.props.setCaptain(captain);
+            this.props.changePhase("Captain Time");
+            
             setVoteToZero(this.props.roomId);
         }
     }

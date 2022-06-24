@@ -112,11 +112,12 @@ Assign roles, set up player's index.
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { phase: "Choose Attires" };
+        this.state = { phase: "Choose Attires" , captain: -1};
         this.setPlayerIndex = this.setPlayerIndex.bind(this);
         this.assignRoles = this.assignRoles.bind(this);
         this.changePhase = this.changePhase.bind(this);
         this.listen = this.listen.bind(this);
+        this.setCaptain = this.setCaptain.bind(this);
     }
 
     componentDidMount() { // When game begins, assgin roles.
@@ -201,13 +202,18 @@ class Game extends React.Component {
         });
     }
 
+    setCaptain(playerIndex) {
+        this.setState({ captain: playerIndex });
+    }
+
     render() {
         return (
             <div>
                 <Description
                     phase={this.state.phase}
                     roomId={this.props.roomId}
-                    changePhase={this.changePhase}>    
+                    changePhase={this.changePhase}
+                    setCaptain={this.setCaptain}>    
                 </Description>
             </div>
         );
