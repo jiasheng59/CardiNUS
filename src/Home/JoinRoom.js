@@ -1,6 +1,6 @@
 import { ref, onValue, set } from 'firebase/database';
 import React, { useState } from 'react';
-import { rtdb, auth } from "./fire";
+import { rtdb, auth } from "../firebase/fire";
 
 function JoinRoom({setRoomId, setJoined, playerId}) {
     
@@ -20,7 +20,8 @@ function JoinRoom({setRoomId, setJoined, playerId}) {
                         gameInfo: data.gameInfo,
                         host: data.host,
                         players: [...data.players, uid],
-                        playersId: [data.playersId, playerId]
+                        playersId: [...data.playersId, playerId],
+                        ready : data.ready
                     })
                 }
                 setJoined(true)

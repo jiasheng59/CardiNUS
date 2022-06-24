@@ -1,6 +1,6 @@
 import { onValue, ref, set } from "firebase/database";
 import React from "react";
-import { rtdb, auth } from "../fire";
+import { rtdb, auth } from "../firebase/fire";
 import ReactModal from "react-modal";
 
 class ViewMyAttires extends React.Component {
