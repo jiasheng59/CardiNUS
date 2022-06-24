@@ -91,33 +91,19 @@ function doneAction(roomId) {
     // Update data.done. 
     // TODO: Nothing, but be very careful! Any additional field added to database 
     // is likely to trigger the need to modify this function.
-    const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
-    let tempDone = 0;
-    let tempIndex = {};
-    let tempRole = [];
-    let tempOriAttires = {};
-    let tempPhase;
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo/done');
+    let data = 0;
     onValue(r, (snapshot) => {
-        if (snapshot.exists) {
-            const data = snapshot.val();
-            tempIndex = data.mapIndex;
-            tempRole = data.roles;
-            tempOriAttires = data.originalAttires;
-            tempDone = data.done + 1;
-            tempPhase = data.phase;
-        } else {
-            console.log("fail");
-        }
+        data = snapshot.val();
     });
-    const tempGameInfo = {
-        roles: tempRole,
-        mapIndex: tempIndex,
-        originalAttires: tempOriAttires,
-        done: tempDone,
-        phase: tempPhase
-    }
-    set(r, tempGameInfo);
+    set(r, data + 1);
 }
+
+function setDoneToZero(roomId) {
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo/done');
+    set(r, 0);
+}
+
 
 /*
 Assign roles, set up player's index.
@@ -160,25 +146,12 @@ class Game extends React.Component {
         // Set this player's index
         const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
         var tempIndex = {}
-        var tempRole = []
         onValue(r, (snapshot) => {
-            if(snapshot.exists) {
-                const data = snapshot.val();
-                data.mapIndex[uid] = playerIndex;
-                tempIndex = data.mapIndex
-                tempRole = data.roles
-            } else {
-                console.log("fail")
-            } 
+            const data = snapshot.val();
+            tempIndex = data.mapIndex;
         }, {onlyOnce: true});
-        const tempGameInfo = {
-            roles : tempRole,
-            mapIndex: tempIndex,
-            done: 0,
-            phase: "Choose Attires",
-            captain: -1
-        }
-        set(r, tempGameInfo);
+        tempIndex[uid] = playerIndex;
+        set(ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/mapIndex'), tempIndex);
     }
 
     assignRoles() {
@@ -194,7 +167,7 @@ class Game extends React.Component {
             currentAttires: {},
             done: 0,
             phase: "Choose Attires",
-            vote: [],
+            vote: [0, 0, 0, 0, 0, 0, 0],
             captain: -1
         });
     }
