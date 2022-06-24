@@ -2,8 +2,12 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { onValue, set, ref } from "firebase/database";
-import { getPlayerIndex } from "../Game/Game";
+import { isReadyToChangePhase, getPlayerIndex } from "../Game/Game";
 import { auth, rtdb } from "../fire";
+
+function hasSwapppedAll() {
+    // TODO: Check if the alien has swapped all attires. Returns a boolean.
+}
 
 class NightEvent extends React.Component {
     constructor(props) {
@@ -20,20 +24,16 @@ class NightEvent extends React.Component {
     // Modal
     handleOpenModal() {
         this.setState({ showModal: true });
-    }
-        
+    }   
     handleCloseModal() {
         this.setState({ showModal: false });
     }
-
     onSelectAttire(selectedList, selectedItem) {
         this.setState({ attire: selectedItem.id });
     }
-
     onSelectPlayer(selectedList, selectedItem) {
         this.setState({ player: selectedItem.id });
     }
-
     attireToIndex(attire) {
         if (attire === "helmet") {
             return 0;
@@ -80,6 +80,13 @@ class NightEvent extends React.Component {
         set(yourRef, hisAttireColor);
         */
         
+        if (isReadyToChangePhase(this.props.roomId)) {
+            if (hasSwapppedAll()) {
+                this.props.changePhase("Alien And Mr. D Win");
+            } else {
+                this.props.changePhase("Discussion");
+            }
+        }
     }
         
     render() {

@@ -22,7 +22,11 @@ done, phase, mapIndex, roles, originalAttires, currentAttires, vote
 function Description(props) {
     if (props.phase === "Choose Attires") {
         return (
-            <ChooseAttiresEvent roomId={props.roomId} changePhase={props.changePhase}></ChooseAttiresEvent>
+            <ChooseAttiresEvent
+                roomId={props.roomId}
+                changePhase={props.changePhase}
+            >
+            </ChooseAttiresEvent>
         );
     }
     if (props.phase === "Night") {
@@ -39,11 +43,24 @@ function Description(props) {
             </div>
         );
     }
+    if (props.phase === "Vote For Captain") {
+
+    }
+    if (props.phase === "Captain Time") {
+
+    }
     if (props.phase === "Vote For Alien") {
         return (
             <div>Vote the person you suspect might be an Alien. The person with highest vote will be eliminated.</div>
         );
     }
+    if (props.phase === "Astronauts Win") {
+
+    }
+    if (props.phase === "Alien And Mr. D Win") {
+
+    }
+    alert("Error in GameBody");
 }
 
 class GameBody extends React.Component {

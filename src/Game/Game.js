@@ -213,7 +213,8 @@ class Game extends React.Component {
                     phase={this.state.phase}
                     roomId={this.props.roomId}
                     changePhase={this.changePhase}
-                    setCaptain={this.setCaptain}>    
+                    setCaptain={this.setCaptain}
+                >    
                 </Description>
             </div>
         );
