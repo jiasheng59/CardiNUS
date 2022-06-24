@@ -2,8 +2,12 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { onValue, set, ref } from "firebase/database";
-import { getPlayerIndex } from "../Game/Game";
+import { isReadyToChangePhase, getPlayerIndex } from "../Game/Game";
 import { auth, rtdb } from "../fire";
+
+function hasSwapppedAll() {
+    // TODO: Check if the alien has swapped all attires. Returns a boolean.
+}
 
 class NightEvent extends React.Component {
     constructor(props) {
@@ -20,20 +24,16 @@ class NightEvent extends React.Component {
     // Modal
     handleOpenModal() {
         this.setState({ showModal: true });
-    }
-        
+    }   
     handleCloseModal() {
         this.setState({ showModal: false });
     }
-
     onSelectAttire(selectedList, selectedItem) {
         this.setState({ attire: selectedItem.id });
     }
-
     onSelectPlayer(selectedList, selectedItem) {
         this.setState({ player: selectedItem.id });
     }
-
     attireToIndex(attire) {
         if (attire === "helmet") {
             return 0;
@@ -58,7 +58,13 @@ class NightEvent extends React.Component {
         alert("You have swapped your " + this.state.attire + " with Player " + this.state.player);
         event.preventDefault();
 
+        /*
+        TODO: 
+        This function is to handle the attires change of two players in database.
+        */
+        
         // Update database
+        /*
         const yourRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/orginalAttires/' + getPlayerIndex(this.props.roomId, auth.currentUser.uid) + '/' + this.attireToIndex(this.state.attire));
         const hisRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/orginalAttires/' + (this.state.player - 1).toString() + '/' + this.attireToIndex(this.state.attire));
         let hisAttireColor;
@@ -72,6 +78,15 @@ class NightEvent extends React.Component {
         });
         set(hisRef, yourAttireColor);
         set(yourRef, hisAttireColor);
+        */
+        
+        if (isReadyToChangePhase(this.props.roomId)) {
+            if (hasSwapppedAll()) {
+                this.props.changePhase("Alien And Mr. D Win");
+            } else {
+                this.props.changePhase("Discussion");
+            }
+        }
     }
         
     render() {

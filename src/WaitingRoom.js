@@ -13,7 +13,7 @@ function WaitingRoom({roomId}) {
         onValue(gameRef, (snapshot) => {
             const data = snapshot.val();
             setPlayers(data.playersId)
-        }, {onlyOnce: true});
+        });
     }, [roomId]);
 
     return(

@@ -24,8 +24,9 @@ class Inspect extends React.Component {
     handleView(event) {
         const players = this.state.selectedPlayers;
         const message =
-            "The " + this.state.attire + `of players ${players[0]}, ${players[1]}, ${players[2]} are: respectively`;
+            "The " + this.state.attire + ` of players ${players[0]}, ${players[1]}, ${players[2]} are: respectively`;
         alert(message);
+        this.props.changePhase("Captain time");
         this.handleCloseModal();
     }
 

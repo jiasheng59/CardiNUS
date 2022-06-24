@@ -1,35 +1,51 @@
 import React from "react";
 import Player from "./Player";
 import { Game } from "./Game";
-import NightEvent from "../Event/NightEvent";
-import VoteForCaptainEvent from "../Event/VoteEvent";
-import Timer from "./Timer";
-import Inspect from "./Captain";
-import { Description } from "./GameBody";
+import { onValue, ref } from "firebase/database";
+import { rtdb } from "../fire";
 
 class GamePage extends React.Component { // this.props.phase
+    constructor(props) {
+        super(props);
+        this.getPlayerList = this.getPlayerList.bind(this);
+    }
+
+    getPlayerList() {
+        let playerList = [];
+        const gameRef = ref(rtdb, '/games/' + this.props.roomId);
+        onValue(gameRef, (snapshot) => {
+            const data = snapshot.val();
+            playerList = data.playersId;
+        }, { onlyOnce: true });
+        return playerList;
+    }
 
     render() {
-        const players = ["ori", "or", "andi", "and", "beq", "bnq", "j"];
+        const players = this.getPlayerList();
         let count = 0;
         return (
             <div>
                 <Game roomId={this.props.roomId}></Game>
-                <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>
                 <h2>Players in the room: </h2>
                 <ul>
                     {players.map(player => {
                         count++;
-                        return (<Player name={player} number={count} />);
+                        return (<Player name={player} number={count} roomId={this.props.roomId} />);
                     })}
                 </ul>
-                <Inspect></Inspect>
-                <VoteForCaptainEvent></VoteForCaptainEvent>
-                <Timer secondsLeft={30}></Timer>
-                <NightEvent roomId={this.props.roomId}></NightEvent>
             </div>
         );
     }
 }
 
 export default GamePage;
+
+
+// <NightEvent roomId={this.props.roomId}></NightEvent>
+// <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>
+
+/*
+    <Inspect></Inspect>                
+    <VoteForCaptainEvent></VoteForCaptainEvent>
+    <Timer secondsLeft={30}></Timer>
+*/

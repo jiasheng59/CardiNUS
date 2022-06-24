@@ -3,15 +3,50 @@ import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { auth, rtdb } from "../fire";
 import { onValue, ref, set } from "firebase/database";
-import { getPlayerIndex } from "../Game/Game";
+import { doneAction, getPlayerIndex, isReadyToChangePhase } from "../Game/Game";
 
-// const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
+// red, yellow, blue, turquoise, purple
+
+function setOriginalAttires(roomId, playerIndex, attires) {
+    /*
+    TODO: 
+    Debug pleaseee (facing the same problem of the previous players' attires disappear)
+    This function is to update the originalAttires in database.
+    */
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+    let tempIndex = {};
+    let tempRole = [];
+    let tempOriAttires = {};
+    let tempDone;
+    let tempPhase;
+    onValue(r, (snapshot) => {
+        if (snapshot.exists) {
+            const data = snapshot.val();
+            data.originalAttires[playerIndex] = attires;
+            tempIndex = data.mapIndex;
+            tempRole = data.roles;
+            tempOriAttires = data.originalAttires;
+            tempDone = data.done;
+            tempPhase = data.phase;
+        } else {
+            console.log("fail");
+        }
+    }, { onlyOnce: true });
+    const tempGameInfo = {
+        roles: tempRole,
+        mapIndex: tempIndex,
+        originalAttires: tempOriAttires,
+        done: tempDone,
+        phase: tempPhase
+    }
+    set(r, tempGameInfo);
+}
 
 class ChooseAttiresEvent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: true,
+            showModal: false,
             helmet: "",
             visor: "",
             suit: "",
@@ -22,6 +57,10 @@ class ChooseAttiresEvent extends React.Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.onSelect = this.onSelect.bind(this);
         this.handleDone = this.handleDone.bind(this);
+    }
+
+    componentDidMount() {
+        this.handleOpenModal();
     }
     
     handleOpenModal() {
@@ -61,7 +100,6 @@ class ChooseAttiresEvent extends React.Component {
         } else {
             this.handleCloseModal();
             const playerIndex = getPlayerIndex(this.props.roomId, auth.currentUser.uid);
-            const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/originalAttires');
             const originalAttires = [
                 { name: "helmet", color: this.state.helmet },
                 { name: "visor", color: this.state.visor },
@@ -69,14 +107,13 @@ class ChooseAttiresEvent extends React.Component {
                 { name: "gloves", color: this.state.gloves },
                 { name: "boots", color: this.state.boots }
             ];
-            onValue(r, (snapshot) => {
-                const data = snapshot.val();
-                const arr = data;
-                arr[playerIndex] = originalAttires;
-                set(r, arr);
-            }, { onlyOnce: true });
-            // set(r, originalAttires);
             alert("You have chosen your attires.");
+            doneAction(this.props.roomId);
+            if (isReadyToChangePhase(this.props.roomId)) {
+                this.props.changePhase("Night");
+            }
+            // Update database
+            setOriginalAttires(this.props.roomId, playerIndex, originalAttires);
             event.preventDefault();
         }
     }

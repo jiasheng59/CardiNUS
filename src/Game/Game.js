@@ -1,6 +1,8 @@
 import { onValue, ref, set } from "firebase/database";
 import React from "react";
 import { rtdb, auth } from "../fire";
+import { Description } from "./GameBody";
+
 /*
 const helmet = ['r', 'y', 'b', 't', 'p']; // red, yellow, blue, turquoise, purple
 const visor = ['r', 'y', 'b', 't', 'p'];
@@ -24,7 +26,7 @@ function shuffle(array) {
     return array;
 }
 
-function getHostId(roomId) { // roomId === joinId
+function getHostId(roomId) {
     let hostId;
     const gameRef = ref(rtdb, '/games/' + roomId);
     onValue(gameRef, (snapshot) => {
@@ -37,11 +39,84 @@ function getHostId(roomId) { // roomId === joinId
 }
 function getPlayerIndex(roomId, uid) {
     let playerIndex;
-    const playerIndexRef = ref(rtdb, '/games/' + roomId + '/gameInfo/playerIndex/' + uid);
+    const playerIndexRef = ref(rtdb, '/games/' + roomId + '/gameInfo/mapIndex/' + uid);
     onValue(playerIndexRef, (snapshot) => {
         playerIndex = snapshot.val();
     });
     return playerIndex;
+}
+function getAlienIndex(roomId) {
+    let alienIndex;
+    const gameRef = ref(rtdb, '/games/' + roomId);
+    onValue(gameRef, (snapshot) => {
+        const roles = snapshot.val().roles;
+        for (let i = 0; i < roles.length; i++) {
+            if (roles[i] === "alien") {
+                alienIndex = i;
+            }
+        }
+    }, { onlyOnce: true });
+    return alienIndex;
+}
+function getMrDIndex(roomId) {
+        let mrDIndex;
+        const gameRef = ref(rtdb, '/games/' + roomId);
+        onValue(gameRef, (snapshot) => {
+            const roles = snapshot.val().roles;
+            for (let i = 0; i < roles.length; i++) {
+                if (roles[i] === "mrD") {
+                    mrDIndex = i;
+                }
+            }
+        }, { onlyOnce: true });
+        return mrDIndex;
+}
+
+function isReadyToChangePhase(roomId) {
+    let tempDone = 0;
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+    onValue(r, (snapshot) => {
+        if (snapshot.exists) {
+            const data = snapshot.val();
+            tempDone = data.done;
+        } else {
+            console.log("fail");
+        }
+    });
+    return tempDone === 7;
+}
+
+
+function doneAction(roomId) {
+    // Update data.done. 
+    // TODO: Nothing, but be very careful! Any additional field added to database 
+    // is likely to trigger the need to modify this function.
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+    let tempDone = 0;
+    let tempIndex = {};
+    let tempRole = [];
+    let tempOriAttires = {};
+    let tempPhase;
+    onValue(r, (snapshot) => {
+        if (snapshot.exists) {
+            const data = snapshot.val();
+            tempIndex = data.mapIndex;
+            tempRole = data.roles;
+            tempOriAttires = data.originalAttires;
+            tempDone = data.done + 1;
+            tempPhase = data.phase;
+        } else {
+            console.log("fail");
+        }
+    });
+    const tempGameInfo = {
+        roles: tempRole,
+        mapIndex: tempIndex,
+        originalAttires: tempOriAttires,
+        done: tempDone,
+        phase: tempPhase
+    }
+    set(r, tempGameInfo);
 }
 
 /*
@@ -50,11 +125,13 @@ Assign roles, set up player's index.
 class Game extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { gameStarted: false };
+        this.state = { phase: "Choose Attires", captain: -1}; 
         this.setPlayerIndex = this.setPlayerIndex.bind(this);
         this.assignRoles = this.assignRoles.bind(this);
+        this.changePhase = this.changePhase.bind(this);
+        this.listen = this.listen.bind(this);
+        this.setCaptain = this.setCaptain.bind(this);
     }
-
 
     componentDidMount() { // When game begins, assgin roles.
         const { uid } = auth.currentUser;
@@ -62,22 +139,14 @@ class Game extends React.Component {
             this.assignRoles();
         }
         this.setPlayerIndex();
+        this.listen(); // listen for the phase change in database
     }
-    
 
     setPlayerIndex() { // Start counting from 0
         const uid = auth.currentUser.uid;
         const gameRef = ref(rtdb, '/games/' + this.props.roomId);
         let playerIndex; // this player's index
-        /*
-        function isPlayerIndexEmpty(roomId) {
-            let isEmpty;
-            onValue(playerIndexRef, (snapshot) => {
-                isEmpty = !snapshot.exists();
-            }, { onlyOnce: true });
-            return isEmpty;
-        }
-        */
+        
         // Find this player's index
         onValue(gameRef, (snapshot) => {
             const players = snapshot.val().players;
@@ -86,7 +155,8 @@ class Game extends React.Component {
                     playerIndex = i;
                 }
             }
-        }, {onlyOnce: true});
+        }, { onlyOnce: true });
+        
         // Set this player's index
         const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
         var tempIndex = {}
@@ -103,27 +173,73 @@ class Game extends React.Component {
         }, {onlyOnce: true});
         const tempGameInfo = {
             roles : tempRole,
-            mapIndex: tempIndex
+            mapIndex: tempIndex,
+            done: 0,
+            phase: "Choose Attires",
+            captain: -1
         }
-        set(r, tempGameInfo)
-        console.log(tempGameInfo)
+        set(r, tempGameInfo);
     }
 
     assignRoles() {
-        // const shuffledRoles = some permutation
-        // update database to assign role to each player
         var mapIndex = {};
         const uid = auth.currentUser.uid;
         mapIndex[uid] = 0;
         const roles = shuffle(ROLES);
         const gameInfoRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
-        set(gameInfoRef, { roles: roles, mapIndex: mapIndex });
+        set(gameInfoRef, {
+            roles: roles,
+            mapIndex: mapIndex,
+            originalAttires: {},
+            currentAttires: {},
+            done: 0,
+            phase: "Choose Attires",
+            vote: [],
+            captain: -1
+        });
+    }
+
+    changePhase(newPhase) {
+        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/phase');
+        set(r, newPhase);
+        alert(`Phase changed, now: ${newPhase}`);
+    }
+
+    listen() { // This function may cause trouble.
+        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/phase');
+        onValue(r, (snapshot) => {
+            if (snapshot.exists) {
+                const curPhase = snapshot.val();
+                this.setState({ phase: curPhase }); 
+            } else {
+                console.log("fail");
+            }
+        });
+        const r2 = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/captain');
+        onValue(r, (snapshot) => {
+            if (snapshot.exists) {
+                const captain = snapshot.val();
+                this.setState({ captain: captain }); 
+            } else {
+                console.log("fail to synchronise captain");
+            }
+        });
+    }
+
+    setCaptain(playerIndex) {
+        this.setState({ captain: playerIndex });
     }
 
     render() {
         return (
             <div>
-                <h1>Game is starting soon!</h1>
+                <Description
+                    phase={this.state.phase}
+                    roomId={this.props.roomId}
+                    changePhase={this.changePhase}
+                    captain={this.state.captain}
+                >    
+                </Description>
             </div>
         );
     }
@@ -143,17 +259,14 @@ function setClientGameStarted(joinId) {
     }, {onlyOnce: false});
 }
 */
-export { Game, getPlayerIndex };
+export { Game, getPlayerIndex, isReadyToChangePhase, doneAction, getAlienIndex, getMrDIndex };
+    
+    // <NightEvent roomId={this.props.roomId}></NightEvent>
+// <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>
 
 /*
-function TestingShuffle() {
-    const roles = ["alien", "mrD", "astronaut", "astronaut", "astronaut", "astronaut", "astronaut"];
-    const shuffledRoles = shuffle(roles).map(n => <li>{n}</li>);
-    return (
-        <ul>
-            {shuffledRoles}
-        </ul>
-    );
-}
+    <Inspect></Inspect>                
+    <VoteForCaptainEvent></VoteForCaptainEvent>
+    <Timer secondsLeft={30}></Timer>
 */
 

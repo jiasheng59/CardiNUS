@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactModal from 'react-modal';
+import { getPlayerIndex } from "./Game";
+import { auth } from "../fire";
+import "./Player.css";
 
 class Player extends React.Component {
     constructor(props) {
@@ -19,11 +22,25 @@ class Player extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <button onClick={this.handleOpenModal}>
+        const playerIndex = getPlayerIndex(this.props.roomId, auth.currentUser.uid);
+        let button;
+        if (playerIndex === this.props.number - 1) {
+            button = (
+                <button className='you' onClick={this.handleOpenModal}>
+                    {"Player " + this.props.number + ": " + this.props.name + " (You)"}
+                </button>
+            );
+        } else {
+            button = (
+                <button className='otherPlayers' onClick={this.handleOpenModal}>
                     {"Player " + this.props.number + ": " + this.props.name}
                 </button>
+            );
+        }
+
+        return (
+            <div>
+                {button}
                 <ReactModal
                     isOpen={this.state.showModal}
                     contentLabel="showAttire">
