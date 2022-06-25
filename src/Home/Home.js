@@ -21,6 +21,9 @@ function Home({handleLogout, playerId, setPlayerId}) {
             ):(
             <WaitingRoom
                 roomId={roomId}
+                setStarted={setStarted}
+                setRoomId={setRoomId}
+                setJoined={setJoined}
             />
         )}
         </>

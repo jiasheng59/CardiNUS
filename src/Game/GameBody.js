@@ -6,7 +6,7 @@ import Inspect from "./Captain";
 import { getPlayerIndex, getAlienIndex, getMrDIndex } from "./Game";
 import Timer from "./Timer";
 import ViewMyAttires from "./ViewMyAttires";
-import { rtdb, auth } from "../fire";
+import { rtdb, auth } from "../firebase/fire";
 /*
 const phases = [
     "Choose Attires",

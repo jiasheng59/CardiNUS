@@ -2,7 +2,7 @@ import React from "react";
 import Player from "./Player";
 import { Game } from "./Game";
 import { onValue, ref } from "firebase/database";
-import { rtdb } from "../fire";
+import { rtdb } from "../firebase/fire";
 
 class GamePage extends React.Component { // this.props.phase
     constructor(props) {

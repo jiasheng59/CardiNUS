@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {fire, auth} from "./fire";
+import {fire, auth} from "./firebase/fire";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import Login from "./Login";
-import Home from "./Home";
+import Login from "./Home/Login";
+import Home from "./Home/Home";
 import "./App.css";
 
 const App = () => {

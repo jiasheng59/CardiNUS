@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { db, auth } from "./fire";
+import { db, auth } from "../../firebase/fire";
 import firebase from "firebase/compat/app";
 import "./Chat.css"
 

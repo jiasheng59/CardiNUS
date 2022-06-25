@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import SendMessage from './SendMessage'
-import { db } from "./fire";
+import { db } from "../../firebase/fire";
 import "./Chat.css"
 
 

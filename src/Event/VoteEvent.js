@@ -2,7 +2,7 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { isReadyToChangePhase, doneAction, getAlienIndex } from "../Game/Game";
-import { rtdb, auth } from "../fire";
+import { rtdb, auth } from "../firebase/fire";
 import { onValue, ref, set } from "firebase/database";
 
 // Remark: Eliminate player feature will be implemented by milestone 3
@@ -31,14 +31,27 @@ function getHighestVote(roomId) {
         return arr[tempVote.length - 1][0];
     }
 }
+
 function setVote(roomId, votedPlayerIndex) {
     // TODO: update vote array in database, the array name should be called vote
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo/vote/' + votedPlayerIndex);
+
+    onValue(r, (snapshot) => {
+        const data = snapshot.val();
+        set(r, data + 1);
+    }, {onlyOnce: true});
 }
+
 function setVoteToZero(roomId) {
     // TODO: set the vote array in database to [] / {}, depending on your implementation
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo/vote');
+    set(r, [0, 0, 0, 0, 0, 0, 0]);
 }
+
 function setCaptain(roomId, newCaptain) {
     // TODO: update captain field in database to newCaptain
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo/captain');
+    set(r, newCaptain);
 }
 
 class VoteForCaptainEvent extends React.Component {
