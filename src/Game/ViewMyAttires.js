@@ -6,6 +6,7 @@ import { getPlayerIndex } from "./Game";
 import Attire from "./Attire";
 
 class ViewMyAttires extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -41,7 +42,8 @@ class ViewMyAttires extends React.Component {
                 gloves: currentAttires[3].color,
                 boots: currentAttires[4].color
             });
-        }, {onlyOnce: true});
+        });
+        /*
         return (
             <div>
                 <Attire attire={"Helmet"} color={this.state.helmet}></Attire>
@@ -51,6 +53,7 @@ class ViewMyAttires extends React.Component {
                 <Attire attire={"Boots"} color={this.state.boots}></Attire>
             </div>
         );
+        */
     }
     getOriginalAttires() {
         let originalAttires;
@@ -68,10 +71,13 @@ class ViewMyAttires extends React.Component {
             </div>
         );
     }
+
+    componentDidMount() {
+        this.getCurrentAttires();
+    }
         
     render() {
         const originalAttiresElement = this.getOriginalAttires();
-        const currentAttiresElement = <div></div>;
 
         return (
             <div>
@@ -79,7 +85,13 @@ class ViewMyAttires extends React.Component {
                 <ReactModal isOpen={this.state.showModal}>
                     <h2>Your attires</h2>
                     <h3>Current</h3>
-                    {currentAttiresElement}
+                    <div>
+                        <Attire attire={"Helmet"} color={this.state.helmet}></Attire>
+                        <Attire attire={"Visor"} color={this.state.visor}></Attire>
+                        <Attire attire={"Suit"} color={this.state.suit}></Attire>
+                        <Attire attire={"Gloves"} color={this.state.gloves}></Attire>
+                        <Attire attire={"Boots"} color={this.state.boots}></Attire>
+                    </div>
                     <h3>Original</h3>
                     {originalAttiresElement}
                     <button onClick={this.handleCloseModal}>Close</button>
