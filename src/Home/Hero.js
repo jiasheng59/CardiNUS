@@ -8,11 +8,16 @@ import ReactModal from 'react-modal';
 
 function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
   const [changeId, setChangeId] = useState(false)
+  const [joiningRoom, setJoiningRoom] = useState(false)
 
   function change() {
     setChangeId(true)
   }
 
+  function joining() {
+    setJoiningRoom(true)
+  }
+  
   return (
     <>
       <section className="hero">
@@ -37,11 +42,15 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
           setJoined={setJoined}
           playerId={playerId}
         />
-        <JoinRoom
-          setRoomId={setRoomId}
-          setJoined={setJoined}
-          playerId={playerId}
-        />
+        {joiningRoom ?(
+          <JoinRoom
+            setRoomId={setRoomId}
+            setJoined={setJoined}
+            playerId={playerId}
+          />
+          ):(
+            <button onClick={joining}>Join Room</button>
+          )}
         </div>
       <div>
         <ReactModal isOpen={ false}>
