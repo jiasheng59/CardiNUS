@@ -5,8 +5,9 @@ import { VoteForAlienEvent, VoteForCaptainEvent } from "../Event/VoteEvent";
 import Inspect from "./Captain";
 import { getPlayerIndex, getAlienIndex, getMrDIndex } from "./Game";
 import Timer from "./Timer";
-import ViewMyAttires from "./ViewMyAttires";
 import { rtdb, auth } from "../firebase/fire";
+import DayEvent from "../Event/DayEvent";
+
 /*
 const phases = [
     "Choose Attires",
@@ -49,7 +50,7 @@ function Description(props) {
         return (
             <div>
                 Discussion time left: <Timer secondsLeft={300}></Timer>
-                <ViewMyAttires roomId={props.roomId}></ViewMyAttires>
+                <DayEvent roomId={props.roomId}></DayEvent>
             </div>
         );
     }

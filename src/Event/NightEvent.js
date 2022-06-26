@@ -3,7 +3,7 @@ import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { onValue, set, ref } from "firebase/database";
 import { isReadyToChangePhase, getPlayerIndex, doneAction } from "../Game/Game";
-import { auth, rtdb } from "../fire";
+import { auth, rtdb } from "../firebase/fire";
 
 function hasSwapppedAll() {
     // TODO: Check if the alien has swapped all attires. Returns a boolean.

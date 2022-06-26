@@ -233,9 +233,6 @@ function setClientGameStarted(joinId) {
 }
 */
 export { Game, getPlayerIndex, isReadyToChangePhase, doneAction, getAlienIndex, getMrDIndex };
-    
-    // <NightEvent roomId={this.props.roomId}></NightEvent>
-// <Description phase={"Choose attires"} roomId={this.props.roomId}></Description>
 
 /*
     <Inspect></Inspect>                

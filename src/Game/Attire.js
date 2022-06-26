@@ -1,21 +1,12 @@
 import React from "react";
-/*
+
 class Attire extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
-    formatImageName(imageName) {
-        // To do
-    } 
-
-    render(props) {
-        const imageName = formatImageName(this.props.imageName);
+    render() {
         return (
-            <img src={this.props.name} />
+            <div>{`${this.props.attire}: ${this.props.color}`}</div>
         );
     }
 }
 
 export default Attire;
-*/
