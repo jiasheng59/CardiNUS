@@ -82,7 +82,7 @@ function isReadyToChangePhase(roomId) {
         } else {
             console.log("fail");
         }
-    }, {onlyOnce: true}));
+    }, {onlyOnce: true});
     return tempDone === 7;
 }
 
