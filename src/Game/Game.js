@@ -83,7 +83,7 @@ function isReadyToChangePhase(roomId) {
             console.log("fail");
         }
     });
-    return tempDone === 7;
+    return tempDone === 1;
 }
 
 
@@ -188,7 +188,6 @@ class Game extends React.Component {
                 console.log("fail");
             }
         });
-        const r2 = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/captain');
         onValue(r, (snapshot) => {
             if (snapshot.exists) {
                 const captain = snapshot.val();
