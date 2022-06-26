@@ -98,6 +98,7 @@ class NightEvent extends React.Component {
             } else {
                 this.props.changePhase("Discussion");
             }
+            setDoneToZero(this.props.roomId);
         }
     }
         

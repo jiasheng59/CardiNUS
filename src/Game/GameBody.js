@@ -49,7 +49,12 @@ function Description(props) {
     if (props.phase === "Discussion") { // ViewMyAttires TBC
         return (
             <div>
-                Discussion time left: <Timer secondsLeft={300}></Timer>
+                Discussion time left:
+                <Timer
+                    secondsLeft={100}
+                    roomId={props.roomId}
+                    changePhase={props.changePhase}
+                ></Timer>
                 <DayEvent roomId={props.roomId}></DayEvent>
             </div>
         );
