@@ -25,6 +25,7 @@ function Home({handleLogout, playerId, setPlayerId}) {
                     setStarted={setStarted}
                     setRoomId={setRoomId}
                     setJoined={setJoined}
+                    playerId={playerId}
                 />
             ):(
                 <GamePage roomId={roomId}></GamePage>
