@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { rtdb } from "../firebase/fire";
-import { ref, onValue, set} from "firebase/database";
+import { ref, onValue, set, remove} from "firebase/database";
 import GamePage from "../Game/GamePage";
 import {auth} from "../firebase/fire";
 
@@ -13,11 +13,15 @@ function WaitingRoom({roomId, setStarted, setJoined}) {
         const gameRef = ref(rtdb, '/games/' + roomId);
         const uid = auth.currentUser.uid;
         onValue(gameRef, (snapshot) => {
-            const data = snapshot.val();
-            setIsHost(uid === data.host)
-            setPlayers(data.playersId)
+            if(snapshot.exists()) {
+                const data = snapshot.val();
+                setIsHost(uid === data.host)
+                setPlayers(data.playersId)
+            } else{
+                setJoined(false);
+            }
         });
-    }, [roomId]);
+    }, [roomId, setJoined]);
 
     const setReady = () => {
         const gameRef = ref(rtdb, '/games/' + roomId);
@@ -64,7 +68,7 @@ function WaitingRoom({roomId, setStarted, setJoined}) {
         if (allReady) {
             setStarted(true);
         } else {
-            alert("Wait For All Player To Get Ready")
+            alert("Wait For All Players To Get Ready")
         }
     }
 
@@ -94,6 +98,11 @@ function WaitingRoom({roomId, setStarted, setJoined}) {
         setJoined(false)
     }
 
+    const closeRoom = () => {
+        const gameRef = ref(rtdb, '/games/' + roomId);
+        remove(gameRef);
+    }
+
     return(
         <div>
             <div>
@@ -116,9 +125,11 @@ function WaitingRoom({roomId, setStarted, setJoined}) {
                 <button onClick={setReady}>Ready</button>
              )
             )}
-            {!isHost &&
+            {isHost ?(
+                <button onClick={closeRoom}>Close Room</button>
+                ):(
                 <button onClick={leaveRoom}>Leave Room</button>
-            }
+            )}
             <GamePage roomId={roomId}></GamePage>
         </div>
     );
