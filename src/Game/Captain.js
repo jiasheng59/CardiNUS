@@ -1,6 +1,9 @@
 import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
+import { setDoneToZero } from "./Game";
+import { rtdb } from "../firebase/fire";
+import { onValue, ref } from "firebase/database";
 
 class Inspect extends React.Component {
     constructor(props) {
@@ -9,6 +12,8 @@ class Inspect extends React.Component {
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleView = this.handleView.bind(this);
+        this.handleVoteForAlien = this.handleVoteForAlien.bind(this);
+        this.handleSkip = this.handleSkip.bind(this);
         this.onSelectAttire = this.onSelectAttire.bind(this);
         this.onSelectPlayers = this.onSelectPlayers.bind(this);
         this.onRemovePlayers = this.onRemovePlayers.bind(this);
@@ -23,11 +28,27 @@ class Inspect extends React.Component {
     }
     handleView(event) {
         const players = this.state.selectedPlayers;
+        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/currentAttires');
+        let colors;
+        onValue(r, (snapshot) => {
+            colors = snapshot.val();
+        }, {onlyOnce: true}); 
         const message =
-            "The " + this.state.attire + ` of players ${players[0]}, ${players[1]}, ${players[2]} are: respectively`;
+            "The " + this.state.attire + ` of players ${players[0]}, ${players[1]}, ${players[2]} are: 
+            ${colors[players[0] - 1].color}, 
+            ${colors[players[1] - 1].color}, 
+            ${colors[players[2] - 1].color} respectively`;
         alert(message);
-        this.props.changePhase("Captain time");
+    }
+    handleVoteForAlien(event) {
         this.handleCloseModal();
+        setDoneToZero(this.props.roomId);
+        this.props.changePhase("Vote For Alien");
+    }
+    handleSkip(event) {
+        this.handleCloseModal();
+        setDoneToZero(this.props.roomId);
+        this.props.changePhase("Night");
     }
 
     onSelectAttire(selectedList, selectedItem) {
@@ -86,6 +107,8 @@ class Inspect extends React.Component {
                         />
                     </form>
                     <button onClick={this.handleView}>View</button>
+                    <button onClick={this.handleVoteForAlien}>Vote For Alien</button>
+                    <button onClick={this.handleSkip}>Skip Voting Phase</button>
                     <button onClick={this.handleCloseModal}>Close</button>
                 </ReactModal>
             </div>

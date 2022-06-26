@@ -2,7 +2,7 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { isReadyToChangePhase, doneAction, getAlienIndex } from "../Game/Game";
-import { rtdb, auth } from "../firebase/fire";
+import { rtdb } from "../firebase/fire";
 import { onValue, ref, set } from "firebase/database";
 
 // Remark: Eliminate player feature will be implemented by milestone 3
