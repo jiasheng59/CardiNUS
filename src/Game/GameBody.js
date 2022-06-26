@@ -5,7 +5,7 @@ import { VoteForAlienEvent, VoteForCaptainEvent } from "../Event/VoteEvent";
 import Inspect from "./Captain";
 import { getPlayerIndex, getAlienIndex, getMrDIndex } from "./Game";
 import Timer from "./Timer";
-import { rtdb, auth } from "../firebase/fire";
+import { auth } from "../firebase/fire";
 import DayEvent from "../Event/DayEvent";
 
 /*
@@ -36,6 +36,10 @@ function Description(props) {
         );
     }
     if (props.phase === "Night") {
+        const messageForMrD =
+            getPlayerIndex(props.roomId, auth.currentUser.uid) === getMrDIndex(props.roomId)
+                ? <div>You are Mr.D</div>
+                : <div></div>;
         return (
             <div>
                 You may swap an attire with any other player.
@@ -43,6 +47,7 @@ function Description(props) {
                     roomId={props.roomId}
                     changePhase={props.changePhase}
                 ></NightEvent>
+                {messageForMrD}
             </div>
         );
     }
