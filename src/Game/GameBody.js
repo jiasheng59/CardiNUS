@@ -5,7 +5,7 @@ import { VoteForAlienEvent, VoteForCaptainEvent } from "../Event/VoteEvent";
 import Inspect from "./Captain";
 import { getPlayerIndex, getAlienIndex, getMrDIndex } from "./Game";
 import Timer from "./Timer";
-import { rtdb, auth } from "../firebase/fire";
+import { auth } from "../firebase/fire";
 import DayEvent from "../Event/DayEvent";
 
 /*
@@ -36,6 +36,10 @@ function Description(props) {
         );
     }
     if (props.phase === "Night") {
+        const messageForMrD =
+            getPlayerIndex(props.roomId, auth.currentUser.uid) === getMrDIndex(props.roomId)
+                ? <div>You are Mr.D</div>
+                : <div></div>;
         return (
             <div>
                 You may swap an attire with any other player.
@@ -43,13 +47,19 @@ function Description(props) {
                     roomId={props.roomId}
                     changePhase={props.changePhase}
                 ></NightEvent>
+                {messageForMrD}
             </div>
         );
     }
     if (props.phase === "Discussion") { // ViewMyAttires TBC
         return (
             <div>
-                Discussion time left: <Timer secondsLeft={300}></Timer>
+                Discussion time left:
+                <Timer
+                    secondsLeft={100}
+                    roomId={props.roomId}
+                    changePhase={props.changePhase}
+                ></Timer>
                 <DayEvent roomId={props.roomId}></DayEvent>
             </div>
         );
