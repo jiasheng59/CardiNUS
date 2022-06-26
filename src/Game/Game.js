@@ -83,7 +83,7 @@ function isReadyToChangePhase(roomId) {
             console.log("fail");
         }
     });
-    return tempDone === 7;
+    return tempDone === 1;
 }
 
 
@@ -232,7 +232,7 @@ function setClientGameStarted(joinId) {
     }, {onlyOnce: false});
 }
 */
-export { Game, getPlayerIndex, isReadyToChangePhase, doneAction, getAlienIndex, getMrDIndex };
+export { Game, getPlayerIndex, isReadyToChangePhase, doneAction, setDoneToZero, getAlienIndex, getMrDIndex };
 
 /*
     <Inspect></Inspect>                

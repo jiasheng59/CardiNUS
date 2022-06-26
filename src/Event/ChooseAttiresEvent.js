@@ -3,7 +3,7 @@ import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { auth, rtdb } from "../firebase/fire";
 import { onValue, ref, set } from "firebase/database";
-import { doneAction, getPlayerIndex, isReadyToChangePhase } from "../Game/Game";
+import { doneAction, getPlayerIndex, isReadyToChangePhase, setDoneToZero } from "../Game/Game";
 
 // red, yellow, blue, turquoise, purple
 
@@ -98,6 +98,7 @@ class ChooseAttiresEvent extends React.Component {
             doneAction(this.props.roomId);
             if (isReadyToChangePhase(this.props.roomId)) {
                 this.props.changePhase("Night");
+                setDoneToZero(this.props.roomId);
             }
             // Update database
             setOriginalAttires(this.props.roomId, playerIndex, originalAttires);

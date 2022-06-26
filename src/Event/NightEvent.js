@@ -2,11 +2,27 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { onValue, set, ref } from "firebase/database";
-import { isReadyToChangePhase, getPlayerIndex, doneAction } from "../Game/Game";
+import { isReadyToChangePhase, getPlayerIndex, doneAction, getAlienIndex } from "../Game/Game";
 import { auth, rtdb } from "../firebase/fire";
 
-function hasSwapppedAll() {
-    // TODO: Check if the alien has swapped all attires. Returns a boolean.
+function hasSwapppedAll(roomId) {
+    // Check if the alien has swapped all attires. Returns a boolean.
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+    let currentAttires;
+    let originalAttires;
+    onValue(r, snapshot => {
+        const data = snapshot.val();
+        originalAttires = data.originalAttires;
+        currentAttires = data.currentAttires;
+    }, { onlyOnce: true });
+    const alienCurrentAttires = currentAttires[getAlienIndex(roomId)].map(a => a.color);
+    const alienOriginalAttires = originalAttires[getAlienIndex(roomId)].map(a => a.color);
+    for (let i = 0; i < alienCurrentAttires.length; i++) {
+        if (alienCurrentAttires[i] !== alienOriginalAttires[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 class NightEvent extends React.Component {
@@ -75,8 +91,9 @@ class NightEvent extends React.Component {
         set(hisRef, yourAttire);
         set(yourRef, hisAttire);
         
+        doneAction(this.props.roomId);
         if (isReadyToChangePhase(this.props.roomId)) {
-            if (hasSwapppedAll()) {
+            if (hasSwapppedAll(this.props.roomId)) {
                 this.props.changePhase("Alien And Mr. D Win");
             } else {
                 this.props.changePhase("Discussion");
