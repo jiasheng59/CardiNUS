@@ -2,7 +2,7 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { onValue, set, ref } from "firebase/database";
-import { isReadyToChangePhase, getPlayerIndex, doneAction, getAlienIndex } from "../Game/Game";
+import { isReadyToChangePhase, getPlayerIndex, doneAction, getAlienIndex, setDoneToZero } from "../Game/Game";
 import { auth, rtdb } from "../firebase/fire";
 
 function hasSwapppedAll(roomId) {

@@ -2,6 +2,8 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { setDoneToZero } from "./Game";
+import { rtdb } from "../firebase/fire";
+import { onValue, ref } from "firebase/database";
 
 class Inspect extends React.Component {
     constructor(props) {
