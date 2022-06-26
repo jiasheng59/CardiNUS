@@ -50,7 +50,6 @@ function getAlienIndex(roomId) {
     const gameRef = ref(rtdb, '/games/' + roomId + '/gameInfo');
     onValue(gameRef, (snapshot) => {
         const roles = snapshot.val().roles;
-        console.log(roles)
         for (let i = 0; i < roles.length; i++) {
             if (roles[i] === "alien") {
                 alienIndex = i;
@@ -80,11 +79,10 @@ function isReadyToChangePhase(roomId) {
         if (snapshot.exists) {
             const data = snapshot.val();
             tempDone = data;
-            console.log(tempDone)
         } else {
             console.log("fail");
         }
-    }, {onlyOnce: true}));
+    }, {onlyOnce: true});
     return tempDone === 7;
 }
 

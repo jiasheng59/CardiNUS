@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { rtdb } from "../firebase/fire";
 import { ref, onValue, set, remove} from "firebase/database";
-import GamePage from "../Game/GamePage";
 import {auth} from "../firebase/fire";
 
 function WaitingRoom({roomId, setStarted, setJoined}) {
@@ -130,7 +129,6 @@ function WaitingRoom({roomId, setStarted, setJoined}) {
                 ):(
                 <button onClick={leaveRoom}>Leave Room</button>
             )}
-            <GamePage roomId={roomId}></GamePage>
         </div>
     );
 }
