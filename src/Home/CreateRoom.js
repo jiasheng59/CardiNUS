@@ -9,7 +9,7 @@ function CreateRoom({ setRoomId, setJoined, playerId }) {
         const { uid } = auth.currentUser;
 
         const roomInfo = {
-            gameInfo: [null],
+            gameInfo: [-1],
             host: uid,
             players:[uid],
             playersId: [playerId],

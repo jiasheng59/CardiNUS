@@ -115,17 +115,17 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
 
     return(
         <div>
-            <div>
+            <h1>
                 Room ID: {roomId}
-            </div>
-            <div>
+            </h1>
+            <h1>
                 Player List:
                 {players.map(player => (
                     <div>
                         {player}
                     </div>
                 ))}
-            </div>
+            </h1>
             <div className="btmButtons">
             <button onClick={openChat}>Chat Room</button>
                 <ReactModal isOpen={chatOpen}>
