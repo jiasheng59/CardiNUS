@@ -47,9 +47,10 @@ function getPlayerIndex(roomId, uid) {
 }
 function getAlienIndex(roomId) {
     let alienIndex;
-    const gameRef = ref(rtdb, '/games/' + roomId);
+    const gameRef = ref(rtdb, '/games/' + roomId + '/gameInfo');
     onValue(gameRef, (snapshot) => {
         const roles = snapshot.val().roles;
+        console.log(roles)
         for (let i = 0; i < roles.length; i++) {
             if (roles[i] === "alien") {
                 alienIndex = i;
@@ -60,7 +61,7 @@ function getAlienIndex(roomId) {
 }
 function getMrDIndex(roomId) {
         let mrDIndex;
-        const gameRef = ref(rtdb, '/games/' + roomId);
+        const gameRef = ref(rtdb, '/games/' + roomId + '/gameInfo');
         onValue(gameRef, (snapshot) => {
             const roles = snapshot.val().roles;
             for (let i = 0; i < roles.length; i++) {
@@ -74,16 +75,17 @@ function getMrDIndex(roomId) {
 
 function isReadyToChangePhase(roomId) {
     let tempDone = 0;
-    const r = ref(rtdb, '/games/' + roomId + '/gameInfo');
+    const r = ref(rtdb, '/games/' + roomId + '/gameInfo/done');
     onValue(r, (snapshot) => {
         if (snapshot.exists) {
             const data = snapshot.val();
-            tempDone = data.done;
+            tempDone = data;
+            console.log(tempDone)
         } else {
             console.log("fail");
         }
-    });
-    return tempDone === 1;
+    }, {onlyOnce: true});
+    return tempDone === 7;
 }
 
 
