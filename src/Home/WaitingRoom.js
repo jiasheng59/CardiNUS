@@ -56,17 +56,17 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
     }
 
     const setStart = () => {
-        const gameRef = ref(rtdb, '/games/' + roomId);
+        const gameRef = ref(rtdb, '/games/' + roomId + "/ready");
         var allReady = true;
         onValue(gameRef, (snapshot) => {
             const data = snapshot.val();
-            const ready = data.ready;
+            const ready = data;
             for (let i = 0; i < ready; i++) {
                 if (!ready[i]) {
                     allReady = false;
                 }
             }
-        }, {onlyOnce: true});
+        });
         if (allReady) {
             setStarted(true);
         } else {
