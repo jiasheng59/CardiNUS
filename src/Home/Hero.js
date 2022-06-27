@@ -9,6 +9,7 @@ import ReactModal from 'react-modal';
 function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
   const [changeId, setChangeId] = useState(false)
   const [joiningRoom, setJoiningRoom] = useState(false)
+  const [chatOpen, setChatOpen] = useState(false)
 
   function change() {
     setChangeId(true)
@@ -17,7 +18,15 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
   function joining() {
     setJoiningRoom(true)
   }
-  
+
+  function openChat() {
+    setChatOpen(true)
+  }
+
+  function closeChat() {
+    setChatOpen(false)
+  }
+
   return (
     <>
       <section className="hero">
@@ -36,7 +45,13 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
           <button onClick={handleLogout}>Logout</button>
         </nav>
       </section>
-      <div>
+      <div className="btmButtons">
+        <button onClick={openChat}>Chat Room</button>
+          <ReactModal isOpen={chatOpen}>
+            <button onClick={closeChat}>Close</button>
+            <Chat
+            playerId={playerId}/>
+          </ReactModal>
         <CreateRoom
           setRoomId={setRoomId}
           setJoined={setJoined}
@@ -51,12 +66,6 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId}){
           ):(
             <button onClick={joining}>Join Room</button>
           )}
-        </div>
-      <div>
-        <ReactModal isOpen={ false}>
-          <Chat
-          playerId={playerId} />
-        </ReactModal>
       </div>
     </>
   );

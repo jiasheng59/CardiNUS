@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Hero from "./Hero";
 import WaitingRoom from "./WaitingRoom";
+import GamePage from "../Game/GamePage";
 
 function Home({handleLogout, playerId, setPlayerId}) {
     const [joined, setJoined] = useState(false);
@@ -18,13 +19,17 @@ function Home({handleLogout, playerId, setPlayerId}) {
                 setJoined={setJoined}
                 setRoomId={setRoomId}
             />
+            ):(!started ? (
+                <WaitingRoom
+                    roomId={roomId}
+                    setStarted={setStarted}
+                    setRoomId={setRoomId}
+                    setJoined={setJoined}
+                    playerId={playerId}
+                />
             ):(
-            <WaitingRoom
-                roomId={roomId}
-                setStarted={setStarted}
-                setRoomId={setRoomId}
-                setJoined={setJoined}
-            />
+                <GamePage roomId={roomId}></GamePage>
+            )
         )}
         </>
     )

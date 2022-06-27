@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { rtdb } from "../firebase/fire";
 import { ref, onValue, set, remove} from "firebase/database";
-import GamePage from "../Game/GamePage";
 import {auth} from "../firebase/fire";
+import Chat from "./Features/Chat";
+import ReactModal from 'react-modal';
 
-function WaitingRoom({roomId, setStarted, setJoined}) {
+function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
     const [players, setPlayers] = useState([]);
     const [isHost, setIsHost] = useState(false);
     const [isReady, setIsReady] = useState(false);
+    const [chatOpen, setChatOpen] = useState(false)
     
     useEffect(() => {
         const gameRef = ref(rtdb, '/games/' + roomId);
@@ -103,6 +105,14 @@ function WaitingRoom({roomId, setStarted, setJoined}) {
         remove(gameRef);
     }
 
+    function openChat() {
+        setChatOpen(true)
+      }
+    
+      function closeChat() {
+        setChatOpen(false)
+      }
+
     return(
         <div>
             <div>
@@ -116,6 +126,13 @@ function WaitingRoom({roomId, setStarted, setJoined}) {
                     </div>
                 ))}
             </div>
+            <div className="btmButtons">
+            <button onClick={openChat}>Chat Room</button>
+                <ReactModal isOpen={chatOpen}>
+                    <button onClick={closeChat}>Close</button>
+                    <Chat
+                    playerId={playerId}/>
+                </ReactModal>
             {isHost ?(
                 <button onClick={setStart}>Start Game</button>
              ):(
@@ -130,7 +147,7 @@ function WaitingRoom({roomId, setStarted, setJoined}) {
                 ):(
                 <button onClick={leaveRoom}>Leave Room</button>
             )}
-            <GamePage roomId={roomId}></GamePage>
+            </div>
         </div>
     );
 }
