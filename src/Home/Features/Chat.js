@@ -9,7 +9,7 @@ function Chat({playerId}) {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        db.collection('messages').orderBy('createdAt').limit(25).onSnapshot(snapshot => {
+        db.collection('messages').orderBy('createdAt').limit(15).onSnapshot(snapshot => {
             setMessages(snapshot.docs.map(doc => doc.data()))
         })
     }, [])
