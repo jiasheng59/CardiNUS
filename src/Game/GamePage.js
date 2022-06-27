@@ -25,7 +25,6 @@ class GamePage extends React.Component { // this.props.phase
         let count = 0;
         return (
             <div>
-                <Game roomId={this.props.roomId}></Game>
                 <h2>Players in the room: </h2>
                 <ul>
                     {players.map(player => {
@@ -33,6 +32,7 @@ class GamePage extends React.Component { // this.props.phase
                         return (<Player name={player} number={count} roomId={this.props.roomId} />);
                     })}
                 </ul>
+                <Game roomId={this.props.roomId}></Game>
             </div>
         );
     }
