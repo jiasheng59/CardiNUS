@@ -170,6 +170,7 @@ class Game extends React.Component {
             vote: [0, 0, 0, 0, 0, 0, 0],
             captain: -1
         });
+        set(ref(rtdb, '/games/' + this.props.roomId + "/ready/" + 0), true);
     }
 
     changePhase(newPhase) {

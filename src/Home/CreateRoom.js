@@ -13,7 +13,7 @@ function CreateRoom({ setRoomId, setJoined, playerId }) {
             host: uid,
             players:[uid],
             playersId: [playerId],
-            ready: [true, false, false, false, false, false]
+            ready: [false, false, false, false, false, false, false]
         };
         const key = push(ref(rtdb, "/games"), roomInfo).key;
         alert(key);

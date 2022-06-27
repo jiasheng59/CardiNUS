@@ -23,10 +23,20 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
                 setJoined(false);
             }
         });
-    }, [roomId, setJoined]);
+
+        const startRef = ref(rtdb, '/games/' + roomId + "/ready");
+        onValue(startRef, (snapshot) => {
+            if(snapshot.exists()) {
+                const ready = snapshot.val();
+                if (ready.every(Boolean)) {
+                    setStarted(true);
+                }
+            }
+        });
+    }, [roomId, setJoined, setStarted]);
 
     const setReady = () => {
-        const gameRef = ref(rtdb, '/games/' + roomId);
+        var gameRef = ref(rtdb, '/games/' + roomId);
         const uid = auth.currentUser.uid;
         onValue(gameRef, (snapshot) => {
             const data = snapshot.val();
@@ -56,14 +66,14 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
     }
 
     const setStart = () => {
-        const gameRef = ref(rtdb, '/games/' + roomId);
+        var gameRef = ref(rtdb, '/games/' + roomId);
         var allReady = true;
         var players;
         onValue(gameRef, (snapshot) => {
             const data = snapshot.val();
             players = data.players;
             const ready = data.ready;
-            for (let i = 0; i < ready.length; i++) {
+            for (let i = 1; i < ready.length; i++) {
                 if (!ready[i]) {
                     allReady = false;
                 }
