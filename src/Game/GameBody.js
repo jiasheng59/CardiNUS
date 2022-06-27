@@ -43,11 +43,11 @@ function Description(props) {
         return (
             <div>
                 You may swap an attire with any other player.
+                {messageForMrD}
                 <NightEvent
                     roomId={props.roomId}
                     changePhase={props.changePhase}
                 ></NightEvent>
-                {messageForMrD}
             </div>
         );
     }
@@ -73,7 +73,7 @@ function Description(props) {
                     changePhase={props.changePhase}
                 ></VoteForCaptainEvent>
             </div>
-        )
+        );
     }
     if (props.phase === "Captain Time") { // Inspect (in Captain.js) TBC
         if (props.captain === getPlayerIndex(props.roomId, auth.currentUser.uid)) {
@@ -133,7 +133,6 @@ function Description(props) {
             </div>
         );
     }
-    alert("Error in GameBody");
 }
 
 class GameBody extends React.Component {
