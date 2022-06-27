@@ -56,21 +56,27 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
     }
 
     const setStart = () => {
-        const gameRef = ref(rtdb, '/games/' + roomId + "/ready");
+        const gameRef = ref(rtdb, '/games/' + roomId);
         var allReady = true;
+        var players;
         onValue(gameRef, (snapshot) => {
             const data = snapshot.val();
-            const ready = data;
-            for (let i = 0; i < ready; i++) {
+            players = data.players;
+            const ready = data.ready;
+            for (let i = 0; i < ready.length; i++) {
                 if (!ready[i]) {
                     allReady = false;
                 }
             }
-        });
+        }, {onlyOnce:true});
         if (allReady) {
             setStarted(true);
         } else {
-            alert("Wait For All Players To Get Ready")
+            if (players.length < 7) {
+                alert(`Insufficient players: ${7 - players.length} more player needed`)
+            } else {
+                alert("Wait For All Players To Get Ready")
+            }
         }
     }
 
