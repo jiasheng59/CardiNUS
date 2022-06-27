@@ -23,10 +23,26 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
                 setJoined(false);
             }
         });
-    }, [roomId, setJoined]);
+
+        const startRef = ref(rtdb, '/games/' + roomId + "/ready");
+        onValue(startRef, (snapshot) => {
+            var allReady = true;
+            if(snapshot.exists()) {
+                const ready = snapshot.val();
+                for (let i = 0; i < ready.length; i++) {
+                    if (!ready[i]){
+                        allReady = false;
+                    }
+                }
+                if (allReady) {
+                    setStarted(true);
+                }
+            }
+        });
+    }, [roomId, setJoined, setStarted]);
 
     const setReady = () => {
-        const gameRef = ref(rtdb, '/games/' + roomId);
+        var gameRef = ref(rtdb, '/games/' + roomId);
         const uid = auth.currentUser.uid;
         onValue(gameRef, (snapshot) => {
             const data = snapshot.val();
@@ -56,21 +72,27 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
     }
 
     const setStart = () => {
-        const gameRef = ref(rtdb, '/games/' + roomId);
+        var gameRef = ref(rtdb, '/games/' + roomId);
         var allReady = true;
+        var players;
         onValue(gameRef, (snapshot) => {
             const data = snapshot.val();
+            players = data.players;
             const ready = data.ready;
-            for (let i = 0; i < ready; i++) {
+            for (let i = 1; i < ready.length; i++) {
                 if (!ready[i]) {
                     allReady = false;
                 }
             }
-        }, {onlyOnce: true});
+        }, {onlyOnce:true});
         if (allReady) {
             setStarted(true);
         } else {
-            alert("Wait For All Players To Get Ready")
+            if (players.length < 7) {
+                alert(`Insufficient players: ${7 - players.length} more player needed`)
+            } else {
+                alert("Wait For All Players To Get Ready")
+            }
         }
     }
 
