@@ -189,7 +189,8 @@ class Game extends React.Component {
                 console.log("fail");
             }
         });
-        onValue(r, (snapshot) => {
+        const r2 = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/captain'); 
+        onValue(r2, (snapshot) => {
             if (snapshot.exists) {
                 const captain = snapshot.val();
                 this.setState({ captain: captain }); 
