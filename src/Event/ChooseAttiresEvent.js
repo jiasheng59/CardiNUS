@@ -13,8 +13,8 @@ function setOriginalAttires(roomId, playerIndex, attires) {
     Debug pleaseee (facing the same problem of the previous players' attires disappear)
     This function is to update the originalAttires in database.
     */
-    set(ref(rtdb, '/games/' + roomId + '/gameInfo/originalAttires' + playerIndex), attires);
-    set(ref(rtdb, '/games/' + roomId + '/gameInfo/currentAttires' + playerIndex), attires);
+    set(ref(rtdb, '/games/' + roomId + '/gameInfo/originalAttires/' + playerIndex), attires);
+    set(ref(rtdb, '/games/' + roomId + '/gameInfo/currentAttires/' + playerIndex), attires);
 }
 
 class ChooseAttiresEvent extends React.Component {
