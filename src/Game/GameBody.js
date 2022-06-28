@@ -77,7 +77,6 @@ function Description(props) {
     }
     if (props.phase === "Captain Time") { // Inspect (in Captain.js) TBC
         if (props.captain === getPlayerIndex(props.roomId, auth.currentUser.uid)) {
-            console.log(getPlayerIndex(props.roomId, auth.currentUser.uid))
             return (
                 <div>
                     <div>
