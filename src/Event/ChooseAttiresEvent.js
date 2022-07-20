@@ -2,7 +2,7 @@ import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
 import { auth, rtdb } from "../firebase/fire";
-import { onValue, ref, set } from "firebase/database";
+import { ref, set } from "firebase/database";
 import { doneAction, getPlayerIndex, isReadyToChangePhase, setDoneToZero } from "../Game/Game";
 
 // red, yellow, blue, turquoise, purple
