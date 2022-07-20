@@ -144,14 +144,7 @@ class Game extends React.Component {
         }, { onlyOnce: true });
         
         // Set this player's index
-        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
-        var tempIndex = {}
-        onValue(r, (snapshot) => {
-            const data = snapshot.val();
-            tempIndex = data.mapIndex;
-        }, {onlyOnce: true});
-        tempIndex[uid] = playerIndex;
-        set(ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/mapIndex'), tempIndex);
+        set(ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/mapIndex/' + uid), playerIndex);
     }
 
     assignRoles() {
