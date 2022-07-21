@@ -235,9 +235,3 @@ function setClientGameStarted(joinId) {
 */
 export { Game, getPlayerIndex, isReadyToChangePhase, doneAction, setDoneToZero, getAlienIndex, getMrDIndex };
 
-/*
-    <Inspect></Inspect>                
-    <VoteForCaptainEvent></VoteForCaptainEvent>
-    <Timer secondsLeft={30}></Timer>
-*/
-
