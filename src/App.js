@@ -5,6 +5,8 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Home/Login";
 import Home from "./Home/Home";
 import "./App.css";
+import Container from 'react-bootstrap/Container';
+import Navbar from "react-bootstrap/Navbar";
 
 const App = () => {
   const [user, setUser] = useState("");
@@ -90,6 +92,15 @@ const App = () => {
 
   return (
     <div className="App">
+      <div className="title">
+        CardiNUS
+        <img className="logo" src={require("./img/cardinus.png")} height={"68"} width={"68"} alt="" />
+        <button className="howToPlay">How To Play</button>
+      </div>
+
+        <button class="hbtn hb-fill-right">Slide</button>
+
+      
       <div>
         {user ? (
           <Home

@@ -156,7 +156,7 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
                     playerId={playerId}/>
                 </ReactModal>
             {isHost ?(
-                <button onClick={setStart}>Start Game</button>
+                <button className="hbtn hb-fill-right" onClick={setStart}>Start Game</button>
              ):(
                 isReady ?(
                 <button onClick={setNotReady}>Not Ready</button>
@@ -165,7 +165,7 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
              )
             )}
             {isHost ?(
-                <button onClick={closeRoom}>Close Room</button>
+                <button class="close" onClick={closeRoom}>Close Room</button>
                 ):(
                 <button onClick={leaveRoom}>Leave Room</button>
             )}
