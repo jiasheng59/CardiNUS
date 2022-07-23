@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { rtdb, auth } from "../firebase/fire";
+import { onValue, ref, set } from "firebase/database";
 import Chat from "./Features/Chat";
 import ChangePlayerId from "./Features/ChangePlayerId";
 import CreateRoom from './CreateRoom';
@@ -26,6 +28,18 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
   function closeChat() {
     setChatOpen(false)
   }
+
+  useEffect(() => {
+    const uid = auth.currentUser.uid;
+    const userRef = ref(rtdb, '/profiles/' + uid + "/playerID/");
+
+    onValue(userRef, (snapshot) => {
+      if(!snapshot.exists()) {
+        set(userRef, "Anon");
+      }
+      setPlayerId(snapshot.val())
+    });
+  })
 
   return (
     <>

@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
+import { rtdb, auth } from "../../firebase/fire";
+import { ref, set } from "firebase/database";
 
 function ChangePlayerId({setPlayerId, setChangeId}){
     const [id, setId] = useState('')
 
     function changePlayerId() {
-        setPlayerId(id);
-        setChangeId(false);
+      const uid = auth.currentUser.uid;
+      const userRef = ref(rtdb, '/profiles/' + uid + "/playerID/");
+      set(userRef, id);
+      setPlayerId(id)
+      setChangeId(false);
     }
 
     return (

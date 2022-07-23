@@ -17,14 +17,13 @@ function hasSwapppedAll(roomId) {
     }, { onlyOnce: true });
     const alienCurrentAttires = currentAttires[getAlienIndex(roomId)].map(a => a.color);
     const alienOriginalAttires = originalAttires[getAlienIndex(roomId)].map(a => a.color);
-    console.log(alienCurrentAttires);
-    console.log(alienOriginalAttires);
+    var allSwapped = true
     for (let i = 0; i < alienCurrentAttires.length; i++) {
-        if (alienCurrentAttires[i] !== alienOriginalAttires[i]) {
-            return false;
+        if (alienCurrentAttires[i] === alienOriginalAttires[i]) {
+            allSwapped = false;
         }
     }
-    return true;
+    return allSwapped;
 }
 
 class NightEvent extends React.Component {
