@@ -29,7 +29,7 @@ function hasSwapppedAll(roomId) {
 class NightEvent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showModal: false, player: 1, attire: "helmet" };
+        this.state = { swap: false, showModal: false, player: 1, attire: "helmet" };
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.onSelectAttire = this.onSelectAttire.bind(this);
@@ -72,6 +72,7 @@ class NightEvent extends React.Component {
     
     handleSwap(event) {
         // Client side
+        this.setState({ swap: true });
         this.handleCloseModal();
         alert("You have swapped your " + this.state.attire + " with Player " + this.state.player);
         event.preventDefault();
@@ -141,7 +142,7 @@ class NightEvent extends React.Component {
         ];
         return (
             <div>
-                <button disabled={false} onClick={this.handleOpenModal}>Change Attire</button>
+                <button disabled={swap} onClick={this.handleOpenModal}>Change Attire</button>
                 <ReactModal isOpen={this.state.showModal}>
                     <h2>Do you want to swap your attire?</h2>
                     <form>
