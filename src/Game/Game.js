@@ -144,25 +144,15 @@ class Game extends React.Component {
         }, { onlyOnce: true });
         
         // Set this player's index
-        const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
-        var tempIndex = {}
-        onValue(r, (snapshot) => {
-            const data = snapshot.val();
-            tempIndex = data.mapIndex;
-        }, {onlyOnce: true});
-        tempIndex[uid] = playerIndex;
-        set(ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/mapIndex'), tempIndex);
+        set(ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/mapIndex/' + uid), playerIndex);
     }
 
     assignRoles() {
-        var mapIndex = {};
         const uid = auth.currentUser.uid;
-        mapIndex[uid] = 0;
         const roles = shuffle(ROLES);
         const gameInfoRef = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo');
         set(gameInfoRef, {
             roles: roles,
-            mapIndex: mapIndex,
             originalAttires: {},
             currentAttires: {},
             done: 0,
@@ -170,6 +160,7 @@ class Game extends React.Component {
             vote: [0, 0, 0, 0, 0, 0, 0],
             captain: -1
         });
+        set(ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/mapIndex/' + uid), 0);
         set(ref(rtdb, '/games/' + this.props.roomId + "/ready/" + 0), true);
     }
 
