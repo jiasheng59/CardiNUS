@@ -3,10 +3,9 @@ import React from "react";
 import { rtdb, auth } from "../firebase/fire";
 import ReactModal from "react-modal";
 import { getPlayerIndex } from "./Game";
-import Attire from "./Attire";
+import { Attire } from "./Attire";
 
 class ViewMyAttires extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +21,9 @@ class ViewMyAttires extends React.Component {
         this.getCurrentAttires = this.getCurrentAttires.bind(this);
         this.getOriginalAttires = this.getOriginalAttires.bind(this);
     }
-
+    componentDidMount() {
+        this.getCurrentAttires();
+    }
     handleOpenModal() {
         this.setState({ showModal: true });
     }
@@ -71,14 +72,9 @@ class ViewMyAttires extends React.Component {
             </div>
         );
     }
-
-    componentDidMount() {
-        this.getCurrentAttires();
-    }
         
     render() {
         const originalAttiresElement = this.getOriginalAttires();
-
         return (
             <div>
                 <button disabled={false} onClick={this.handleOpenModal}>View My Attires</button>

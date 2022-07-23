@@ -91,26 +91,26 @@ const App = () => {
   return (
     <div className="App">
       <div>
-      {user ? (
-        <Home 
-          handleLogout={handleLogout} 
-          playerId={playerId}
-          setPlayerId={setPlayerId}
-        />
-      ) : (
-        <Login
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-          handleSignUp={handleSignUp}
-          hasAccount={hasAccount}
-          setHasAccount={setHasAccount}
-          emailError={emailError}
-          passwordError={passwordError}
-          signInWithGoogle={signInWithGoogle}
-        />
+        {user ? (
+          <Home
+            handleLogout={handleLogout}
+            playerId={playerId}
+            setPlayerId={setPlayerId}
+          />
+        ) : (
+          <Login
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+            handleSignUp={handleSignUp}
+            hasAccount={hasAccount}
+            setHasAccount={setHasAccount}
+            emailError={emailError}
+            passwordError={passwordError}
+            signInWithGoogle={signInWithGoogle}
+          />
         )}
       </div>
     </div>

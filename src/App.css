@@ -17,6 +17,10 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  background: #9a7fdf;
+}
+
 .login {
   width: 100%;
   min-height: 100vh;

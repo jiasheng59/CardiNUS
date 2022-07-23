@@ -36,9 +36,10 @@ function Description(props) {
         );
     }
     if (props.phase === "Night") {
+        const alienIndex = getAlienIndex(props.roomId);
         const messageForMrD =
             getPlayerIndex(props.roomId, auth.currentUser.uid) === getMrDIndex(props.roomId)
-                ? <div>You are Mr.D</div>
+                ? <div>{`You are Mr.D. Alien is player ${alienIndex + 1}`}</div>
                 : <div></div>;
         return (
             <div>

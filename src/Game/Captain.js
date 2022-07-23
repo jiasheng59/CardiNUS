@@ -1,19 +1,20 @@
 import React from "react";
 import ReactModal from "react-modal";
 import Multiselect from 'multiselect-react-dropdown';
-import { setDoneToZero } from "./Game";
-import { rtdb } from "../firebase/fire";
+import { getAlienIndex, getPlayerIndex, setDoneToZero } from "./Game";
+import { auth, rtdb } from "../firebase/fire";
 import { onValue, ref } from "firebase/database";
 
 class Inspect extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showModal: false, attire: "", selectedPlayers: []};
+        this.state = { showModal: false, attire: "", selectedPlayers: [], view: false};
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleView = this.handleView.bind(this);
         this.handleVoteForAlien = this.handleVoteForAlien.bind(this);
         this.handleSkip = this.handleSkip.bind(this);
+        this.handleEscape = this.handleEscape.bind(this);
         this.onSelectAttire = this.onSelectAttire.bind(this);
         this.onSelectPlayers = this.onSelectPlayers.bind(this);
         this.onRemovePlayers = this.onRemovePlayers.bind(this);
@@ -27,6 +28,7 @@ class Inspect extends React.Component {
         this.setState({ showModal: false });
     }
     handleView(event) {
+        this.setState({ view: true });
         const players = this.state.selectedPlayers;
         const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/currentAttires');
         let colors;
@@ -37,7 +39,7 @@ class Inspect extends React.Component {
             "The " + this.state.attire + ` of players ${players[0]}, ${players[1]}, ${players[2]} are: 
             ${colors[players[0] - 1].color}, 
             ${colors[players[1] - 1].color}, 
-            ${colors[players[2] - 1].color} respectively`;
+            ${colors[players[2] - 1].color} respectively. The ${this.state.attire} of alien is ${colors[getAlienIndex(this.props.roomId)].color}.`;
         alert(message);
     }
     handleVoteForAlien(event) {
@@ -50,7 +52,18 @@ class Inspect extends React.Component {
         setDoneToZero(this.props.roomId);
         this.props.changePhase("Night");
     }
-
+    handleEscape(event) {
+        this.handleCloseModal();
+        setDoneToZero(this.props.roomId);
+        if (getPlayerIndex(this.props.roomId, auth.currentUser.uid) === getAlienIndex(this.props.roomId)) {
+            this.props.changePhase("Alien And Mr. D Win");
+        } else {
+            alert("You are not Alien!");
+            // To be implemented: eliminate the player if he is not the Alien but press escape
+            this.props.changePhase("Night");
+        }
+    }
+ 
     onSelectAttire(selectedList, selectedItem) {
         this.setState({ attire: selectedItem.id });
     }
@@ -106,7 +119,7 @@ class Inspect extends React.Component {
                             selectionLimit={3}
                         />
                     </form>
-                    <button onClick={this.handleView}>View</button>
+                    <button disabled={this.state.view} onClick={this.handleView}>View</button>
                     <button onClick={this.handleVoteForAlien}>Vote For Alien</button>
                     <button onClick={this.handleSkip}>Skip Voting Phase</button>
                     <button onClick={this.handleCloseModal}>Close</button>
