@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {fire, auth} from "./firebase/fire";
+import { fire, auth} from "./firebase/fire";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Home/Login";
 import Home from "./Home/Home";
