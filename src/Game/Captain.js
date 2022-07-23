@@ -5,6 +5,25 @@ import { getAlienIndex, getPlayerIndex, setDoneToZero } from "./Game";
 import { auth, rtdb } from "../firebase/fire";
 import { onValue, ref } from "firebase/database";
 
+
+function fromAttireToIndex(attire) {
+    if (attire === "helmet"){
+        return 0;
+    }
+    if (attire === "visor"){
+        return 1;
+    }
+    if (attire === "suit"){
+        return 2;
+    }
+    if (attire === "gloves"){
+        return 3;
+    }
+    if (attire === "boots"){
+        return 4;
+    }
+}
+
 class Inspect extends React.Component {
     constructor(props) {
         super(props);
@@ -37,9 +56,9 @@ class Inspect extends React.Component {
         }, {onlyOnce: true}); 
         const message =
             "The " + this.state.attire + ` of players ${players[0]}, ${players[1]}, ${players[2]} are: 
-            ${colors[players[0] - 1].color}, 
-            ${colors[players[1] - 1].color}, 
-            ${colors[players[2] - 1].color} respectively. The ${this.state.attire} of alien is ${colors[getAlienIndex(this.props.roomId)].color}.`;
+            ${colors[players[0] - 1][fromAttireToIndex(this.state.attire)].color}, 
+            ${colors[players[1] - 1][fromAttireToIndex(this.state.attire)].color}, 
+            ${colors[players[2] - 1][fromAttireToIndex(this.state.attire)].color} respectively. The ${this.state.attire} of alien is ${colors[getAlienIndex(this.props.roomId)][fromAttireToIndex(this.state.attire)].color}.`;
         alert(message);
     }
     handleVoteForAlien(event) {
