@@ -142,7 +142,7 @@ class NightEvent extends React.Component {
         ];
         return (
             <div>
-                <button disabled={swap} onClick={this.handleOpenModal}>Change Attire</button>
+                <button disabled={this.state.swap} onClick={this.handleOpenModal}>Change Attire</button>
                 <ReactModal isOpen={this.state.showModal}>
                     <h2>Do you want to swap your attire?</h2>
                     <form>

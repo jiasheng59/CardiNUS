@@ -5,8 +5,6 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Home/Login";
 import Home from "./Home/Home";
 import "./App.css";
-import Container from 'react-bootstrap/Container';
-import Navbar from "react-bootstrap/Navbar";
 
 const App = () => {
   const [user, setUser] = useState("");
