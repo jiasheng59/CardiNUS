@@ -8,7 +8,7 @@ import { onValue, ref } from "firebase/database";
 class Inspect extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showModal: false, attire: "", selectedPlayers: []};
+        this.state = { showModal: false, attire: "", selectedPlayers: [], view: false};
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleView = this.handleView.bind(this);
@@ -28,6 +28,7 @@ class Inspect extends React.Component {
         this.setState({ showModal: false });
     }
     handleView(event) {
+        this.setState({ view: true });
         const players = this.state.selectedPlayers;
         const r = ref(rtdb, '/games/' + this.props.roomId + '/gameInfo/currentAttires');
         let colors;
@@ -38,7 +39,7 @@ class Inspect extends React.Component {
             "The " + this.state.attire + ` of players ${players[0]}, ${players[1]}, ${players[2]} are: 
             ${colors[players[0] - 1].color}, 
             ${colors[players[1] - 1].color}, 
-            ${colors[players[2] - 1].color} respectively`;
+            ${colors[players[2] - 1].color} respectively. The ${this.state.attire} of alien is ${colors[getAlienIndex(this.props.roomId)].color}.`;
         alert(message);
     }
     handleVoteForAlien(event) {
@@ -118,7 +119,7 @@ class Inspect extends React.Component {
                             selectionLimit={3}
                         />
                     </form>
-                    <button onClick={this.handleView}>View</button>
+                    <button disabled={this.state.view} onClick={this.handleView}>View</button>
                     <button onClick={this.handleVoteForAlien}>Vote For Alien</button>
                     <button onClick={this.handleSkip}>Skip Voting Phase</button>
                     <button onClick={this.handleCloseModal}>Close</button>
