@@ -3,7 +3,7 @@ import React from "react";
 import { rtdb, auth } from "../firebase/fire";
 import ReactModal from "react-modal";
 import { getPlayerIndex } from "./Game";
-import Attire from "./Attire";
+import { Attire } from "./Attire";
 
 class ViewMyAttires extends React.Component {
     constructor(props) {

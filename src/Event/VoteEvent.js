@@ -57,7 +57,7 @@ function setCaptain(roomId, newCaptain) {
 class VoteForCaptainEvent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {showModal: false, captain: ""};
+        this.state = { showModal: false, captain: "", voted: false };
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleVote = this.handleVote.bind(this);
@@ -76,6 +76,7 @@ class VoteForCaptainEvent extends React.Component {
             alert("Please choose one player.");
             return;
         }
+        this.setState({ voted: true });
         alert("You have voted for Player " + this.state.captain + " to be the Captain.");
         this.handleCloseModal();
         this.updateVote();
@@ -108,7 +109,7 @@ class VoteForCaptainEvent extends React.Component {
 
         return (
             <div>
-                <button disabled={false} onClick={this.handleOpenModal}>Vote a Captain</button>
+                <button disabled={this.state.voted} onClick={this.handleOpenModal}>Vote a Captain</button>
                 <ReactModal isOpen={this.state.showModal}>
                     <form>
                         <h3>Vote a Captain.</h3>
@@ -130,7 +131,7 @@ class VoteForCaptainEvent extends React.Component {
 class VoteForAlienEvent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {showModal: false, alien: ""};
+        this.state = {showModal: false, alien: "", voted: false};
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleVote = this.handleVote.bind(this);
@@ -149,9 +150,9 @@ class VoteForAlienEvent extends React.Component {
             alert("Please choose one player.");
             return;
         }
+        this.setState({ voted: true });
         this.handleCloseModal();
         this.updateVote();
-
         alert("You have voted for Player " + this.state.alien + ".");
         event.preventDefault();
     }
@@ -186,7 +187,7 @@ class VoteForAlienEvent extends React.Component {
 
         return (
             <div>
-                <button disabled={false} onClick={this.handleOpenModal}>Vote for Alien</button>
+                <button disabled={this.state.voted} onClick={this.handleOpenModal}>Vote for Alien</button>
                 <ReactModal isOpen={this.state.showModal}>
                     <form>
                         <h3>Vote for Alien. The player with highest vote will be eliminated.</h3>

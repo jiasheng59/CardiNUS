@@ -17,6 +17,8 @@ function hasSwapppedAll(roomId) {
     }, { onlyOnce: true });
     const alienCurrentAttires = currentAttires[getAlienIndex(roomId)].map(a => a.color);
     const alienOriginalAttires = originalAttires[getAlienIndex(roomId)].map(a => a.color);
+    console.log(alienCurrentAttires);
+    console.log(alienOriginalAttires);
     for (let i = 0; i < alienCurrentAttires.length; i++) {
         if (alienCurrentAttires[i] !== alienOriginalAttires[i]) {
             return false;
@@ -35,6 +37,7 @@ class NightEvent extends React.Component {
         this.onSelectPlayer = this.onSelectPlayer.bind(this);
         this.attireToIndex = this.attireToIndex.bind(this);
         this.handleSwap = this.handleSwap.bind(this);
+        this.handleSkip = this.handleSkip.bind(this);
     }
     
     // Modal
@@ -103,6 +106,22 @@ class NightEvent extends React.Component {
             console.log("Not ready");
         }
     }
+
+    handleSkip(event) {
+        this.handleCloseModal();
+        event.preventDefault();
+        doneAction(this.props.roomId);
+        if (isReadyToChangePhase(this.props.roomId)) {
+            if (hasSwapppedAll(this.props.roomId)) {
+                this.props.changePhase("Alien And Mr. D Win");
+            } else {
+                this.props.changePhase("Discussion");
+            }
+            setDoneToZero(this.props.roomId);
+        } else {
+            console.log("Not ready");
+        }
+    }
         
     render() {
         const attires = [
@@ -146,7 +165,7 @@ class NightEvent extends React.Component {
                         />
                     </form>
                     <button onClick={this.handleSwap}>Swap</button>
-                    <button onClick={this.handleCloseModal}>Skip</button>
+                    <button onClick={this.handleSkip}>Skip</button>
                 </ReactModal>
             </div>
         );
