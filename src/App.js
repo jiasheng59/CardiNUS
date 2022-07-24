@@ -97,7 +97,6 @@ const App = () => {
         <button className="howToPlay">How To Play</button>
       </div>
 
-
       <div>
         {user ? (
           <Home

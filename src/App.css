@@ -50,7 +50,7 @@ button {
 }
 
 button:disabled {
-  background: #9a7fdf;
+  background: #13123b;
 }
 
 .login {
@@ -350,3 +350,7 @@ button:disabled {
   background: #004aad;
   transition: color 0.3s ease 0s, background 0s ease 0.3s;
 } 
+
+.description {
+  text-align: center;
+}

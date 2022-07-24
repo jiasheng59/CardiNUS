@@ -42,7 +42,7 @@ function Description(props) {
                 ? <div>{`You are Mr.D. Alien is player ${alienIndex + 1}`}</div>
                 : <div></div>;
         return (
-            <div>
+            <div className="description">
                 You may swap an attire with any other player.
                 {messageForMrD}
                 <NightEvent
@@ -54,7 +54,7 @@ function Description(props) {
     }
     if (props.phase === "Discussion") { // ViewMyAttires TBC
         return (
-            <div>
+            <div className="description">
                 Discussion time left:
                 <Timer
                     secondsLeft={100}
@@ -67,7 +67,7 @@ function Description(props) {
     }
     if (props.phase === "Vote For Captain") {
         return (
-            <div>
+            <div className="description">
                 Now, it's time to vote for a captain. The captain can view an attire from three players.
                 <VoteForCaptainEvent
                     roomId={props.roomId}
@@ -80,7 +80,7 @@ function Description(props) {
         if (props.captain === getPlayerIndex(props.roomId, auth.currentUser.uid)) {
             return (
                 <div>
-                    <div>
+                    <div className="description">
                         Congratulations! You are elected as captain in this round.
                         <br />
                         You can inspect three players' attires and decide whether to vote for Alien.
@@ -93,7 +93,7 @@ function Description(props) {
             );
         } else {
             return (
-                <div>
+                <div className="description">
                     Please wait for the captain.
                 </div>
             );
@@ -102,7 +102,7 @@ function Description(props) {
     if (props.phase === "Vote For Alien") {
         return (
             <div>
-                <div>
+                <div className="description">
                     Vote the person you suspect might be an Alien. The person with highest vote will be eliminated.
                 </div>
                 <VoteForAlienEvent
@@ -114,7 +114,7 @@ function Description(props) {
     }
     if (props.phase === "Astronauts Win") {
         return (
-            <div>
+            <div className="description">
                 <h4>Astronauts win!</h4>
                 <div>{
                     `Alien is Player ${getAlienIndex(props.roomId) + 1},
@@ -125,7 +125,7 @@ function Description(props) {
     }
     if (props.phase === "Alien And Mr. D Win") {
         return (
-            <div>
+            <div className="description">
                 <h4>Alien and Mr. D win!</h4>
                 <div>{
                     `Alien is Player ${getAlienIndex(props.roomId) + 1},
