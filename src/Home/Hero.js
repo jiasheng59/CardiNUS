@@ -43,7 +43,7 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
   })
 
   return (
-    <>
+    <div className="bottom">
       <section className="hero">
         <nav>
           {changeId ? (
@@ -82,7 +82,7 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
           <button className="chatRoomButton" onClick={joining}>Join Room <OutboxIcon className="icon" /></button>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
