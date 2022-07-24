@@ -40,7 +40,7 @@ button {
   color: #fff;
   font-size: 16px;
   letter-spacing: 1px;
-  background: #05c4eb;
+  background: #0abbd7;
   cursor: pointer;
 }
 
@@ -65,13 +65,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: radial-gradient(
-    ellipse at left bottom,
-    rgba(22, 24, 47, 1) 0%,
-    rgba(38, 20, 72, 0.9) 59%,
-    rgba(17, 27, 75, 0.9) 100%
-  );
-  box-shadow: 0 50px 70px -20px rgba(0, 0, 0, 0.8);
+  background-image: linear-gradient( 135deg, #FD6585 10%, #0D25B9 100%);
 }
 
 .login .loginContainer label {
@@ -137,12 +131,7 @@ button:disabled {
 .hero {
   width: 100%;
   min-height: 100vh;
-  background: radial-gradient(
-    ellipse at left bottom,
-    rgb(11, 65, 78) 0%,
-    rgb(12, 12, 12) 59%,
-    rgb(0, 0, 0) 100%
-  );
+  background-image: linear-gradient( 135deg, #FFA8A8 10%, #FCFF00 100%);
 }
 
 .hero nav {
@@ -163,6 +152,7 @@ button:disabled {
   padding: 8px 0;
   background-color: #004aad;
 }
+
 
 .btmButtons {
   width: 100%;
