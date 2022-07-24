@@ -5,6 +5,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Home/Login";
 import Home from "./Home/Home";
 import "./App.css";
+import TemporaryDrawer from "./Drawer";
 
 const App = () => {
   const [user, setUser] = useState("");
@@ -13,7 +14,8 @@ const App = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
-  const [playerId, setPlayerId] = useState("Anon")
+  const [playerId, setPlayerId] = useState("Anon");
+  const [showDrawer, setShowDrawer] = useState(false);
 
   const provider = new GoogleAuthProvider();
 
@@ -90,12 +92,13 @@ const App = () => {
 
   return (
     <div className="App">
-      
+
       <div className="title">
         CardiNUS
         <img className="logo" src={require("./img/cardinus.png")} height={"68"} width={"68"} alt="" />
-        <button className="howToPlay">How To Play</button>
+        <TemporaryDrawer className="howToPlay"></TemporaryDrawer>
       </div>
+
 
       <div>
         {user ? (
