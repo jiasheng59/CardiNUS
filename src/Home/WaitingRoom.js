@@ -167,9 +167,9 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
                     </button>
              ):(
                 isReady ?(
-                <button onClick={setNotReady}>Not Ready</button>
+                <button className="notReady" onClick={setNotReady}>Not Ready</button>
              ):(
-                                <button onClick={setReady}>
+                                <button className="hbtn hb-fill-right" onClick={setReady}>
                                     Ready <PlayCircleFilledIcon className="icon" />
                                 </button>
              )
@@ -179,7 +179,7 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
                         Close Room <CancelIcon className="icon"></CancelIcon>
                     </button>
                 ):(
-                <button onClick={leaveRoom}>Leave Room</button>
+                <button class="close" onClick={leaveRoom}>Leave Room</button>
             )}
             </div>
         </div>
