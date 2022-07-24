@@ -6,7 +6,8 @@ import ChangePlayerId from "./Features/ChangePlayerId";
 import CreateRoom from './CreateRoom';
 import JoinRoom from './JoinRoom';
 import ReactModal from 'react-modal';
-
+import OutboxIcon from '@mui/icons-material/Outbox';
+import ChatIcon from "@mui/icons-material/Chat";
 
 function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
   const [changeId, setChangeId] = useState(false)
@@ -60,7 +61,7 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
         </nav>
       </section>
       <div className="btmButtons">
-        <button onClick={openChat}>Chat Room</button>
+        <button className="chatRoomButton" onClick={openChat}>Chat Room <ChatIcon className="icon" /></button>
         <ReactModal isOpen={chatOpen}>
           <button onClick={closeChat}>Close</button>
           <Chat
@@ -78,7 +79,7 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
             playerId={playerId}
           />
         ) : (
-          <button onClick={joining}>Join Room</button>
+          <button onClick={joining}>Join Room <OutboxIcon className="icon" /></button>
         )}
       </div>
     </>

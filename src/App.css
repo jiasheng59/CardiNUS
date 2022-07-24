@@ -17,7 +17,7 @@
 
 .logo {
   display: flex;
-  padding-bottom: 10px;
+  padding-bottom: 9px;
 }
 
 .howToPlay {
@@ -40,7 +40,7 @@ button {
   color: #fff;
   font-size: 16px;
   letter-spacing: 1px;
-  background: #603bbb;
+  background: #05c4eb;
   cursor: pointer;
 }
 
@@ -139,14 +139,14 @@ button:disabled {
   min-height: 100vh;
   background: radial-gradient(
     ellipse at left bottom,
-    rgba(22, 24, 47, 1) 0%,
-    rgba(38, 20, 72, 0.9) 59%,
-    rgba(17, 27, 75, 0.9) 100%
+    rgb(11, 65, 78) 0%,
+    rgb(12, 12, 12) 59%,
+    rgb(0, 0, 0) 100%
   );
 }
 
 .hero nav {
-  background: #603bbb;
+  background: #05c4eb;
   width: 100%;
   padding: 20px 40px;
   display: flex;
@@ -161,7 +161,7 @@ button:disabled {
 .hero nav button {
   width: 86px;
   padding: 8px 0;
-  background: #3a2b58;
+  background-color: #004aad;
 }
 
 .btmButtons {
@@ -200,7 +200,7 @@ button:disabled {
 .hb-fill-right::before {
       position: absolute;
       content: "";
-      background: #12b86d;
+      background: #20c720;
       transition-duration: 0.3s;
       z-index: -1;
       inset: 0px auto auto 0px;
@@ -276,3 +276,44 @@ button:disabled {
   transition: color 0.3s ease 0s, background 0s ease 0.3s;
 } 
 
+
+
+.icon {
+  vertical-align: bottom;
+}
+
+.chatRoomButton {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  white-space: nowrap;
+  z-index: 0;
+} 
+.chatRoomButton i {
+  padding-right: 8px;
+} 
+.chatRoomButton::before {
+  position: absolute;
+  content: "";
+  background: #0971e8;
+  transition-duration: 0.3s;
+  z-index: -1;
+  inset: 0px auto auto 0px;
+  width: 0px;
+  height: 100%;
+  opacity: 1;
+} 
+.chatRoomButton:hover::before {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+} 
+.chatRoomButton:hover {
+  color: rgb(255, 255, 255);
+  background: #004aad;
+  transition: color 0.3s ease 0s, background 0s ease 0.3s;
+} 

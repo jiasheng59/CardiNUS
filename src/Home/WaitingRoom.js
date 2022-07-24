@@ -4,6 +4,9 @@ import { ref, onValue, set, remove} from "firebase/database";
 import {auth} from "../firebase/fire";
 import Chat from "./Features/Chat";
 import ReactModal from 'react-modal';
+import ChatIcon from "@mui/icons-material/Chat";
+import CancelIcon from '@mui/icons-material/Cancel';
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 
 function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
     const [players, setPlayers] = useState([]);
@@ -149,23 +152,32 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
                 ))}
             </h1>
             <div className="btmButtons">
-            <button onClick={openChat}>Chat Room</button>
+                <button className="chatRoomButton" onClick={openChat}>
+                    Chat Room <ChatIcon className="icon" />
+                </button>
+                
                 <ReactModal isOpen={chatOpen}>
                     <button onClick={closeChat}>Close</button>
                     <Chat
                     playerId={playerId}/>
                 </ReactModal>
             {isHost ?(
-                <button className="hbtn hb-fill-right" onClick={setStart}>Start Game</button>
+                    <button className="hbtn hb-fill-right" onClick={setStart}>
+                        Start Game <PlayCircleFilledIcon className="icon" />
+                    </button>
              ):(
                 isReady ?(
                 <button onClick={setNotReady}>Not Ready</button>
              ):(
-                <button onClick={setReady}>Ready</button>
+                                <button onClick={setReady}>
+                                    Ready <PlayCircleFilledIcon className="icon" />
+                                </button>
              )
             )}
             {isHost ?(
-                <button class="close" onClick={closeRoom}>Close Room</button>
+                    <button class="close" onClick={closeRoom}>
+                        Close Room <CancelIcon className="icon"></CancelIcon>
+                    </button>
                 ):(
                 <button onClick={leaveRoom}>Leave Room</button>
             )}

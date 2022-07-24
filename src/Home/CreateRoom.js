@@ -1,6 +1,7 @@
 import React from 'react';
 import { rtdb, auth } from "../firebase/fire";
 import { push, ref } from 'firebase/database';
+import InboxIcon from '@mui/icons-material/Inbox';
 
 function CreateRoom({ setRoomId, setJoined, playerId }) {
 
@@ -24,7 +25,7 @@ function CreateRoom({ setRoomId, setJoined, playerId }) {
 
 
     return (
-        <button onClick={createRoom}>Create Room</button>
+        <button onClick={createRoom}>Create Room <InboxIcon className="icon" /></button>
     )
 }
 
