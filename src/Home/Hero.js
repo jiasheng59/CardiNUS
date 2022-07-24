@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { rtdb, auth } from "../firebase/fire";
 import { onValue, ref, set } from "firebase/database";
 import Chat from "./Features/Chat";
+import Achievements from './Features/Achievements';
 import ChangePlayerId from "./Features/ChangePlayerId";
 import CreateRoom from './CreateRoom';
 import JoinRoom from './JoinRoom';
@@ -42,6 +43,16 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
     });
   })
 
+  useEffect(() => {
+    const uid = auth.currentUser.uid;
+    const statRef = ref(rtdb, '/profiles/' + uid + "/statistics/");
+    onValue(statRef, (snapshot) => {
+      if(!snapshot.exists()) {
+        set(statRef, {TotalGames: 0, WinAsAlien: 0, WinAsCrew:0});
+      }
+    });
+  })
+
   return (
     <>
       <section className="hero">
@@ -59,6 +70,7 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
           }
           <button onClick={handleLogout}>Logout</button>
         </nav>
+        <Achievements/>
       </section>
       <div className="btmButtons">
         <button className="chatRoomButton" onClick={openChat}>Chat Room <ChatIcon className="icon" /></button>
