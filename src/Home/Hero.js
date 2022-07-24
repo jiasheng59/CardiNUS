@@ -91,7 +91,7 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
             playerId={playerId}
           />
         ) : (
-          <button onClick={joining}>Join Room <OutboxIcon className="icon" /></button>
+          <button className="chatRoomButton" onClick={joining}>Join Room <OutboxIcon className="icon" /></button>
         )}
       </div>
     </>

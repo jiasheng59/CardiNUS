@@ -143,7 +143,7 @@ function WaitingRoom({roomId, setStarted, setJoined, playerId}) {
             <h1>
                 Room ID: {roomId}
             </h1>
-            <h1>
+            <h1 className="list">
                 Player List:
                 {players.map(player => (
                     <div>
