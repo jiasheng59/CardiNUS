@@ -5,7 +5,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Login from "./Home/Login";
 import Home from "./Home/Home";
 import "./App.css";
-import TemporaryDrawer from "./Drawer";
+import TemporaryDrawer from "./Home/Features/Drawer";
 
 const App = () => {
   const [user, setUser] = useState("");
@@ -15,7 +15,6 @@ const App = () => {
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
   const [playerId, setPlayerId] = useState("Anon");
-  const [showDrawer, setShowDrawer] = useState(false);
 
   const provider = new GoogleAuthProvider();
 
