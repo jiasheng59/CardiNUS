@@ -25,7 +25,7 @@ function CreateRoom({ setRoomId, setJoined, playerId }) {
 
 
     return (
-        <button onClick={createRoom}>Create Room <InboxIcon className="icon" /></button>
+        <button className="chatRoomButton" onClick={createRoom}>Create Room <InboxIcon className="icon" /></button>
     )
 }
 
