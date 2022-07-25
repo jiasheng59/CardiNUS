@@ -53,6 +53,16 @@ function Hero({ handleLogout, playerId, setPlayerId, setJoined, setRoomId }) {
     });
   })
 
+  useEffect(() => {
+    const uid = auth.currentUser.uid;
+    const questRef = ref(rtdb, '/profiles/' + uid + "/quests/");
+    onValue(questRef, (snapshot) => {
+      if(!snapshot.exists()) {
+        set(questRef, {notcompleted:["Win A Game"], completed:["None"]});
+      }
+    });
+  })
+
   return (
     <div className="bottom">
       <section className="hero">

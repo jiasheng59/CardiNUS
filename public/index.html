@@ -3,15 +3,64 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
     <title>CardiNUS</title>
     <link rel="icon" type="image/x-icon" href="icon.png" />
-    <audio controls autoplay hidden loop>
-      <source src="music.mp3" type="audio/mpeg" loop="loop" />
-      Your browser does not support the audio element.
-    </audio>
+    <audio
+      id="player"
+      src="music.mp3"
+      autoplay
+      hidden
+      loop
+      muted
+      oncanplay="this.muted=true"
+    ></audio>
+    <div class="audiobtn">
+      <button class="play" onclick="document.getElementById('player').play()">
+        <i class="fa-solid fa-play"></i>
+      </button>
+      <button class="pause" onclick="document.getElementById('player').pause()">
+        <i class="fa-solid fa-pause"></i>
+      </button>
+      <button
+        class="mute"
+        onclick="document.getElementById('player').muted=!document.getElementById('player').muted"
+      >
+        <i class="fa-solid fa-volume-xmark"></i>
+      </button>
+    </div>
+    <style>
+      .audiobtn .play {
+        position: absolute;
+        top: 0;
+        right: 20%;
+        width: 2%;
+        height: 5%;
+      }
+      .audiobtn .pause {
+        position: absolute;
+        top: 0;
+        right: 18%;
+        width: 2%;
+        height: 5%;
+      }
+      .audiobtn .mute {
+        position: absolute;
+        top: 0;
+        right: 22%;
+        width: 2%;
+        height: 5%;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script
+      src="https://kit.fontawesome.com/41900cfaf3.js"
+      crossorigin="anonymous"
+    ></script>
     <div id="root"></div>
   </body>
 </html>

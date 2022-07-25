@@ -1,9 +1,14 @@
 .messages {
     background-image: linear-gradient(to right, #ccc7f1, #dbe2b4);
+    position: absolute;
+    bottom: 1;
+    width: 97.8%;
+    height: 88%;
+    overflow:scroll;
 }
 
 .sendBox {
     position: absolute;
-    width: 100%;
+    width: 120%;
     bottom:0;
 }

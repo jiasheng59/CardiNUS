@@ -9,7 +9,7 @@ function Chat({playerId}) {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        db.collection('messages').orderBy('createdAt').limit(41).onSnapshot(snapshot => {
+        db.collection('messages').orderBy('createdAt').onSnapshot(snapshot => {
             setMessages(snapshot.docs.map(doc => doc.data()))
         })
     }, [])
@@ -17,18 +17,20 @@ function Chat({playerId}) {
 
     
     return (
+        <>
         <div className="messages">
             {messages.map(({id, text, playerId}) => (
                 <div key={id}>
                     <p>{`${playerId} : ${text}`}</p>
                 </div>   
             ))}
+            </div>
             <SendMessage
                 playerId={playerId}
                 scroll={scroll}
                 />
             <div ref={scroll}></div>
-        </div>
+            </>
     )
     
 
