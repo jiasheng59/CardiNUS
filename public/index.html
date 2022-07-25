@@ -3,12 +3,36 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
     <title>CardiNUS</title>
     <link rel="icon" type="image/x-icon" href="icon.png" />
-    <audio controls autoplay hidden loop>
-      <source src="music.mp3" type="audio/mpeg" loop="loop" />
-      Your browser does not support the audio element.
-    </audio>
+    <audio
+      id="player"
+      src="music.mp3"
+      autoplay
+      hidden
+      loop
+      muted
+      oncanplay="this.muted=true"
+    ></audio>
+    <div class="ply">
+      <button
+        onclick="document.getElementById('player').muted=!document.getElementById('player').muted"
+      >
+        Mute/ Unmute
+      </button>
+    </div>
+    <style>
+      .ply {
+        position: fixed;
+        top: 0;
+        right: 30%;
+        width: 8%;
+        height: 8%;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

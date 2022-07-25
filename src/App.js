@@ -91,7 +91,6 @@ const App = () => {
 
   return (
     <div className="App">
-
       <div className="title">
         CardiNUS
         <img className="logo" src={require("./img/cardinus.png")} height={"68"} width={"68"} alt="" />
