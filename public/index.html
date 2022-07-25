@@ -19,16 +19,16 @@
     ></audio>
     <div class="audiobtn">
       <button class="play" onclick="document.getElementById('player').play()">
-        Play
+        <i class="fa-solid fa-play"></i>
       </button>
       <button class="pause" onclick="document.getElementById('player').pause()">
-        Pause
+        <i class="fa-solid fa-pause"></i>
       </button>
       <button
         class="mute"
         onclick="document.getElementById('player').muted=!document.getElementById('player').muted"
       >
-        Mute/ Unmute
+        <i class="fa-solid fa-volume-xmark"></i>
       </button>
     </div>
     <style>
@@ -36,21 +36,21 @@
         position: absolute;
         top: 0;
         right: 20%;
-        width: 8%;
+        width: 2%;
         height: 5%;
       }
       .audiobtn .pause {
         position: absolute;
         top: 0;
-        right: 10%;
-        width: 8%;
+        right: 18%;
+        width: 2%;
         height: 5%;
       }
       .audiobtn .mute {
         position: absolute;
         top: 0;
-        right: 30%;
-        width: 8%;
+        right: 22%;
+        width: 2%;
         height: 5%;
       }
     </style>
