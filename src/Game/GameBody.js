@@ -7,7 +7,7 @@ import { getPlayerIndex, getAlienIndex, getMrDIndex } from "./Game";
 import Timer from "./Timer";
 import { auth, rtdb } from "../firebase/fire";
 import DayEvent from "../Event/DayEvent";
-import { onValue, set } from "firebase/database";
+import { onValue, set, ref } from "firebase/database";
 
 /*
 const phases = [
