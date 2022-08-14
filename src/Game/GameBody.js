@@ -32,12 +32,10 @@ function afterAstronautsWin(roomId) {
     const rTotal = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics/TotalGames');
     const rCrew = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics/WinAsCrew');
     let total = 0;
-    let alien = 0;
     let crew = 0;
     onValue(r, snapshot => {
         const stats = snapshot.val();
         total = stats.TotalGames;
-        alien = stats.WinAsAlien;
         crew = stats.WinAsCrew;
     }, { onlyOnce: true });
     set(rTotal, total + 1);
@@ -55,12 +53,10 @@ function afterAlienWin(roomId) {
     const rAlien = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics/WinAsAlien');
     let total = 0;
     let alien = 0;
-    let crew = 0;
     onValue(r, snapshot => {
         const stats = snapshot.val();
         total = stats.TotalGames;
         alien = stats.WinAsAlien;
-        crew = stats.WinAsCrew;
     }, { onlyOnce: true });
     set(rTotal, total + 1);
     if (getPlayerIndex(roomId, auth.currentUser.uid) === getAlienIndex(roomId) ||
