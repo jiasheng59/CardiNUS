@@ -5,8 +5,9 @@ import { VoteForAlienEvent, VoteForCaptainEvent } from "../Event/VoteEvent";
 import Inspect from "./Captain";
 import { getPlayerIndex, getAlienIndex, getMrDIndex } from "./Game";
 import Timer from "./Timer";
-import { auth } from "../firebase/fire";
+import { auth, rtdb } from "../firebase/fire";
 import DayEvent from "../Event/DayEvent";
+import { onValue, set } from "firebase/database";
 
 /*
 const phases = [
@@ -25,6 +26,48 @@ const phases = [
 Things to include while updating database
 done, phase, mapIndex, roles, originalAttires, currentAttires, vote, captain
 */
+
+function afterAstronautsWin(roomId) {
+    const r = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics');
+    const rTotal = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics/TotalGames');
+    const rCrew = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics/WinAsCrew');
+    let total = 0;
+    let alien = 0;
+    let crew = 0;
+    onValue(r, snapshot => {
+        const stats = snapshot.val();
+        total = stats.TotalGames;
+        alien = stats.WinAsAlien;
+        crew = stats.WinAsCrew;
+    }, { onlyOnce: true });
+    set(rTotal, total + 1);
+    if (getPlayerIndex(roomId, auth.currentUser.uid) === getAlienIndex(roomId) ||
+        getPlayerIndex(roomId, auth.currentUser.uid) === getMrDIndex(roomId)) {
+        return;
+    } else {
+        set(rCrew, crew + 1);
+    }
+}
+
+function afterAlienWin(roomId) {
+    const r = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics');
+    const rTotal = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics/TotalGames');
+    const rAlien = ref(rtdb, '/profiles/' + auth.currentUser.uid + '/statistics/WinAsAlien');
+    let total = 0;
+    let alien = 0;
+    let crew = 0;
+    onValue(r, snapshot => {
+        const stats = snapshot.val();
+        total = stats.TotalGames;
+        alien = stats.WinAsAlien;
+        crew = stats.WinAsCrew;
+    }, { onlyOnce: true });
+    set(rTotal, total + 1);
+    if (getPlayerIndex(roomId, auth.currentUser.uid) === getAlienIndex(roomId) ||
+        getPlayerIndex(roomId, auth.currentUser.uid) === getMrDIndex(roomId)) {
+        set(rAlien, alien + 1);
+    }
+}
 
 function Description(props) {
     if (props.phase === "Choose Attires") {
@@ -113,6 +156,7 @@ function Description(props) {
         );
     }
     if (props.phase === "Astronauts Win") {
+        afterAstronautsWin(props.roomId);
         return (
             <div className="description">
                 <h4>Astronauts win!</h4>
@@ -124,6 +168,7 @@ function Description(props) {
         );
     }
     if (props.phase === "Alien And Mr. D Win") {
+        afterAlienWin(props.roomId);
         return (
             <div className="description">
                 <h4>Alien and Mr. D win!</h4>
