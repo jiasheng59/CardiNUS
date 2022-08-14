@@ -1,6 +1,6 @@
 import "./Achievements.css"
 import { rtdb, auth } from "../../firebase/fire";
-import { onValue, ref} from "firebase/database";
+import { onValue, ref, set} from "firebase/database";
 import { useEffect, useState } from "react";
 
 function Achievements() {
@@ -20,6 +20,11 @@ function Achievements() {
           setCrewWins(data.WinAsCrew);
           setAlienWins(data.WinAsAlien);
       });
+    
+      const questRef = ref(rtdb, '/profiles/' + uid + "/quests/");
+      if (crewWins + alienWins > 0){
+          set(questRef, {notcompleted:["None"], completed:["Win A Game"]})
+      }
 
       const notcompletedquestRef = ref(rtdb, '/profiles/' + uid + '/quests/notcompleted');
       onValue(notcompletedquestRef, (snapshot) => {
@@ -30,7 +35,8 @@ function Achievements() {
       onValue(completedquestRef, (snapshot) => {
         setCompleted(snapshot.val());
       });
-    }, [])
+    }, [alienWins, crewWins])
+
 
     const twitter = `https://twitter.com/intent/tweet?text=I have ${(crewWins + alienWins) / totalGames * 100} percent win rate in CardiNUS. Join me at https://cardinus-99061.web.app/`
     return (
